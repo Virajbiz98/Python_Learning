@@ -67,5 +67,35 @@ for i in range (10):
 i = sum + i:
 print(i)
 # ..................
+
+for i in range (10):
+  if((i % 3 == 0) + (i % 5 == 0)) sum(i):
+sum = sum + i:
+      print(i)
+# ...............
+
+for i in range (10):
+  if(i % 3 == 0) or (i % 5 == 0):
+    print(i)
+i = sum + i:
+    print(i)
+# ..........
+sum = 0
+for i in range (10):
+  if(i % 3 == 0) or (i % 5 == 0):
+    print(i)
+    sum = sum + i
+    print(sum)
+# .......
+
+
+
+
+
+
+
+
+
     
+  
    
