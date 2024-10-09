@@ -27,7 +27,7 @@ for number in range(1, 21):
         print(number)
       ........................
 
-#.we can  filters the numbers from 0 to 14 and only prints those that are odd and not multiples of 5. in bellow code.
+#.we can  filter the numbers from 0 to 14 and only prints those that are odd and not multiples of 5. in bellow code.
 #.>>>
 for i in range(15): #.this line starts a loop that will iterate 15 times, wiht "i" takinge values from 0 to 14.
     if (i % 2 == 0): #.this checks if "i" is divisible by 2  (i.e., if its remainder when divided by 2 is 0). If it is, the continue statement is executed
@@ -37,6 +37,9 @@ for i in range(15): #.this line starts a loop that will iterate 15 times, wiht "
         print("the value is: ", i) #.This line prints the value of i.
     else: #.If i is not divisible by 2 or 5, this block is executed.
         print("this can’t divide by 2 or 5") #. This line prints a message indicating that i is not divisible by 2 or 5.
+
+#. ~.elif meening :- els if 
+
       
 
 
