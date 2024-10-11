@@ -1,11 +1,15 @@
-a = 0
-b = 2
-c = a + b
+a = 0 + 1
+b = 1 + 1
+n = a + b
 sum = 0
-for i in range(10):
-    if(i >((a + b == 1 or b + c == 1) or (b + c == 2))):
-     
-     
-     
-     print(i)
-            
+def fibonacci(n):
+    if(n == a + b and b,a+b):
+        print(n)
+
+    
+    
+        
+ 
+sum = sum + n
+print(sum)
+
