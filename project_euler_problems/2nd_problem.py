@@ -1,15 +1,8 @@
-a = 0 + 1
-b = 1 + 1
-n = a + b
-sum = 0
 def fibonacci(n):
-    if(n == a + b and b,a+b):
-        print(n)
-
-    
-    
+    a,b = 0, 1
+    for i in range(n):
+        print(a, end ="")
+        a,b = b, a + b
+        print()
         
- 
-sum = sum + n
-print(sum)
-
+fibonacci(10)
