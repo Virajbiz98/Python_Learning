@@ -6,9 +6,10 @@ e = 3
 n = a + b , b + c, d + e, next 
 sum = 0
 for i in range(10):
-    if(n % 2 == 0) or n == (b + a == c , c + d == e, + next):
-    sum = sum + n + next:
-    print(n,next)
-
-            
-print(sum)            
+    if(a,b == 0,1 ,b,c == 2):
+    elif(n == (b + a == c , c + d == e, + next) and (n % 2 == 0)):
+         while True:
+      sum = sum + n + next:
+          print(n)
+         
+print(sum)
