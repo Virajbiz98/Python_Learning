@@ -3,13 +3,14 @@ b = 1
 c = 1
 d = 2
 e = 3
-n = a + b , b + c, d + e, next 
+n = a + b, b + c, c + d, d + e
+n = fn
 sum = 0
-for i in range(10):
-    if(a,b == 0,1 ,b,c == 2):
-    elif(n == (b + a == c , c + d == e, + next) and (n % 2 == 0)):
-         while True:
-      sum = sum + n + next:
-          print(n)
-         
+for fn in range(10):
+    if (fn(2**6, - 20) and (fn % 2 == 0 or sum)):
+    while True
+for fn in range(4000000):
+        print(fn)
+        
+sum = sum + fn
 print(sum)
