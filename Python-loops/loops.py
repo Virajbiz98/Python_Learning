@@ -40,6 +40,24 @@ for i in range(15): #.this line starts a loop that will iterate 15 times, wiht "
 
 #. ~.elif meening :- els if 
 
+marks_list = [23, 56, 98, 78, 67, 46]
+
+for marks in marks_list:
+    if marks < 0 or marks > 100:
+        print("invalid")
+    elif marks < 35:
+        print("w")
+    elif marks < 55:
+        print("s")
+    elif marks < 65:
+        print("c")  
+    elif marks < 75:
+        print("b")
+    else:  
+        print("a")
+
+>> w c a a b s 
+
       
 
 
