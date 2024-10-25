@@ -158,8 +158,13 @@ squares = [x**2 for x in range(10)]
 print(squares) 
 >> [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
+
 even_numbers = [x for x in range(20) if x % 2 == 0]
 print(even_numbers) 
 >> [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
 
 
+my_list = [1,3,4,5,6,2,6,7,8,9]
+del my_list
+print(my_list)
+# >> my list not defined
