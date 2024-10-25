@@ -24,6 +24,22 @@ print(x[0])
 print(x[-1])
 >> 9
 
+import array
+x = array.array('i', [2,3,5,4,-1,5,6,7,9])
+for i in x:
+ print(i)
+>>
+2
+3
+5
+4
+-1
+5
+6
+7
+9
+
+
 my_list = [1, 2, 3, 4, 5]
 mixed_list = [1, "apple", 3.14, True]
 
