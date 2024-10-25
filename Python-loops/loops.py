@@ -1,15 +1,12 @@
-# example for nested loops
-number = 0
-
-if number > 0:
-    print("positive number")
-else:
-    if number < 0:
-        print("negetive number")
+# nested loops for example
+number = -10
+if number != 0:
+    if number > 0:
+        print("positive")
     else:
-        print("zero")
-
-............
+        print("negative")
+else:
+    print("zero")
 name = ["kamal, nimal, eranda, malith"]
 for names in name:
     print(name)
