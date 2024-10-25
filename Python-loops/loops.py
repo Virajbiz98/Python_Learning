@@ -1,11 +1,13 @@
-#.What are for loops?
-#.For loops are used to repeat a block of code a specific number of times.
-#.They're particularly useful when you want to iterate over a sequence of values, such as a list, string, or range of numbers.
-#.examplese
-fruits=["banana","apple","mango"]
-for fruits in fruits:
-    print(fruits)
-  >> banana apple mango
+# example for nested loops
+number = 0
+
+if number > 0:
+    print("positive number")
+else:
+    if number < 0:
+        print("negetive number")
+    else:
+        print("zero")
 
 ............
 name = ["kamal, nimal, eranda, malith"]
