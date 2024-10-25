@@ -2,6 +2,28 @@
 
 # array is a collection of items stored at continuous memory locations.
 
+# data type            type code
+# Character                  'c'
+# Unuicode                   'u' - can use for stor string
+# Signed short               'h'
+# Undigned short             'H'
+# Signed int                 'i' - dhana ha rina sankya stor kala haka.
+# Unsigned int               'I' - dana sankya pamanak stor kala haka.
+# Signed long                'l'
+# Unsigned long              'L'
+# Float                      'f'
+# double                     'd'
+
+# python have no defoalt array but we can import array
+import array
+ x = array.array('i', [2,3,5,4,-1,5,6,7,9])
+pirnt(x)
+>> array('i', [2, 3, 5, 4, -1, 5, 6, 7, 9])
+print(x[0])
+>> 2
+print(x[-1])
+>> 9
+
 my_list = [1, 2, 3, 4, 5]
 mixed_list = [1, "apple", 3.14, True]
 
