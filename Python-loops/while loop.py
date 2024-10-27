@@ -1,8 +1,7 @@
-sum = 0
-i = 1;
-while(i<=5):
-    number =int(input("Enter Number : "))
-    sum = sum + number
-    i+=1
+num = int(input('Enter a # between 1 - 10: '))
 
-print(f"Sum of numbers = {sum}")
+while num < 1 or num > 10:
+    print(f"{num} is not valid")
+    num = int(input ("Enter a # between 1 - 10: "))
+
+print(f"you number is {num}")
