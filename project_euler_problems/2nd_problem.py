@@ -1,16 +1,14 @@
-a = 0
-b = 1
-c = 1
-d = 2
-e = 3
-n = a + b, b + c, c + d, d + e
-n = fn
-sum = 0
-for fn in range(10):
-    if (fn(2**6, - 20) and (fn % 2 == 0 or sum)):
-    while True
-for fn in range(4000000):
-        print(fn)
-        
-sum = sum + fn
-print(sum)
+def sum_evn(n):
+    a, b = 0, 1
+    sum_even = 0
+
+    for n in range(n):
+        if a % 2 == 0:
+            sum_even += a
+        a, b = b, a + b
+
+    print(sum_even)
+
+n = 0
+sum_evn(10)
+>> 44
