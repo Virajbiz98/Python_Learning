@@ -1,8 +1,15 @@
-try: 
+try:
     a =  int(input("Enter first number: "))
     b =  int(input("Enter second number: "))
     print(a/b)
-
-except Exception as e: # e is chooseble and we can finde what is error using Exception 
+except ZeroDivisionError as e:
+    print("can not divide by zero:" , e)
+except ValueError as e:
+    print("Use integers: ", e)
+except Exception as e:
     print("somthing went wrong" ,e)
-print("bye")
+
+finally:
+    print("bye")
+
+
