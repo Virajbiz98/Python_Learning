@@ -1,4 +1,8 @@
-def say_hello(name):
-    print('Hey there', name)
+from datetime import datetime
 
-say_hello('mark')
+def show_date() -> None:
+    print('this is current date and time:')
+    print(datetime.now())
+
+show_date()
+show_date()
