@@ -1,5 +1,4 @@
-while True:
-    User_input = input('Enter something: ')
-    if User_input == '8':
-        print('we are done here')
-        break
+i = 0
+while i < 5:
+    i = i + 1
+    print(i)
