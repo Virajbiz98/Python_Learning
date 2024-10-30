@@ -1,8 +1,7 @@
-from datetime import datetime
 
-def show_date() -> None:
-    print('this is current date and time:')
-    print(datetime.now())
 
-show_date()
-show_date()
+def greet(name: str) -> None:
+    print(f'hello {name}!')
+
+greet('bob')
+greet('mali')
