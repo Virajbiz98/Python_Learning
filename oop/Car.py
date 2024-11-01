@@ -8,7 +8,8 @@ class Car:
         self.color = color
 
     def drive(self):
-        print("this car is driving")
+        print("this  "+self.model+" is driving")
 
     def stop(self):
-        print("this car is stopped")
+        print("this "+self.model+" is stopped")
+
