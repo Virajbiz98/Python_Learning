@@ -1,6 +1,9 @@
-def add_item(item, list = []):
-    list.append(item)
-    return list
+# send data back to where function was called from
+# return statements end the function's execution
+# if omitted, functions return none by default
 
-print(add_item("apple"))
-print(add_item("banana"))
+def add_numbers(a, b):
+    return a + b
+
+result = add_numbers(5, 3)
+print(result)
