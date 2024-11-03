@@ -1,9 +1,10 @@
-# send data back to where function was called from
-# return statements end the function's execution
-# if omitted, functions return none by default
+def divide(a, b):
+    if b == 0:
+        return "Error: cannot divide by zero"
+    return a / b
 
-def add_numbers(a, b):
-    return a + b
+print(divide(10, 2))
+print(divide(10, 0))
 
-result = add_numbers(5, 3)
-print(result)
+>> 5.0
+>> Error:connot divide by zero
