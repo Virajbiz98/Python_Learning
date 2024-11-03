@@ -1,7 +1,6 @@
+def add_item(item, list = []):
+    list.append(item)
+    return list
 
-
-def greet(name: str) -> None:
-    print(f'hello {name}!')
-
-greet('bob')
-greet('mali')
+print(add_item("apple"))
+print(add_item("banana"))
