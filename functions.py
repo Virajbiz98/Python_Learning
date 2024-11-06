@@ -1,10 +1,7 @@
-def divide(a, b):
-    if b == 0:
-        return "Error: cannot divide by zero"
-    return a / b
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    else:
+        return n * factorial(n - 1)
 
-print(divide(10, 2))
-print(divide(10, 0))
-
->> 5.0
->> Error:connot divide by zero
+print(factorial(5))
