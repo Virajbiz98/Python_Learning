@@ -1,12 +1,6 @@
-# how to find average of N numbers in python
+# how to sum of the first N positive integers in python
 
-num = int(input("How many numbers ?: "))
-total_sum = 0
+n = int (input("Enter number: "))
 
-for n in range(num):
-    numbers = float(input("Enter any number: "))
-    total_sum += numbers
-
-avg = total_sum / num
-
-print( "Average is : ",avg)
+sum = (n * (n + 1)) / 2
+print(sum)
