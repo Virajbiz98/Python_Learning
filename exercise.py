@@ -1,6 +1,13 @@
-# how to sum of the first N positive integers in python
+#3. how to get time of a python program's execution
 
-n = int (input("Enter number: "))
+import time
+def myFunc ():
+    start_time = time.time()
+    s = 0
+    for i in range ( 1 , n+1):
+        s = s + i
 
-sum = (n * (n + 1)) / 2
-print(sum)
+    end_time = time.time()
+    return s , end_time-start_time
+n = 5
+print(myFunc())
