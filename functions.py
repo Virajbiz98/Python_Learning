@@ -1,10 +1,17 @@
-# the code for short form  words
-def generator(sentence):
-    word_list = text.split()  # this for separate words
-    short_form = ""
-    for i in word_list:
-        short_form = short_form + i[0].upper() # .upper for capitalise text
-    print(short_form)
+import random
 
-text = input("Enter something: ")
-generator(text)
+def guess_number():
+    hidden_number = random.randint(1, 10)
+
+    your_input = 0
+    while your_input != hidden_number:
+        your_input = int(input("Enter number: "))
+
+        if your_input < hidden_number:
+            print("Too low. Tey again")
+        elif your_input > hidden_number:
+            print("Too high. Try again")
+
+    print("You won")
+
+guess_number()
