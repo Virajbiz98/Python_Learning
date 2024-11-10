@@ -1,9 +1,7 @@
+# how to print current Date and time
 
-# How to find out the version of python you are using
+import datetime
 
-
-import sys
-
-print("python version")
-print(sys.version)
-print(sys.version_info)
+now = datetime.datetime.now()
+print("Current date and time is: ")
+print(now.strftime("%y-%m-%d %H:%M:%S"))
