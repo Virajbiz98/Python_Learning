@@ -1,7 +1,8 @@
-# how to print current Date and time
+# how to create a list and tuple with comma separated numbers in python
 
-import datetime
+values = input('Enter some numbers: ')
+list = values.split(",")
+tuple = tuple(list)
 
-now = datetime.datetime.now()
-print("Current date and time is: ")
-print(now.strftime("%y-%m-%d %H:%M:%S"))
+print("list :" , list)
+print("tuple : " , tuple )
