@@ -1,7 +1,8 @@
-# how to print a calendar for the given month and year
-import calendar
+# how to check if item is in list
+def is_group_number (group_data , n):
+    for value in group_data:
+        if n == value:
+            return True
+    return False
 
-y = int(input("Enter the year: "))
-m = int(input("Enter the month: "))
-
-print(calendar.month(y,m))
+print(is_group_number([1, 2, 3, 4, 5, 6, 6, 44] , 44))
