@@ -1,8 +1,7 @@
-# how to create a list and tuple with comma separated numbers in python
+# how to print a calendar for the given month and year
+import calendar
 
-values = input('Enter some numbers: ')
-list = values.split(",")
-tuple = tuple(list)
+y = int(input("Enter the year: "))
+m = int(input("Enter the month: "))
 
-print("list :" , list)
-print("tuple : " , tuple )
+print(calendar.month(y,m))
