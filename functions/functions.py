@@ -1,4 +1,7 @@
-def sum(num1, num2):
-    print(num1 + num2)
+def func(length,width):
+    perimeter = 2*(length + width)
+    area = length * width
+    print(f"perimeter = {perimeter}")
+    print(f"area = {area}")
 
-sum(5, 9)
+func(3 , 5)
