@@ -1,7 +1,28 @@
-def student(subject,marks,**friends):
-  print("subject = " , subject)
-  print("marks = ", marks)
-  for key,value in friends.items():
-    print(key,"=",value)
 
-student("maths",68,kamal=69,saman=54)
+def call_num():
+  operator = input("Enter an operator (+ - * / ): ")
+  num1 = float(input("Enter the 1st number: "))
+  num2 = float(input("Enter the 2nd number: "))
+
+  if operator == "+":
+        result= num1 + num2
+        print(round(result, 3))
+  elif operator == "-":
+        result = num1 - num2
+        print(round(result, 3))
+  elif operator == "*":
+        result = num1 * num2
+        print(round(result, 3))
+  elif operator == "/":
+        result = num1 / num2 
+        print(round(result, 3))
+  else:
+         print(f"{operator}is not a valid operator")
+ 
+      
+    
+call_num()
+  
+
+
+
