@@ -1,7 +1,5 @@
-def func(length,width):
-    perimeter = 2*(length + width)
-    area = length * width
-    print(f"perimeter = {perimeter}")
-    print(f"area = {area}")
+# keyword arguments
+def student_info(name,age):
+  print((f"my name is {name} my age is {age}."))
 
-func(3 , 5)
+student_info("kamal",19)
