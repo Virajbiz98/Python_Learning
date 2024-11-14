@@ -1,19 +1,15 @@
-class Car:
-    def __init__(self,brand:str, horsepower: int) -> None :
-        self.brand = brand
-        self.horsepower = horsepower
+class Phone:
+    def say(self , name ):
+        self.x = name
+        print(f"hello {name}")
 
-    def drive(self)-> None:
-        print(f'{self.brand} is driving!')
+phone1 = Phone()
+phone1.say("nokia")
+print(phone1.x)
+phone1.x = "sony"
+print(phone1.x)
+phone2 = Phone()
+phone2.say("samsung")
 
-    def get_info(self, var: int)->None:
-        print(var)
-        print(f'{self.brand} with {self.horsepower} horsepower')
-
-BMW: Car = Car('BMW',200)
-BMW.drive()
-BMW.get_info(10)
-
-vevo: Car = Car('vevo', 390)
-vevo.drive()
-vevo.get_info(60)
+ipad = Phone()
+ipad.say('apple')
