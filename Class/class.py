@@ -1,15 +1,13 @@
-class Phone:
-    def say(self , name ):
-        self.x = name
-        print(f"hello {name}")
+class Student:
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
 
-phone1 = Phone()
-phone1.say("nokia")
-print(phone1.x)
-phone1.x = "sony"
-print(phone1.x)
-phone2 = Phone()
-phone2.say("samsung")
 
-ipad = Phone()
-ipad.say('apple')
+
+st1 = Student("kamal",34)
+st2 = Student("Nimal",65)
+print(st1.name)
+print(st1.age)
+print(st2.name)
+print(st2.age)
