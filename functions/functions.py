@@ -1,28 +1,24 @@
+def cal():
+    a = float(input("Enter the 1st number: "))
+    b = float(input("Enter the 2nd number: "))
+    c = input("Enter an operator (+ - * / ): ")
 
-def call_num():
-  operator = input("Enter an operator (+ - * / ): ")
-  num1 = float(input("Enter the 1st number: "))
-  num2 = float(input("Enter the 2nd number: "))
+    match c: # check the value of c 
+        case "+":
+            print(a + b)
+        case "-":
+            print(a - b)
+        case "*":
+            print(a * b)
+        case "/":
+            print(a / b)
+        case _:
+            print("It's not a valid operator")
 
-  if operator == "+":
-        result= num1 + num2
-        print(round(result, 3))
-  elif operator == "-":
-        result = num1 - num2
-        print(round(result, 3))
-  elif operator == "*":
-        result = num1 * num2
-        print(round(result, 3))
-  elif operator == "/":
-        result = num1 / num2 
-        print(round(result, 3))
-  else:
-         print(f"{operator}is not a valid operator")
+cal() # call the function 
  
-      
-    
-call_num()
-  
+
+
 
 
 
