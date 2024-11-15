@@ -1,10 +1,10 @@
 class Myclass:
-    x = 18
-    __y = 29; # privet variable can't access without method
+    def meth1(self):
+        print("hello")
+        self.__meth2() # that's how to call privet method
 
-    def disp(self):
-        return self.__y # this method can use for get access to privet variable 
+    def __meth2(self): # privet method
+        print("Welcome")
 
-
-myObjct = Myclass()
-print(myObjct.disp())
+myobj = Myclass()
+myobj.meth1() 
