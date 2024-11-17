@@ -1,24 +1,5 @@
-def cal():
-    a = float(input("Enter the 1st number: "))
-    b = float(input("Enter the 2nd number: "))
-    c = input("Enter an operator (+ - * / ): ")
+def apple(unit_price):
+    return (lambda number_of_apples : number_of_apples*unit_price)
 
-    match c: # check the value of c 
-        case "+":
-            print(a + b)
-        case "-":
-            print(a - b)
-        case "*":
-            print(a * b)
-        case "/":
-            print(a / b)
-        case _:
-            print("It's not a valid operator")
-
-cal() # call the function 
- 
-
-
-
-
-
+x = apple(48)
+print(x(9))
