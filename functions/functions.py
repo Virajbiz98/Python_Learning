@@ -1,5 +1,8 @@
-def apple(unit_price):
-    return (lambda number_of_apples : number_of_apples*unit_price)
+# recursive function
+def factorial(n):
+    if n == 1:
+        return 1
+    return n * factorial(n -1)
 
-x = apple(48)
-print(x(9))
+print(factorial(5))
+
