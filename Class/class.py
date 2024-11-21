@@ -1,17 +1,11 @@
-# Polymorphism (Different Forms)
-class Animal:
-    def speak(self):
-        pass
+# magic method (special methods)
+class Dog:
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
 
-class Dog(Animal):
-    def speak(self):
-        print("woof!")
+    def __str__(self):
+        return f"{self.name} is {self.age} years old."
 
-class Cat(Animal):
-    def speak(self):
-        print("meow!")
-
-# Creating a list of animals
-animals = [Dog(),Cat()]
-for animal in animals:
-    animal.speak() # # Each animal will speak its own way (Polymorphism)
+dog = Dog("Whaita" , 6)
+print(dog)
