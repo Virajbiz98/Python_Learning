@@ -1,19 +1,28 @@
-class ac:
-    def __init__(self,make,model,year,color,):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.color = color
+# inheritance
+class Person:
+    def __init__(self,name):
+        self.name = name
+        print("Hello from person")
+
+    def eat(self,food):
+        print("person is eating", food)
+
+    def sleep(self):
+        print("person is sleeping...")
+
+class Employee(Person): # child class. this class can get properties before class that's why this class to call inheritance.
+    def __init__(self,dep):
+        self.dep = dep
+        print("Hello from employee ")
+
+    def work(self):
+        print("this employee is working...")
+
+    def Leave(self):
+        print("this employee is leaving...")
+
+emp1 = Employee("IT")
+print(emp1.eat("apple"))# This is how to call before class 
 
 
-    def dura(self):
-        print(f"this " + self.model + " has good durability")
 
-
-    def maintain(self):
-        print(f"this " + self.model + "is easy maintain ")
-
-
-ac1 = ac("sri lanka","orange",2034,"white",)
-print(ac1.dura())
-print(ac1.make,ac1.model,ac1.year,ac1.color,ac1.maintain())
