@@ -10,8 +10,9 @@ class Person:
     def sleep(self):
         print("person is sleeping...")
 
-class Employee(Person): # child class. this class can get properties before class that's why this class to call inheritance.
+class Employee(Person): # child class. this class can get properties before class. that's why this class to call inheritance.
     def __init__(self,dep):
+        super(Employee,self).__init__("bob")# super function
         self.dep = dep
         print("Hello from employee ")
 
@@ -24,5 +25,7 @@ class Employee(Person): # child class. this class can get properties before clas
 emp1 = Employee("IT")
 print(emp1.eat("apple"))# This is how to call before class 
 
+print(emp1.name)
 
-
+emp2 = Employee("HR")
+emp2.Leave()
