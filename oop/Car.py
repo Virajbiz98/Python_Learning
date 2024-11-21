@@ -1,31 +1,22 @@
-# inheritance
-class Person:
-    def __init__(self,name):
-        self.name = name
-        print("Hello from person")
+# multible inheritance 
+class Car:
+    def __init__(self,):
+        self.name1 = "Lightning"
+        print("Going")
 
-    def eat(self,food):
-        print("person is eating", food)
+class Flyeble:
+    def __init__(self):
+        self.name2 = "Flyer"
+        print("Flying")
 
-    def sleep(self):
-        print("person is sleeping...")
+class Flyingcar(Car,Flyeble):
+    def __init__(self):
+        Car.__init__(self)
+        Flyeble.__init__(self)
+        print("inherited")
 
-class Employee(Person): # child class. this class can get properties before class. that's why this class to call inheritance.
-    def __init__(self,dep):
-        super(Employee,self).__init__("bob")# super function
-        self.dep = dep
-        print("Hello from employee ")
+    def PrintName(self):
+        print(self.name1,self.name2)
 
-    def work(self):
-        print("this employee is working...")
-
-    def Leave(self):
-        print("this employee is leaving...")
-
-emp1 = Employee("IT")
-print(emp1.eat("apple"))# This is how to call before class 
-
-print(emp1.name)
-
-emp2 = Employee("HR")
-emp2.Leave()
+ob = Flyingcar()
+ob.PrintName()
