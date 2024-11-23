@@ -1,30 +1,22 @@
-class Fruit:
-    number_of_items = None
-    unit_price = None
-    def set_value(self,x,y):
-        self.number_of_items = x
-        self.unit_price = y
+# class variable 
+class Student:
 
-class Apple(Fruit):
-    def price(self):
-        print("for apple" ,self.number_of_items * self.unit_price)
+    class_year = 2024 
+    num_student = 0
 
-class Orange(Fruit):
-    def price(self):
-        print("for orange" ,self.number_of_items * self.unit_price)
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+        Student.num_student += 1 # count objects 
 
-class Grapes(Fruit):
-    def price(self):
-        print("for grapes" ,self.number_of_items * self.unit_price)
+student1 = Student("mark",14)
+student2  = Student("patrick",16 )
+student3 = Student("saman", 17)
+student4 = Student("sandy", 14)
 
-myobj1 = Apple()
-myobj2 = Orange()
-myobj3 = Grapes()
+print(f"My graduating class of {Student.class_year} has {Student.num_student} students")
+print(student1.name)
+print(student2.name)
+print(student3.name)
+print(Student.class_year)
 
-myobj1.set_value(12,34)
-myobj2.set_value(13,54)
-myobj3.set_value(15,4)
-
-myobj1.price()
-myobj2.price()
-myobj3.price()
