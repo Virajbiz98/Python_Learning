@@ -4,8 +4,10 @@ class Parent:
 
 class Child(Parent):
     def func2(self):
-        super().func1() 
         print("welcome")
 
-myobj1 = Child() 
-myobj1.func2()
+    def func1(self): #  overwriting method
+        print("hi")
+
+myobj1 = Child()
+myobj1.func1()
