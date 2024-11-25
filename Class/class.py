@@ -1,27 +1,33 @@
+class Guitar:
+    def __init__(self,n_strings= 6):
+        self.n_strings = n_strings
+        self.play()
+        self.__cost = 50000
 
-class Person:
+    def play(self):
+        print("em em em em em ")
 
-    types = ["Student", "Teacher", "Librarian"] # class attributes. this  variables we can run without instance or with instance
+class BassGuitar(Guitar):
+    pass
 
-    def __init__(self,name):
-        print("Person is created.")
-        self.name = name
+class ElectricGuitar(Guitar):# child class
+    def __init__(self):
+        super().__init__(n_strings=6)
+        # self.n_strings = 12
+        self.color = ("Black", "White")
+        self.__cost = 50000
+    def playLouder(self):
+        print("em em em em em" .upper())
+    def __secret(self): # privet method
+        print("this guitar actually cost me Rs",self._Guitar__cost, "only")
 
-    def print_name(self): 
-        print(self)
-        print("Name is ", self.name)
-
-    @classmethod # decoraters.   
-    def get_types(cls):
-        return cls.types # can't access other functions only class variable
-    
-    @staticmethod # we can use without intaraction with class
-    def get_person():
-        print("static method")
-
-
-praneeth = Person("praneeth")
-praneeth.print_name()
-print(Person.get_types()) 
-
-praneeth.get_person()
+my_guitar = ElectricGuitar()
+# print(my_guitar.n_strings)
+# print(my_guitar.playLouder())
+# print("child class:", my_guitar.n_strings)
+# print("parent class:",Guitar().n_strings)
+# print(my_guitar._Guitar__cost)
+# my_guitar._ElectricGuitar__secret()
+# print(BassGuitar(4).n_strings)
+print("my bass guitar has",BassGuitar(4).n_strings, "strings")
+print("my electric guitar has", my_guitar.n_strings, "strings")
