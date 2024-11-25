@@ -14,8 +14,14 @@ class Person:
     @classmethod # decoraters.   
     def get_types(cls):
         return cls.types # can't access other functions only class variable
+    
+    @staticmethod # we can use without intaraction with class
+    def get_person():
+        print("static method")
 
 
 praneeth = Person("praneeth")
 praneeth.print_name()
 print(Person.get_types()) 
+
+praneeth.get_person()
