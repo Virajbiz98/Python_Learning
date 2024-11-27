@@ -1,12 +1,12 @@
 import streamlit as st
-import pandas as pd  
+import pandas as pd  # pip install pandas
 
 
 # CONFIGS
-YEAR = 2025
-PREVIOUS_YEAR = 2024
-CITIES = ["china", "colombo"]
-DATA_URL = "https://raw.githubusercontent.com/Sven-Bo/datasets/master/store_sales_2024-2025.csv"
+YEAR = 2023
+PREVIOUS_YEAR = 2022
+CITIES = ["Tokyo", "Yokohama", "Osaka"]
+DATA_URL = "https://raw.githubusercontent.com/Sven-Bo/datasets/master/store_sales_2022-2023.csv"
 
 
 st.title(f"Sales Dashboard", anchor=False)
