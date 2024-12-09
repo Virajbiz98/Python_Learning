@@ -1,6 +1,8 @@
 import streamlit as st 
 import os 
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt 
 
 
 # st.write({"key":"value"})
@@ -34,41 +36,81 @@ import pandas as pd
 
 # TITLE
 
-st.title("Streamlit Elements Demo")
+# st.title("Streamlit Elements Demo")
 
-# Dataframe section 
-st.subheader("Dataframe")
-df = pd.DataFrame({
-    'name':['Alice','Bob','Charly','David'],
-    'Age': ['32','28','37','19'],
-    'Occupation' : ['Engineer','Doctor','Artist','Chef']
+# # Dataframe section 
+# st.subheader("Dataframe")
+# df = pd.DataFrame({
+#     'name':['Alice','Bob','Charly','David'],
+#     'Age': ['32','28','37','19'],
+#     'Occupation' : ['Engineer','Doctor','Artist','Chef']
+# })
+
+# st.dataframe(df)
+
+# # Data Editor Section (Editable dataframe)
+# st.subheader("Data Editor")
+# editable_df = st.data_editor(df)
+# print(editable_df)
+
+# # Static Table Section 
+# st.subheader('Static Table')
+# st.table(df)
+
+# # Metrics Section 
+# st.subheader("Metrics")
+# st.metric(label="Total Rows", value=len(df))
+# # st.metric(label="Average Age", value=round(df["Age"].mean(), 1))
+
+# # jSON and Dict Section 
+# st.subheader("JSON and Dictionary")
+# sample_dict = {
+#     "name" : "Alice",
+#     "Age"  : 25,
+#     "skils": ["Python", "Data Science", "Machine Learning"]
+# }
+# st.json(sample_dict)
+
+# # Alsp show it as dictionary
+# st.write("Dictionary view", sample_dict)
+
+# import numpy as np
+# import matplotlib.pyplot as plt 
+
+# Title 
+st.title("Streamlit Charts Demo")
+# Generate Sample data 
+chart_data = pd.DataFrame(
+    np.random.randn(20,3),
+    columns=['A','B','C']
+)
+
+# Area Chart Section 
+st.subheader("Area Chart Section")
+st.area_chart(chart_data) 
+
+# Bar Chart section 
+st.subheader("Bar Chart Section")
+st.bar_chart(chart_data)
+
+# Line Chart Section 
+st.subheader("Line Chart Section")
+st.line_chart(chart_data)
+
+# Scatter Chart Section 
+st.subheader("Scatter Chart")
+scatter_data = pd.DataFrame({
+    'x': np.random.randn(100),
+    'y': np.random.randn(100)
+
 })
+st.scatter_chart(scatter_data)
 
-st.dataframe(df)
+# Map Section (Displaying random points on a map)
 
-# Data Editor Section (Editable dataframe)
-st.subheader("Data Editor")
-editable_df = st.data_editor(df)
-print(editable_df)
-
-# Static Table Section 
-st.subheader('Static Table')
-st.table(df)
-
-# Metrics Section 
-st.subheader("Metrics")
-st.metric(label="Total Rows", value=len(df))
-# st.metric(label="Average Age", value=round(df["Age"].mean(), 1))
-
-# jSON and Dict Section 
-st.subheader("JSON and Dictionary")
-sample_dict = {
-    "name" : "Alice",
-    "Age"  : 25,
-    "skils": ["Python", "Data Science", "Machine Learning"]
-}
-st.json(sample_dict)
-
-# Alsp show it as dictionary
-st.write("Dictionary view", sample_dict)
-
+st.subheader("Map")
+map_data = pd.DataFrame(
+    np.random.randn(100, 2) / [50, 50] + [37.76, -122.4], # Coordinates around SF 
+    columns=['lat', 'lon']
+)
+st.map(map_data)
