@@ -114,3 +114,16 @@ map_data = pd.DataFrame(
     columns=['lat', 'lon']
 )
 st.map(map_data)
+# ------------------
+
+# Pyplot Section 
+st.subheader("Pyplot Chart")
+fig, ax =plt.subplots()
+ax.plot(chart_data['A'], label='A')
+ax.plot(chart_data['B'], label='B')
+ax.plot(chart_data['C'], label='C')
+ax.set_title("Pyplot Line Chart")
+ax.legend()
+st.pyplot(fig)
+
+# ----------
