@@ -45,7 +45,7 @@ def collect_data(file_path, duration):
         temp_data = get_real_time_data()
         save_data_to_file(temp_data, file_path)
         st.write(f"Data saved: {temp_data}")
-        time.sleep(5)  # Collect data every 5 seconds
+        time.sleep(2)  # Collect data every 5 seconds
     st.success("Data collection complete!")
 
 # Display the temperature data as a line chart using Streamlit
