@@ -77,53 +77,54 @@ import matplotlib.pyplot as plt
 # import numpy as np
 # import matplotlib.pyplot as plt 
 
-# Title 
-st.title("Streamlit Charts Demo")
-# Generate Sample data 
-chart_data = pd.DataFrame(
-    np.random.randn(20,3),
-    columns=['A','B','C']
-)
+# # Title 
+# st.title("Streamlit Charts Demo")
+# # Generate Sample data 
+# chart_data = pd.DataFrame(
+#     np.random.randn(20,3),
+#     columns=['A','B','C']
+# )
 
-# Area Chart Section 
-st.subheader("Area Chart Section")
-st.area_chart(chart_data) 
+# # Area Chart Section 
+# st.subheader("Area Chart Section")
+# st.area_chart(chart_data) 
 
-# Bar Chart section 
-st.subheader("Bar Chart Section")
-st.bar_chart(chart_data)
+# # Bar Chart section 
+# st.subheader("Bar Chart Section")
+# st.bar_chart(chart_data)
 
-# Line Chart Section 
-st.subheader("Line Chart Section")
-st.line_chart(chart_data)
+# # Line Chart Section 
+# st.subheader("Line Chart Section")
+# st.line_chart(chart_data)
 
-# Scatter Chart Section 
-st.subheader("Scatter Chart")
-scatter_data = pd.DataFrame({
-    'x': np.random.randn(100),
-    'y': np.random.randn(100)
+# # Scatter Chart Section 
+# st.subheader("Scatter Chart")
+# scatter_data = pd.DataFrame({
+#     'x': np.random.randn(100),
+#     'y': np.random.randn(100)
 
-})
-st.scatter_chart(scatter_data)
+# })
+# st.scatter_chart(scatter_data)
 
-# Map Section (Displaying random points on a map)
+# # Map Section (Displaying random points on a map)
 
-st.subheader("Map")
-map_data = pd.DataFrame(
-    np.random.randn(100, 2) / [50, 50] + [37.76, -122.4], # Coordinates around SF 
-    columns=['lat', 'lon']
-)
-st.map(map_data)
-# ------------------
+# st.subheader("Map")
+# map_data = pd.DataFrame(
+#     np.random.randn(100, 2) / [50, 50] + [37.76, -122.4], # Coordinates around SF 
+#     columns=['lat', 'lon']
+# )
+# st.map(map_data)
+# # ------------------
 
-# Pyplot Section 
-st.subheader("Pyplot Chart")
-fig, ax =plt.subplots()
-ax.plot(chart_data['A'], label='A')
-ax.plot(chart_data['B'], label='B')
-ax.plot(chart_data['C'], label='C')
-ax.set_title("Pyplot Line Chart")
-ax.legend()
-st.pyplot(fig)
+# # Pyplot Section 
+# st.subheader("Pyplot Chart")
+# fig, ax =plt.subplots()
+# ax.plot(chart_data['A'], label='A')
+# ax.plot(chart_data['B'], label='B')
+# ax.plot(chart_data['C'], label='C')
+# ax.set_title("Pyplot Line Chart")
+# ax.legend()
+# st.pyplot(fig)
 
 # ----------
+
