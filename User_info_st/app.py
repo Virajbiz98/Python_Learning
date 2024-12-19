@@ -50,22 +50,23 @@ import re
 #     password1 = st.text_input('Password', placeholder='Enter Your Password', type='password')
 #     password2 = st.text_input('Confirm Password', placeholder='Confirm Your Password', type = 'password')
 
-def app():
-    st.title('Welcome to :violet[MONGODB]🌵')
+# def app():
+#     st.title('Welcome to :violet[MONGODB]🌵')
 
-    choisce = st.selectbox('Login/Signup',['Login','Sign Up'])
-    if choisce =='Login':
-        Email = st.text_input('Enter your Email Address')
-        Password = st.text_input('Enter Your Password',type='password')
+#     choisce = st.selectbox('Login/Signup',['Login','Sign Up'])
+#     if choisce =='Login':
+#         Email = st.text_input('Enter your Email Address')
+#         Password = st.text_input('Enter Your Password',type='password')
 
-        st.button('Login')
+#         st.button('Login')
 
-    else:
-        Email = st.text_input('Enter your Email Address or Username')
-        Password = st.text_input('Enter Your Password',type='password')
+#     else:
+    #     email = st.text_input('Email', placeholder= 'Enter your Email')
+    #     username = st.text_input('Username', placeholder= 'Enter Your Username')
+    #     password1 = st.text_input('Password', placeholder='Enter Your Password', type='password')
+    #     password2 = st.text_input('Confirm Password', placeholder='Confirm Your Password', type = 'password')
 
-        username = st.text_input('Enter your username')
+#         st.button('Create my account')
 
-        st.button('Create my account')
+# print(app())
 
-print(app())

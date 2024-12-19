@@ -1,5 +1,6 @@
 import streamlit as st 
 import pymongo 
+from mongo import collection
 
 # Initialize connection.
 # Uses st.cach_resource to only run once.
@@ -13,11 +14,12 @@ Client = init_connection()
 # 
 @st.cache_data(ttl=600)
 def get_data():
-    db = Client.Cpu_temperature
+    db = Client.CPU_Temperature
 
 items = get_data()
 
 # Print results.
 for item in items:
-    st.write(f"{item["name"]} has a :{item["pet"]}:")
+    st.write(f"{item["first_project"]} has a :{item["CPU_Temperature"]}:")
+
 
