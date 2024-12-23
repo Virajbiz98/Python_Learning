@@ -1,6 +1,6 @@
-import pymongo
-import streamlit as st 
-from pymongo import MongoClient
+# import pymongo
+# import streamlit as st 
+# from pymongo import MongoClient
 
 # client = pymongo.MongoClient("mongodb+srv://DEVMONGO:DEVMONGO@cluster0.wcbtj.mongodb.net/")
 
@@ -39,9 +39,9 @@ from pymongo import MongoClient
 #     pass
 
 
-import streamlit_authenticator as stuth
-import datetime 
-import re
+# import streamlit_authenticator as stuth
+# import datetime 
+# import re
 
 # def sign_up():
 #     st.subheader(',:green[Sign Up]')
