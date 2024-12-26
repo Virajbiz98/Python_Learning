@@ -58,6 +58,18 @@
 # finally:
 #     print("Process competed.") # this impertent for cleanup task 
 
+# custom Exception 1
+class InvalidNameException(Exception):
+    def __init__(self, error):
+        super(InvalidNameException, self).__init__(error)
+        self.error_code = 10 
+
+# Custom Exception 2 
+class InvalidAgeException(Exception):
+    def __init__(self,error):
+        super(InvalidAgeException, self).__init__(error)
+        self.error_code =5
+
 class Person:
     def __init__(self,name,age):
         super().__init__()
@@ -68,18 +80,28 @@ class Person:
     @staticmethod
     def get_person(name,age):
         if not name:
-            raise Exception("Invalid name")
+            # raise Exception("Invalid name")
+            raise InvalidNameException("Invalid Name") # this line for custom exception 1
             print("Error")
         if age < 0 or age >= 120:
-            raise Exception("Invalid age")
+            # raise Exception("Invalid age")
+            raise InvalidAgeException("Invalid Age")
             ruturn
 
         return Person(name,age)
 try:
-    person = Person.get_person("Jayakodi", -30)
+    person = Person.get_person("Jayakodi", 30)
     print(person)
-except Exception as e:
-    print("Error found",e)
+# except Exception as e:
+#     print("Error found",e)
+except(InvalidAgeException, InvalidNameException) as e:
+    if e.error_code == 10:
+        print("Invalid Name")
+    elif e.error == 5:
+        print("Invalid Age")
+    else:
+        print("somthing else went wrong.")
+    # print("Error found", e.error_code)
 
 print("hello world")
 
