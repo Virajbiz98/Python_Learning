@@ -15,7 +15,6 @@ This project is a **Streamlit application** that allows users to:
 - Clean and simple Streamlit interface.
 
 ## Requirements
-
 - Python 3.7+
 - MongoDB Atlas account
 
@@ -23,8 +22,7 @@ This project is a **Streamlit application** that allows users to:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/Virajbiz98/Python_Learning
-.git
+   git clone https://github.com/Virajbiz98/Python_Learning/blob/5f73205060b548abb22d9a56abfd372a616fe4db/User_info_st/Userlogin25/main.py
    cd Python_Learning
 
    ```
