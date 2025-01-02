@@ -81,13 +81,13 @@ pip install -r requirements.txt
 ## Screenshots
 
 ### Registration Page
-![Registration Page](C:\Users\My PC\OneDrive\Documents\Git-hub-repos\Python_Learning\User_info_st\Userlogin25-registration.png)
+![Registration Page](Python_Learning\User_info_st\Userlogin25-registration.png)
 
 ### Login Page
-![Login Page](C:\Users\My PC\OneDrive\Documents\Git-hub-repos\Python_Learning\User_info_st\Userlogin25-login.png)
+![Login Page](Python_Learning\User_info_st\Userlogin25-login.png)
 
 ### User Activity Log
-![Activity Log Page](C:\Users\My PC\OneDrive\Documents\Git-hub-repos\Python_Learning\User_info_st\Userlogin25-activity-log.png)
+![Activity Log Page](Python_Learning\User_info_st\Userlogin25-activity-log.png)
 
 ## Contributing
 
