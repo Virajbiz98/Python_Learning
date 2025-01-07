@@ -10,3 +10,4 @@ arr  = [12, 6, 8, 10, 2, 9]
 print("Before sorting : {}".format(arr))
 bubbleSort(arr)
 print("After sorting : {}".format(arr))
+
