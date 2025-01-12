@@ -1,0 +1,3 @@
+Top student for Science is Kusum with 90 marks.
+Top student for Sinhala is Kelum with 96 marks.
+Top student for Maths is Praneeth with 85 marks.
