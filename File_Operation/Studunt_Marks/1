@@ -1,0 +1,22 @@
+{
+   "Science":{
+      "Praneeth":75,
+      "Saman":89,
+      "siri":55,
+      "Kusum":90,
+      "Gunaya":67
+   },
+   "Sinhala":{
+      "Praneeth":51,
+      "Saman":58,
+      "Kelum":96,
+      "Kuse_Operation\\Studunt_Marks>um":87,
+      "Gunaya":78
+   },
+   "Maths":{
+      "Kusum":76,
+      "Gunaya":76,
+      "Praneeth":85,
+      "Saman":35
+   }
+}
