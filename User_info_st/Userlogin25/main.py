@@ -28,13 +28,17 @@ def user_register():
     name = st.text_input("Enter your name")
     username = st.text_input("Enter your username")
     password = st.text_input(b"Enter your password")
+    password2 = st.text_input(b"Confirm your password")
     if st.button("Register"):
-        if collection.find_one({"username":username}):
+        if password2 != password:
+            st.warning("Passwords does not match!.")
+        elif collection.find_one({"username":username}):
             st.warning("Username already exists")
         else:
             hashed_password = hash_password(password)
             collection.insert_one({"username": username,"password": hashed_password})
-            st.success("Registration successful!")
+            st.success("Registration successful! you can login now.")
+                
 
 def login_user():
     st.subheader("Login")
