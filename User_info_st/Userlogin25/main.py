@@ -24,7 +24,7 @@ def log_activity(username):
     
 
 def user_register():
-    st.subheader("Reister")
+    st.subheader("Register")
     name = st.text_input("Enter your name")
     username = st.text_input("Enter your username")
     password = st.text_input(b"Enter your password")
