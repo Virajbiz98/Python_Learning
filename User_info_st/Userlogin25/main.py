@@ -11,8 +11,9 @@ Activity_collection = db["User Activity"]
 
 
 def hash_password(password):
-    salt = bcrypt.gensalt()
-    return bcrypt.hashpw(password.encode('utf-8'),salt)
+    if not password:  
+        raise ValueError("Password cannot be empty")
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8') 
 
 def verify_password(password, hashed_password):
     return bcrypt.checkpw(password.encode('utf-8'), hashed_password)
