@@ -21,3 +21,18 @@ print("spacial character \n gives new line")
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
