@@ -1,10 +1,11 @@
-
 from threading import Thread
+from multiprocessing import Process
 import requests 
 import os 
 
 
-class ImageDownloader(Thread):
+# class ImageDownloader(Thread):
+class ImageDownloader(Process):
     def __init__(self, thread_id, name, urls, results):
         super(ImageDownloader, self).__init__()
         self.id = thread_id
