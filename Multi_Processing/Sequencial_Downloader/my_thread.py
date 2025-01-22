@@ -18,7 +18,7 @@ class ImageDownloader(Thread):
         os.makedirs('images', exist_ok=True)
         r = requests.get(url, stream= True)
         if r.status_code == 200:
-            # Set decode_content value to True, otherwise the downloaded image file's size will be 
+            # Set decode_content value to True, otherwise the download image file's size will be zero.
             r.raw.decode_content = True
             file_name = f".images/{image_number}.jpg"
             # Open a local file with wb ( write binary) permission.
