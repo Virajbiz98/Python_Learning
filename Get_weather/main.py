@@ -1,9 +1,22 @@
+import requests 
+import json
+
+import weather_check
+
 city = 'colombo'
-api_key = 'a65b4ce65ab276307f712a666720c6'
+api_key = 'b4fd90c6c1a4e3d8161864df79a2cdb7'
 
-def get_weather_report(api_key, city):
-  url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}'
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
   print("Starting dynamic wallpaper")
+  weather_engine = weather_check.WeatherCheck(api_key, city, 5)
+  weather_engine.start()
+  weather_engine.join()
+
+
+
+
+
+
   
