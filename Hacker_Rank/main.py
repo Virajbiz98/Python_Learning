@@ -1,13 +1,9 @@
 # Task
-# The provided code stub reads two integers from STDIN, a and b. Add code to print three lines where:
+# The provided code stub reads an integer. n, from STDIN. For all non-negative integers i < n, print i² .
 
-# The first line contains the sum of the two numbers.
-# The second line contains the difference of the two numbers (first - second).
-# The third line contains the product of the two numbers.
 
 if __name__ == '__main__':
-    a = int(input())
-    b = int(input())
-    print(a + b)
-    print(a - b)
-    print(a * b)
+    n = int(input())
+    for i in range(0, n):
+        print(i*i)
+
