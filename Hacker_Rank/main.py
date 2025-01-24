@@ -5,8 +5,3 @@
 # Note that the code stub provided reads from STDIN and passes arguments to the is_leap function. It is only necessary to complete the is_leap function.
 
 
-def is_leap(year):
-    return year % 4 == 0
-    
-    
-year = int(input())
