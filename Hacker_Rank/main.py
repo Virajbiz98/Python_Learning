@@ -1,9 +1,12 @@
 # Task
-# The provided code stub reads an integer. n, from STDIN. For all non-negative integers i < n, print i² .
+
+# Given a year, determine whether it is a leap year. If it is a leap year, return the Boolean True, otherwise return False.
+
+# Note that the code stub provided reads from STDIN and passes arguments to the is_leap function. It is only necessary to complete the is_leap function.
 
 
-if __name__ == '__main__':
-    n = int(input())
-    for i in range(0, n):
-        print(i*i)
-
+def is_leap(year):
+    return year % 4 == 0
+    
+    
+year = int(input())
