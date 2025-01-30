@@ -8,3 +8,4 @@ if __name__ == '__main__':
     max_score = max(scores)
     runner_up = max([i for i in scores if i != max_score])
     print(runner_up)
+
