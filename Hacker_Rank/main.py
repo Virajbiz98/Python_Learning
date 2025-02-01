@@ -1,25 +1,14 @@
-# Given the names and grades for each student in a class of  students, store them in a nested list and print the name(s) of any student(s) having the second lowest grade.
-
-# Note: If there are multiple students with the second lowest grade, order their names alphabetically and print each name on a new line.
+# The provided code stub will read in a dictionary containing key/value pairs of name:[marks] for a list of students. Print the average of the marks array for the student name provided, showing 2 places after the decimal.
 
 
 if __name__ == '__main__':
-    records = []  
-
-    for _ in range(int(input())):
-        name = input()
-        score = float(input())
-        records.append([name, score])
-
-    grades = sorted(set([score for name, score in records]))
-
-    second_lowest = grades[1]
-
-    students = [name for name, score in records if score == second_lowest]
-
-    students.sort()
-
-    for student in students:
-        print(student)
-
+    n = int(input())
+    student_marks = {}
+    for _ in range(n):
+        name, *line = input().split()
+        scores = list(map(float, line))
+        student_marks[name] = scores
+    query_name = input()
+    avg_marks = sum(student_marks[query_name]) / len(student_marks[query_name])  
+    print(f"{avg_marks:.2f}")
 
