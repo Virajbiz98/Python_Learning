@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ hotel.name }} - Luxury Hotel Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>{{ hotel.name }}</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#rooms">Rooms</a></li>
+                <li><a href="#amenities">Amenities</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Welcome to {{ hotel.name }}</h2>
+            <p>Your perfect stay awaits in the heart of {{ hotel.location }}.</p>
+            <a href="#rooms" class="cta-button">Book Now</a>
+        </div>
+    </section>
+
+    <section id="rooms" class="rooms">
+        <h2>Our Rooms</h2>
+        <div class="room-container">
+            {% for room in hotel.rooms %}
+                <div class="room-card">
+                    <img src="{{ url_for('static', filename='images/hotel1.jpg') }}" alt="Room Image">
+                    <h3>{{ room }}</h3>
+                    <p>Elegant, spacious, and designed for comfort. Book your stay now!</p>
+                    <button class="book-button">Book Now</button>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="amenities" class="amenities">
+        <h2>Amenities</h2>
+        <div class="amenities-list">
+            {% for amenity in hotel.amenities %}
+                <div class="amenity">
+                    <i class="fas fa-check"></i>
+                    <span>{{ amenity }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need help, feel free to reach out to us.</p>
+        <p>Email: info@grandroyalhotel.com | Phone: +1 234 567 890</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Grand Royal Hotel. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+
+</html>
