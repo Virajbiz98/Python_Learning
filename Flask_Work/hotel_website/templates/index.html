@@ -16,6 +16,11 @@
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
     <header>
         <nav>
             <div class="logo" data-aos="fade-down">
@@ -48,15 +53,16 @@
             {% for room in hotel.rooms %}
                 <div class="room-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
                     <div class="room-image">
-                        <img src="{{ url_for('static', filename='images/hotel1.jpg') }}" alt="{{ room }} at {{ hotel.name }}">
+                        <img src="{{ url_for('static', filename='images/hotel1.jpg') }}" alt="{{ room.name }} at {{ hotel.name }}">
+                        <div class="room-badge">${{ room.price }} / night</div>
                     </div>
                     <div class="room-info">
-                        <h3>{{ room }}</h3>
-                        <p class="room-description">Experience unparalleled luxury in our {{ room }}.</p>
+                        <h3>{{ room.name }}</h3>
+                        <p class="room-size"><i class="fas fa-expand-arrows-alt"></i> {{ room.size }}</p>
                         <ul class="room-features">
-                            <li><i class="fas fa-wifi"></i> High-speed WiFi</li>
-                            <li><i class="fas fa-tv"></i> Smart TV</li>
-                            <li><i class="fas fa-coffee"></i> Coffee Maker</li>
+                            {% for feature in room.features %}
+                                <li><i class="fas fa-check"></i> {{ feature }}</li>
+                            {% endfor %}
                         </ul>
                         <button class="book-button">Reserve Now</button>
                     </div>
@@ -71,9 +77,9 @@
         <div class="amenities-list">
             {% for amenity in hotel.amenities %}
                 <div class="amenity" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
-                    <i class="fas fa-concierge-bell"></i>
-                    <h3>{{ amenity }}</h3>
-                    <p>Experience our premium {{ amenity | lower }} services.</p>
+                    <i class="fas fa-{{ amenity.icon }}"></i>
+                    <h3>{{ amenity.name }}</h3>
+                    <p>{{ amenity.description }}</p>
                 </div>
             {% endfor %}
         </div>
@@ -150,9 +156,35 @@
     <!-- AOS Animation Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Initialize AOS
         AOS.init({
             duration: 800,
             once: true
+        });
+
+        // Preloader
+        window.addEventListener('load', function() {
+            document.querySelector('.preloader').style.display = 'none';
+        });
+
+        // Header scroll effect
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>
