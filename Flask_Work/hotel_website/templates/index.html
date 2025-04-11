@@ -1,73 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ hotel.name }} - Luxury Hotel Booking</title>
+    <meta name="description" content="Experience luxury at {{ hotel.name }} in {{ hotel.location }}. Book your perfect stay with our premium amenities and world-class service.">
+    <title>{{ hotel.name }} - Luxury Hotel Experience in {{ hotel.location }}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
     <header>
         <nav>
-            <div class="logo">
+            <div class="logo" data-aos="fade-down">
                 <h1>{{ hotel.name }}</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="#rooms">Rooms</a></li>
-                <li><a href="#amenities">Amenities</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#rooms" data-aos="fade-down" data-aos-delay="100">Our Rooms</a></li>
+                <li><a href="#amenities" data-aos="fade-down" data-aos-delay="200">Amenities</a></li>
+                <li><a href="#gallery" data-aos="fade-down" data-aos-delay="300">Gallery</a></li>
+                <li><a href="#contact" data-aos="fade-down" data-aos-delay="400">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <div class="hero-content">
+        <div class="hero-content" data-aos="fade-up">
             <h2>Welcome to {{ hotel.name }}</h2>
-            <p>Your perfect stay awaits in the heart of {{ hotel.location }}.</p>
-            <a href="#rooms" class="cta-button">Book Now</a>
+            <p>Experience luxury in the heart of {{ hotel.location }}</p>
+            <div class="cta-buttons">
+                <a href="#rooms" class="cta-button">Book Now</a>
+                <a href="#gallery" class="cta-button secondary">View Gallery</a>
+            </div>
         </div>
     </section>
 
     <section id="rooms" class="rooms">
-        <h2>Our Rooms</h2>
+        <h2 data-aos="fade-up">Luxurious Accommodations</h2>
+        <p class="section-description" data-aos="fade-up">Choose from our carefully curated selection of premium rooms</p>
         <div class="room-container">
             {% for room in hotel.rooms %}
-                <div class="room-card">
-                    <img src="{{ url_for('static', filename='images/hotel1.jpg') }}" alt="Room Image">
-                    <h3>{{ room }}</h3>
-                    <p>Elegant, spacious, and designed for comfort. Book your stay now!</p>
-                    <button class="book-button">Book Now</button>
+                <div class="room-card" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                    <div class="room-image">
+                        <img src="{{ url_for('static', filename='images/hotel1.jpg') }}" alt="{{ room }} at {{ hotel.name }}">
+                    </div>
+                    <div class="room-info">
+                        <h3>{{ room }}</h3>
+                        <p class="room-description">Experience unparalleled luxury in our {{ room }}.</p>
+                        <ul class="room-features">
+                            <li><i class="fas fa-wifi"></i> High-speed WiFi</li>
+                            <li><i class="fas fa-tv"></i> Smart TV</li>
+                            <li><i class="fas fa-coffee"></i> Coffee Maker</li>
+                        </ul>
+                        <button class="book-button">Reserve Now</button>
+                    </div>
                 </div>
             {% endfor %}
         </div>
     </section>
 
     <section id="amenities" class="amenities">
-        <h2>Amenities</h2>
+        <h2 data-aos="fade-up">Premium Amenities</h2>
+        <p class="section-description" data-aos="fade-up">Indulge in our world-class facilities</p>
         <div class="amenities-list">
             {% for amenity in hotel.amenities %}
-                <div class="amenity">
-                    <i class="fas fa-check"></i>
-                    <span>{{ amenity }}</span>
+                <div class="amenity" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+                    <i class="fas fa-concierge-bell"></i>
+                    <h3>{{ amenity }}</h3>
+                    <p>Experience our premium {{ amenity | lower }} services.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <h2 data-aos="fade-up">Photo Gallery</h2>
+        <p class="section-description" data-aos="fade-up">Take a visual journey through our luxury hotel</p>
+        <div class="gallery-grid">
+            {% for image in hotel.images %}
+                <div class="gallery-item" data-aos="zoom-in">
+                    <img src="{{ url_for('static', filename='images/' + image) }}" alt="Hotel Gallery Image">
                 </div>
             {% endfor %}
         </div>
     </section>
 
     <section id="contact" class="contact">
-        <h2>Contact Us</h2>
-        <p>If you have any questions or need help, feel free to reach out to us.</p>
-        <p>Email: info@grandroyalhotel.com | Phone: +1 234 567 890</p>
+        <h2 data-aos="fade-up">Contact Us</h2>
+        <p class="section-description" data-aos="fade-up">We're here to assist you with your booking</p>
+        <div class="contact-container">
+            <div class="contact-info" data-aos="fade-right">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>{{ hotel.location }}</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>+1 234 567 890</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <p>reservations@{{ hotel.name | lower | replace(' ', '') }}.com</p>
+                </div>
+            </div>
+            <form class="contact-form" data-aos="fade-left">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </div>
     </section>
 
     <footer>
-        <p>&copy; 2025 Grand Royal Hotel. All Rights Reserved.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>{{ hotel.name }}</h3>
+                <p>Luxury accommodation in {{ hotel.location }}</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#rooms">Our Rooms</a></li>
+                    <li><a href="#amenities">Amenities</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 {{ hotel.name }}. All Rights Reserved.</p>
+        </div>
     </footer>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
 </body>
-
 </html>
