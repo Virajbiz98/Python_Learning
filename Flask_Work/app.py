@@ -1,10 +1,13 @@
 from flask import Flask, render_template
+import os
 
-app = Flask(__name__)
+# Update the static_folder to point to the correct location
+app = Flask(__name__, 
+           template_folder=os.path.join('hotel_website', 'templates'),
+           static_folder=os.path.join('hotel_website', 'static'))
 
 @app.route('/')
 def home():
-    # Data to pass to the HTML template
     hotel_data = {
         'name': 'Grand Royal Hotel',
         'location': 'New York, USA',
