@@ -9,7 +9,7 @@ app = Flask(__name__,
 @app.route('/')
 def home():
     hotel_data = {
-        'name': 'Grand Royal Hotel',
+        'name': 'K D M Grand Royal Hotel',
         'location': 'New York, USA',
         'rooms': [
             {
