@@ -227,13 +227,11 @@
             <span onclick="closeChatbot()" class="close-button">×</span>
         </div>
         <div class="chatbot-body">
-            <form method="post" action="{{ url_for('ask_bot') }}">
-                <input type="text" name="user_input" placeholder="Type your question here..." required>
+            <div id="chat-messages"></div>
+            <form id="chatbot-form" onsubmit="handleChatSubmit(event)">
+                <input type="text" name="user_input" id="user-input" placeholder="Type your question here..." required>
                 <button type="submit">Ask</button>
             </form>
-            {% if bot_response %}
-                <p><strong>Bot Response:</strong> {{ bot_response }}</p>
-            {% endif %}
         </div>
     </div>
 
@@ -273,6 +271,47 @@
 
         function closeChatbot() {
             document.getElementById('chatbot-popup').style.display = 'none';
+        }
+
+        function handleChatSubmit(event) {
+            event.preventDefault();
+            
+            const input = document.getElementById('user-input');
+            const messageDiv = document.getElementById('chat-messages');
+            const userMessage = input.value;
+
+            // Add user message to chat
+            messageDiv.innerHTML += `<p class="user-message"><strong>You:</strong> ${userMessage}</p>`;
+
+            // Create form data
+            const formData = new FormData();
+            formData.append('user_input', userMessage);
+
+            // Clear input
+            input.value = '';
+
+            // Send AJAX request
+            fetch('/ask_bot', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    messageDiv.innerHTML += `<p class="bot-message"><strong>Bot:</strong> ${data.response}</p>`;
+                } else {
+                    messageDiv.innerHTML += `<p class="bot-message error"><strong>Error:</strong> ${data.response}</p>`;
+                }
+                // Scroll to bottom of messages
+                messageDiv.scrollTop = messageDiv.scrollHeight;
+            })
+            .catch(error => {
+                messageDiv.innerHTML += `<p class="bot-message error"><strong>Error:</strong> Failed to get response</p>`;
+                console.error('Error:', error);
+            });
         }
 
         // Scroll to Top Button functionality
