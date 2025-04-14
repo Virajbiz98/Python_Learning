@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, make_response
 import os
 import boto3
 import json
@@ -22,46 +22,50 @@ bedrock_runtime = boto3.client(
 )
 
 hotel_data = {
-        'name': 'K D M Grand Royal Hotel',
-        'location': 'New York, USA',
-        'rooms': [
-            {
-                'name': 'Luxury Suite',
-                'price': 499,
-                'size': '75 m²',
-                'features': ['King-size bed', 'Ocean view', 'Private balcony', 'Luxury bathroom', 'Mini bar']
-            },
-            {
-                'name': 'Presidential Suite',
-                'price': 899,
-                'size': '120 m²',
-                'features': ['Master bedroom', 'Living room', 'Executive lounge access', 'Butler service', 'Private dining']
-            },
-            {
-                'name': 'Standard Room',
-                'price': 299,
-                'size': '45 m²',
-                'features': ['Queen-size bed', 'City view', 'Work desk', 'Rain shower', 'Coffee maker']
-            },
-            {
-                'name': 'Single Room',
-                'price': 199,
-                'size': '30 m²',
-                'features': ['Single bed', 'Garden view', 'Work corner', 'En-suite bathroom', 'Smart TV']
-            }
-        ],
-        'amenities': [
-            {'name': 'Infinity Pool', 'icon': 'swimming-pool', 'description': 'Stunning rooftop pool with city views'},
-            {'name': 'Luxury Spa', 'icon': 'spa', 'description': 'World-class treatments and facilities'},
-            {'name': 'Fitness Center', 'icon': 'dumbbell', 'description': '24/7 state-of-the-art equipment'},
-            {'name': 'Fine Dining', 'icon': 'utensils', 'description': 'Award-winning restaurants'},
-            {'name': 'Business Center', 'icon': 'business-time', 'description': 'Full-service business facilities'}
-        ],
-        'images': ['hotel1.jpg', 'hotel2.jpg']
-    }
+    'name': 'K D M Grand Royal Hotel',
+    'location': 'New York, USA',
+    'rooms': [
+        {
+            'name': 'Luxury Suite',
+            'price': 499,
+            'size': '75 m²',
+            'features': ['King-size bed', 'Ocean view', 'Private balcony', 'Luxury bathroom', 'Mini bar']
+        },
+        {
+            'name': 'Presidential Suite',
+            'price': 899,
+            'size': '120 m²',
+            'features': ['Master bedroom', 'Living room', 'Executive lounge access', 'Butler service', 'Private dining']
+        },
+        {
+            'name': 'Standard Room',
+            'price': 299,
+            'size': '45 m²',
+            'features': ['Queen-size bed', 'City view', 'Work desk', 'Rain shower', 'Coffee maker']
+        },
+        {
+            'name': 'Single Room',
+            'price': 199,
+            'size': '30 m²',
+            'features': ['Single bed', 'Garden view', 'Work corner', 'En-suite bathroom', 'Smart TV']
+        }
+    ],
+    'amenities': [
+        {'name': 'Infinity Pool', 'icon': 'swimming-pool', 'description': 'Stunning rooftop pool with city views'},
+        {'name': 'Luxury Spa', 'icon': 'spa', 'description': 'World-class treatments and facilities'},
+        {'name': 'Fitness Center', 'icon': 'dumbbell', 'description': '24/7 state-of-the-art equipment'},
+        {'name': 'Fine Dining', 'icon': 'utensils', 'description': 'Award-winning restaurants'},
+        {'name': 'Business Center', 'icon': 'business-time', 'description': 'Full-service business facilities'}
+    ],
+    'images': ['hotel1.jpg', 'hotel2.jpg']
+}
 
 @app.route('/', methods=['GET'])
 def home():
+    # Check if the request wants JSON
+    if request.headers.get('Accept') == 'application/json':
+        return jsonify(hotel_data)
+    # Otherwise render the HTML template
     return render_template('index.html', hotel=hotel_data, bot_response=None)
 
 @app.route('/ask_bot', methods=['POST'])
@@ -70,11 +74,18 @@ def ask_bot():
     session_id = "MYSESSION"
 
     try:
-        # Invoke the Bedrock agent
-        bot_response = invoke_agent(Agent_ID, Alias_ID, session_id, user_input)
-        return render_template('index.html', hotel=hotel_data, bot_response=bot_response)
+        # Only process AJAX requests
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            bot_response = invoke_agent(Agent_ID, Alias_ID, session_id, user_input)
+            return jsonify({'status': 'success', 'response': bot_response})
+        else:
+            # For regular form submissions, render the template
+            bot_response = invoke_agent(Agent_ID, Alias_ID, session_id, user_input)
+            return render_template('index.html', hotel=hotel_data, bot_response=bot_response)
     except Exception as e:
-        return render_template('index.html', hotel=hotel_data, bot_response=f"Error: {str(e)}")
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({'status': 'error', 'response': str(e)})
+        return render_template('index.html', hotel=hotel_data, bot_response=str(e))
 
 def invoke_agent(agent_id, agent_alias_id, session_id, user_input):
     """Invokes the Bedrock agent."""
