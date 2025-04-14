@@ -13,25 +13,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- Three.js -->
-    <script async src="https://unpkg.com/es-module-shims/dist/es-module-shims.js"></script>
-    <script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
-        }
-    }
-    </script>
     <style>
-        #hotel3D {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100vw !important;
-            height: 100vh !important;
-            z-index: 2;
-            pointer-events: none;
-        }
         .hero {
             position: relative;
             height: 100vh;
@@ -60,6 +42,38 @@
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
+
+        /* Scroll to Top Button Styles */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 20px;
+            text-align: center;
+            line-height: 45px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .scroll-to-top:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
@@ -83,9 +97,8 @@
         </nav>
     </header>
 
-    <!-- Hero Section with 3D Scene -->
+    <!-- Hero Section -->
     <section class="hero">
-        <div id="hotel3D"></div>
         <div class="hero-content" data-aos="fade-up">
             <h2>Welcome to {{ hotel.name }}</h2>
             <p>Experience luxury in the heart of {{ hotel.location }}</p>
@@ -199,296 +212,35 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 {{ hotel.name }}. All Rights Reserved.</p>
+            <p>© 2025 {{ hotel.name }}. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- Three.js Scene -->
-    <script type="module">
-        import * as THREE from 'three';
+    <!-- Chatbot Button and Popup -->
+    <div class="chatbot-button">
+        <button onclick="openChatbot()">Ask Me Anything</button>
+    </div>
 
-        // Initialize scene
-        window.addEventListener('load', () => {
-            const scene = new THREE.Scene();
-            
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ 
-                alpha: true,
-                antialias: true,
-                powerPreference: "high-performance"
-            });
-            
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setClearColor(0x000000, 0);
-            renderer.outputEncoding = THREE.sRGBEncoding;
-            renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.toneMappingExposure = 1.8; // Increased for better lighting
+    <div id="chatbot-popup" class="chatbot-popup">
+        <div class="chatbot-header">
+            <h3>K D M Grand Royal Hotel Bot</h3>
+            <span onclick="closeChatbot()" class="close-button">×</span>
+        </div>
+        <div class="chatbot-body">
+            <form method="post" action="{{ url_for('ask_bot') }}">
+                <input type="text" name="user_input" placeholder="Type your question here..." required>
+                <button type="submit">Ask</button>
+            </form>
+            {% if bot_response %}
+                <p><strong>Bot Response:</strong> {{ bot_response }}</p>
+            {% endif %}
+        </div>
+    </div>
 
-            // Add shadow capabilities with higher quality
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-            
-            const container = document.getElementById('hotel3D');
-            container.innerHTML = '';
-            container.appendChild(renderer.domElement);
-
-            // Create professional tea cup with enhanced materials
-            const createTeaCup = () => {
-                const cupGroup = new THREE.Group();
-                
-                // Create more detailed cup profile with elegant curves
-                const points = [];
-                for (let i = 0; i <= 40; i++) { // Increased resolution
-                    const t = i / 40;
-                    const radius = 0.2 + Math.sin(t * Math.PI) * 0.08;
-                    const y = t * 0.5;
-                    // Add more sophisticated curves
-                    const curve = Math.sin(t * Math.PI * 2) * 0.02 + Math.sin(t * Math.PI * 4) * 0.01;
-                    points.push(new THREE.Vector2(radius + curve, y));
-                }
-                
-                // Create cup with premium bone china material
-                const cupGeometry = new THREE.LatheGeometry(points, 64); // Increased segments
-                const cupMaterial = new THREE.MeshPhysicalMaterial({
-                    color: 0xFFFAFA, // Snow white
-                    metalness: 0.15,
-                    roughness: 0.05,
-                    clearcoat: 1.0,
-                    clearcoatRoughness: 0.03,
-                    envMapIntensity: 2.0,
-                    reflectivity: 1,
-                    sheen: 1.0, // Added sheen for porcelain look
-                    sheenRoughness: 0.3,
-                    sheenColor: 0xFFFFFF
-                });
-                const cup = new THREE.Mesh(cupGeometry, cupMaterial);
-                cup.castShadow = true;
-                cup.receiveShadow = true;
-
-                // Create realistic milk with enhanced subsurface scattering
-                const milkGeometry = new THREE.CylinderGeometry(0.17, 0.17, 0.04, 64);
-                const milkMaterial = new THREE.MeshPhysicalMaterial({
-                    color: 0xFFF8E7, // Warmer cream color
-                    metalness: 0.0,
-                    roughness: 0.15,
-                    transmission: 0.3, // Increased translucency
-                    thickness: 0.8, // Enhanced subsurface scattering
-                    clearcoat: 1.0,
-                    clearcoatRoughness: 0.05,
-                    transparent: true,
-                    opacity: 0.95,
-                    envMapIntensity: 1.5
-                });
-                const milk = new THREE.Mesh(milkGeometry, milkMaterial);
-                milk.position.y = 0.35;
-
-                // Enhanced milk swirl effect with gradient
-                const swirlGeometry = new THREE.TorusGeometry(0.1, 0.012, 20, 64);
-                const swirlMaterial = new THREE.MeshPhysicalMaterial({
-                    color: 0xFFF3E0, // Soft cream color
-                    metalness: 0.0,
-                    roughness: 0.2,
-                    transmission: 0.4,
-                    transparent: true,
-                    opacity: 0.85,
-                    envMapIntensity: 1.2
-                });
-                const swirl = new THREE.Mesh(swirlGeometry, swirlMaterial);
-                swirl.position.y = 0.37;
-                swirl.rotation.x = Math.PI / 2;
-
-                // Enhanced steam particles with improved visuals and gradient
-                const steamParticles = [];
-                const createSteamGradient = () => {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 32;
-                    canvas.height = 32;
-                    const ctx = canvas.getContext('2d');
-                    const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-                    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
-                    gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.2)');
-                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-                    ctx.fillStyle = gradient;
-                    ctx.fillRect(0, 0, 32, 32);
-                    return canvas;
-                };
-
-                const steamTexture = new THREE.CanvasTexture(createSteamGradient());
-                
-                for (let i = 0; i < 35; i++) { // Increased particle count
-                    const particleSize = 0.03 + Math.random() * 0.03;
-                    const particle = new THREE.Mesh(
-                        new THREE.PlaneGeometry(particleSize, particleSize),
-                        new THREE.MeshBasicMaterial({
-                            color: new THREE.Color(0xFFFFFF),
-                            transparent: true,
-                            opacity: 0.35,
-                            map: steamTexture,
-                            depthWrite: false,
-                            blending: THREE.AdditiveBlending
-                        })
-                    );
-                    
-                    particle.position.set(
-                        (Math.random() - 0.5) * 0.2,
-                        0.7 + Math.random() * 0.5,
-                        (Math.random() - 0.5) * 0.2
-                    );
-                    
-                    particle.userData = {
-                        speed: Math.random() * 0.006 + 0.002,
-                        expandRate: Math.random() * 0.002 + 0.001,
-                        rotateSpeed: (Math.random() - 0.5) * 0.015,
-                        offset: Math.random() * Math.PI * 2,
-                        life: 1.0,
-                        hueShift: Math.random() * 0.1 // Subtle color variation
-                    };
-                    
-                    particle.lookAt(camera.position);
-                    steamParticles.push(particle);
-                    cupGroup.add(particle);
-                }
-
-                // Add premium gold rim detail
-                const rimGeometry = new THREE.TorusGeometry(0.35, 0.008, 32, 64);
-                const rimMaterial = new THREE.MeshPhysicalMaterial({
-                    color: 0xFFD700, // Gold color
-                    metalness: 1.0,
-                    roughness: 0.2,
-                    clearcoat: 1.0,
-                    clearcoatRoughness: 0.3,
-                    envMapIntensity: 3.0
-                });
-                const rim = new THREE.Mesh(rimGeometry, rimMaterial);
-                rim.position.y = 0.8;
-                rim.rotation.x = Math.PI / 2;
-                rim.castShadow = true;
-                cupGroup.add(rim);
-
-                cupGroup.add(cup);
-                cupGroup.add(milk);
-                cupGroup.add(swirl);
-
-                // Position cup
-                cupGroup.position.set(1.5, -2.5, 1.0);
-                cupGroup.rotation.set(0.2, 0.3, -0.1);
-
-                return { group: cupGroup, milk, steamParticles };
-            };
-
-            // Enhanced lighting setup with better color temperatures
-            const ambientLight = new THREE.AmbientLight(0xFFF5E6, 1.5); // Warmer ambient
-            scene.add(ambientLight);
-
-            const frontLight = new THREE.SpotLight(0xFFFFFF, 4.5);
-            frontLight.position.set(0, 6, 8);
-            frontLight.angle = Math.PI / 3;
-            frontLight.castShadow = true;
-            frontLight.shadow.bias = -0.001;
-            frontLight.shadow.mapSize.width = 2048;
-            frontLight.shadow.mapSize.height = 2048;
-            scene.add(frontLight);
-
-            const leftLight = new THREE.SpotLight(0xFFE4C4, 2.8); // Warmer side light
-            leftLight.position.set(-3, 4, 2);
-            leftLight.angle = Math.PI / 4;
-            leftLight.castShadow = true;
-            scene.add(leftLight);
-
-            const rightLight = new THREE.SpotLight(0xFFE4C4, 2.8); // Warmer side light
-            rightLight.position.set(3, 4, 2);
-            rightLight.angle = Math.PI / 4;
-            rightLight.castShadow = true;
-            scene.add(rightLight);
-
-            // Add enhanced rim light with color
-            const rimLight = new THREE.SpotLight(0xE6F0FF, 2.0); // Cool rim light
-            rimLight.position.set(0, 3, -4);
-            rimLight.angle = Math.PI / 6;
-            scene.add(rimLight);
-
-            const cup = createTeaCup();
-            scene.add(cup.group);
-
-            camera.position.z = 2.8;
-            camera.position.y = 0.2;
-            camera.lookAt(0, -0.4, 0);
-
-            // Enhanced animation function with more natural movement
-            function animate() {
-                requestAnimationFrame(animate);
-                
-                const time = Date.now() * 0.001;
-                
-                // Smooth cup movement with multi-axis rotation
-                cup.group.rotation.y += 0.002;
-                cup.group.position.y = -1.0 + Math.sin(time * 0.7) * 0.03;
-                cup.group.rotation.x = Math.sin(time * 0.5) * 0.02;
-                
-                // Enhanced steam animation with color variation
-                cup.steamParticles.forEach(particle => {
-                    particle.lookAt(camera.position);
-                    
-                    // Complex particle movement
-                    particle.position.y += particle.userData.speed;
-                    particle.position.x += Math.sin(time * 1.2 + particle.userData.offset) * 0.002;
-                    particle.position.z += Math.cos(time * 1.2 + particle.userData.offset) * 0.002;
-                    
-                    // Smooth rotation
-                    particle.rotation.z += particle.userData.rotateSpeed;
-                    
-                    // Dynamic scaling with natural ease
-                    const scale = particle.scale.x + particle.userData.expandRate;
-                    const easeScale = Math.min(scale, 1.8); // Limit maximum size
-                    particle.scale.set(easeScale, easeScale, easeScale);
-                    
-                    // Life-based opacity with smooth fade
-                    particle.userData.life -= 0.008;
-                    const fade = Math.max(0, particle.userData.life);
-                    particle.material.opacity = fade * 0.35;
-                    
-                    // Color variation
-                    const hue = 0.1 + Math.sin(time + particle.userData.hueShift) * 0.05;
-                    particle.material.color.setHSL(hue, 0.1, 1);
-                    
-                    // Reset particle with variation
-                    if (particle.userData.life <= 0) {
-                        particle.position.y = 0.7;
-                        particle.position.x = (Math.random() - 0.5) * 0.2;
-                        particle.position.z = (Math.random() - 0.5) * 0.2;
-                        particle.scale.set(1, 1, 1);
-                        particle.userData.life = 1.0;
-                        particle.material.opacity = 0.35;
-                    }
-                });
-                
-                // Enhanced milk and swirl animations
-                cup.group.children.forEach(child => {
-                    if (child.geometry instanceof THREE.TorusGeometry) {
-                        // Dynamic swirl animation with natural flow
-                        child.rotation.z += 0.003;
-                        const scaleBase = 1 + Math.sin(time * 1.2) * 0.06;
-                        const scaleVariation = Math.sin(time * 1.8) * 0.03;
-                        child.scale.x = scaleBase + scaleVariation;
-                        child.scale.z = scaleBase - scaleVariation;
-                        child.position.y = 0.37 + Math.sin(time * 1.5) * 0.002;
-                    }
-                    if (child.geometry instanceof THREE.CylinderGeometry && child.material.transparent) {
-                        // Natural milk surface movement
-                        child.position.y = 0.35 + Math.sin(time * 0.8) * 0.003;
-                        const milkScale = 1 + Math.sin(time * 1.2) * 0.012;
-                        child.scale.x = milkScale;
-                        child.scale.z = milkScale;
-                    }
-                });
-
-                renderer.render(scene, camera);
-            }
-
-            animate();
-        });
-    </script>
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
     <!-- AOS Animation Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -512,6 +264,33 @@
             } else {
                 header.classList.remove('scrolled');
             }
+        });
+
+        // Chatbot functions
+        function openChatbot() {
+            document.getElementById('chatbot-popup').style.display = 'flex';
+        }
+
+        function closeChatbot() {
+            document.getElementById('chatbot-popup').style.display = 'none';
+        }
+
+        // Scroll to Top Button functionality
+        const scrollToTop = document.querySelector('.scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTop.classList.add('visible');
+            } else {
+                scrollToTop.classList.remove('visible');
+            }
+        });
+
+        scrollToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>
