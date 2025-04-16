@@ -1,0 +1,8 @@
+
+Flask
+pymongo
+langchain
+chromadb
+pypdf
+python-dotenv
+ollama

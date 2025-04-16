@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDM Hotel - Chat Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hotel Assistant</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/chat">Chat with Assistant</a>
+            </nav>
+        </header>
+        <main>
+            <div class="chat-container">
+                <div class="upload-section">
+                    <h3>Upload Hotel Documents</h3>
+                    <form id="upload-form" enctype="multipart/form-data">
+                        <input type="file" id="pdf-file" accept=".pdf" required>
+                        <button type="submit">Upload PDF</button>
+                    </form>
+                </div>
+                <div class="chat-section">
+                    <div id="chat-messages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="user-input" placeholder="Ask a question...">
+                        <button id="send-button">Send</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
