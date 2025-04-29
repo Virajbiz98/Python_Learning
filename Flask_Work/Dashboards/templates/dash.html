@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Custom Data Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --text-primary: #2d3748;
+            --border-color: #e2e8f0;
+            --primary-color: #4f46e5;
+            --hover-color: #4338ca;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1a202c;
+            --text-primary: #f7fafc;
+            --border-color: #4a5568;
+            --primary-color: #6366f1;
+            --hover-color: #4f46e5;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dashboard-container { 
+            padding: 2rem; 
+            max-width: 1400px; 
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        #visualization { 
+            height: 600px; 
+            margin: 2rem 0;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .upload-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(var(--primary-color), 0.05);
+            border-radius: 0.5rem;
+        }
+
+        .filter-controls {
+            margin: 2rem 0;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(var(--primary-color), 0.03);
+            border-radius: 0.5rem;
+        }
+
+        .card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .chart-description {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .dataTables_wrapper {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Data Dashboard</a>
+            <div class="d-flex align-items-center">
+                <div class="form-check form-switch me-3">
+                    <input class="form-check-input" type="checkbox" id="themeToggle">
+                    <label class="form-check-label" for="themeToggle">Dark Mode</label>
+                </div>
+                <button class="btn btn-outline-primary" onclick="showHelp()">
+                    <i class="bi bi-question-circle"></i> Help
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h2 class="mb-4">Custom Data Analyzer</h2>
+            <div id="uploadStatus" class="mt-2"></div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-controls row">
+            <div class="col-md-3">
+                <label>Date Range</label>
+                <input type="text" class="form-control" id="dateRange">
+            </div>
+            <div class="col-md-3">
+                <label>Category</label>
+                <select class="form-select" id="categoryFilter">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>Chart Type</label>
+                <select class="form-select" id="chartType" onchange="updateChart()">
+                    <option value="line">Line Chart</option>
+                    <option value="bar">Bar Chart</option>
+                    <option value="pie">Pie Chart</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Visualizations -->
+        <div class="card">
+            <div class="card-body">
+                <div id="visualization"></div>
+            </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="card mt-4">
+            <div class="card-body">
+                <table id="dataTable" class="table table-striped" style="width:100%">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Theme management
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('change', toggleTheme);
+        
+        // Set initial theme from localStorage
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.checked = savedTheme === 'dark';
+
+        function toggleTheme() {
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Help system
+        function showHelp() {
+            Swal.fire({
+                title: 'Dashboard Guide',
+                html: `<div class="text-start">
+                    <h5>Key Features:</h5>
+                    <ul>
+                        <li>Toggle themes using the Dark Mode switch</li>
+                        <li>Select date ranges with the date picker</li>
+                        <li>Filter by category using the dropdown</li>
+                        <li>Switch chart types for different visualizations</li>
+                        <li>Hover over charts for detailed values</li>
+                        <li>Click-and-drag to zoom charts</li>
+                    </ul>
+                    <p>Keyboard shortcuts:<br>
+                    Ctrl+H - Show this help<br>
+                    Ctrl+T - Toggle theme</p>
+                </div>`,
+                icon: 'info',
+                confirmButtonColor: 'var(--primary-color)'
+            });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key.toLowerCase() === 'h') {
+                e.preventDefault();
+                showHelp();
+            }
+            if (e.ctrlKey && e.key.toLowerCase() === 't') {
+                e.preventDefault();
+                themeToggle.click();
+            }
+        });
+
+        let currentData = JSON.parse('{{ data|tojson }}');
+        let dataTable = null;
+        let plotlyChart = null;
+
+        // Initialize date picker
+        flatpickr("#dateRange", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            onChange: updateDashboard
+        });
+
+        function initializeDashboard() {
+            // Initialize category filter
+            const categories = [...new Set(currentData.data.map(item => item.Category))];
+            const categoryFilter = document.getElementById('categoryFilter');
+            categoryFilter.innerHTML = '<option value="">All Categories</option>' + 
+                categories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+            
+            // Initialize data table
+            if (dataTable) dataTable.destroy();
+            
+            dataTable = $('#dataTable').DataTable({
+                data: currentData.data,
+                columns: Object.keys(currentData.data[0]).map(col => ({ 
+                    title: col,
+                    className: 'dt-body-right'
+                })),
+                pageLength: 10,
+                responsive: true,
+                dom: '<"top"f>rt<"bottom"lip><"clear">',
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search data...",
+                    paginate: {
+                        previous: '<i class="bi bi-chevron-left"></i>',
+                        next: '<i class="bi bi-chevron-right"></i>'
+                    }
+                },
+                initComplete: function() {
+                    $('.dataTables_filter input').addClass('form-control');
+                    $('.dataTables_length select').addClass('form-select');
+                }
+            });
+        }
+
+        function updateDashboard() {
+            if (!currentData) return;
+
+            // Get filters
+            const dateRange = document.getElementById('dateRange').value;
+            const category = document.getElementById('categoryFilter').value;
+            
+            // Filter data
+            let filteredData = currentData.data.filter(item => {
+                const matchesCategory = !category || item.Category === category;
+                const matchesDate = !dateRange || checkDateInRange(item.Date, dateRange);
+                return matchesCategory && matchesDate;
+            });
+
+            updateVisualization(filteredData);
+        }
+
+        function updateVisualization(data) {
+            const chartType = document.getElementById('chartType').value;
+            
+            if (plotlyChart) Plotly.purge('visualization');
+
+            const traces = [];
+            const categories = [...new Set(data.map(item => item.Category))];
+
+            switch(chartType) {
+                case 'line':
+                    categories.forEach(category => {
+                        const categoryData = data.filter(item => item.Category === category);
+                        traces.push({
+                            x: categoryData.map(item => item.Date),
+                            y: categoryData.map(item => item.Amount),
+                            name: category,
+                            type: 'line'
+                        });
+                    });
+                    break;
+                    
+                case 'bar':
+                    categories.forEach(category => {
+                        const categoryData = data.filter(item => item.Category === category);
+                        traces.push({
+                            x: categoryData.map(item => item.Date),
+                            y: categoryData.map(item => item.Amount),
+                            name: category,
+                            type: 'bar'
+                        });
+                    });
+                    break;
+                    
+                case 'pie':
+                    const amounts = categories.map(category => 
+                        data.filter(item => item.Category === category)
+                           .reduce((sum, item) => sum + item.Amount, 0)
+                    );
+                    traces.push({
+                        labels: categories,
+                        values: amounts,
+                        type: 'pie'
+                    });
+                    break;
+            }
+
+            const layout = {
+                title: 'Data Analysis',
+                xaxis: { 
+                    title: 'Date',
+                    showgrid: true,
+                    gridcolor: 'var(--border-color)',
+                    zeroline: false
+                },
+                yaxis: { 
+                    title: 'Amount',
+                    showgrid: true,
+                    gridcolor: 'var(--border-color)'
+                },
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                font: {
+                    color: 'var(--text-primary)'
+                },
+                hovermode: 'closest',
+                showlegend: chartType !== 'pie',
+                margin: {t: 40, b: 40},
+                dragmode: 'zoom',
+                hoverlabel: {
+                    bgcolor: 'var(--bg-primary)',
+                    font: {
+                        color: 'var(--text-primary)'
+                    }
+                }
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: true,
+                scrollZoom: true,
+                modeBarButtonsToRemove: ['toImage'],
+                modeBarButtonsToAdd: [
+                    {
+                        name: 'Download PNG',
+                        icon: Plotly.Icons.camera,
+                        click: function(gd) {
+                            Plotly.downloadImage(gd, {
+                                format: 'png',
+                                filename: 'chart'
+                            });
+                        }
+                    }
+                ]
+            };
+
+            plotlyChart = Plotly.newPlot('visualization', traces, layout, config);
+            
+            // Add theme-aware hover effects
+            document.getElementById('visualization').on('plotly_hover', function(data) {
+                const pts = data.points[0];
+                Swal.fire({
+                    title: `${pts.data.name || pts.label}`,
+                    html: `<strong>Date:</strong> ${pts.x}<br>
+                          <strong>Amount:</strong> ${pts.y.toFixed(2)}`,
+                    icon: 'info',
+                    background: 'var(--bg-primary)',
+                    color: 'var(--text-primary)'
+                });
+            });
+        }
+
+        // Helper functions
+        function checkDateInRange(dateString, rangeString) {
+            const [start, end] = rangeString.split(' to ');
+            const date = new Date(dateString);
+            return date >= new Date(start) && date <= new Date(end);
+        }
+
+        function showLoading() {
+            document.getElementById('uploadStatus').innerHTML = `
+                <div class="alert alert-info">
+                    <div class="spinner-border spinner-border-sm"></div>
+                    Processing file...
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            document.getElementById('uploadStatus').innerHTML = `
+                <div class="alert alert-danger">${message}</div>
+            `;
+        }
+
+        // Event listeners
+        document.getElementById('categoryFilter').addEventListener('change', updateDashboard);
+    </script>
+</body>
+</html>
