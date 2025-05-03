@@ -44,7 +44,7 @@ ShimmerCV is a modern, feature-rich resume builder application that helps users 
 1. Clone the repository:
 ```bash
 git clone https://github.com/virajbiz98/login_page.git
-cd shimmercv
+
 ```
 
 2. Install frontend dependencies:
