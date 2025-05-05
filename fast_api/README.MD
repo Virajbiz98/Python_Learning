@@ -44,7 +44,11 @@ ShimmerCV is a modern, feature-rich resume builder application that helps users 
 1. Clone the repository:
 ```bash
 git clone https://github.com/virajbiz98/login_page.git
+<<<<<<< HEAD
 cd shimmercv
+=======
+
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893
 ```
 
 2. Install frontend dependencies:
@@ -118,4 +122,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Lucide Icons](https://lucide.dev) for beautiful icons
 - [Tailwind CSS](https://tailwindcss.com) for styling
+<<<<<<< HEAD
 - [FastAPI](https://fastapi.tiangolo.com) for the backend framework
+=======
+- [FastAPI](https://fastapi.tiangolo.com) for the backend framework
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893

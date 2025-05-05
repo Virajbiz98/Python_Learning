@@ -1,11 +1,19 @@
 fastapi==0.109.2
 uvicorn==0.27.1
+<<<<<<< HEAD
 pydantic>=2.7.0,<3.0.0 # Updated Pydantic version for potential Python 3.13 compatibility
+=======
+pydantic==2.6.1
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893
 python-jose==3.3.0
 passlib==1.7.4
 python-multipart==0.0.9
 bcrypt==4.1.2
 weasyprint==60.2
 jinja2==3.1.3
+<<<<<<< HEAD
 python-dotenv==1.0.1
 supabase>=2.3.1 # Added for Supabase integration
+=======
+python-dotenv==1.0.1
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893

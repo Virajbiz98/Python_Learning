@@ -12,7 +12,11 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
+<<<<<<< HEAD
   signUp: (email: string, password: string, name: string) => Promise<{error?: {message: string}, needsEmailConfirmation?: boolean}>;
+=======
+  register: (name: string, email: string, password: string) => Promise<void>;
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893
   logout: () => void;
 }
 
@@ -70,15 +74,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+<<<<<<< HEAD
   // SignUp function
   const signUp = async (email: string, password: string, name: string) => {
     try {
       const response = await axios.post('http://localhost:8000/users', {
+=======
+  // Register function
+  const register = async (name: string, email: string, password: string) => {
+    try {
+      await axios.post('http://localhost:8000/users', {
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893
         name,
         email,
         password
       });
       
+<<<<<<< HEAD
       if (response.status === 201) {
         return { needsEmailConfirmation: true };
       }
@@ -88,6 +100,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return { error: { message: error.response.data.detail || 'Registration failed' } };
       }
       return { error: { message: 'Network error - could not connect to server' } };
+=======
+      // Auto login after successful registration
+      await login(email, password);
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893
     }
   };
 
@@ -102,7 +121,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthenticated: !!user,
     isLoading,
     login,
+<<<<<<< HEAD
     signUp,
+=======
+    register,
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893
     logout
   };
 
@@ -115,4 +138,8 @@ export function useAuth() {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ca37b1b5e09e2f953b100fb69347e0da9580f893
