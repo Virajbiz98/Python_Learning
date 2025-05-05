@@ -12,7 +12,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string, name: string) => Promise<{error?: {message: string}, needsEmailConfirmation?: boolean}>;
   logout: () => void;
 }
 
@@ -70,20 +70,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Register function
-  const register = async (name: string, email: string, password: string) => {
+  // SignUp function
+  const signUp = async (email: string, password: string, name: string) => {
     try {
-      await axios.post('http://localhost:8000/users', {
+      const response = await axios.post('http://localhost:8000/users', {
         name,
         email,
         password
       });
       
-      // Auto login after successful registration
-      await login(email, password);
-    } catch (error) {
-      console.error('Registration error:', error);
-      throw error;
+      if (response.status === 201) {
+        return { needsEmailConfirmation: true };
+      }
+      return {};
+    } catch (error: any) {
+      if (error.response) {
+        return { error: { message: error.response.data.detail || 'Registration failed' } };
+      }
+      return { error: { message: 'Network error - could not connect to server' } };
     }
   };
 
@@ -98,7 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isAuthenticated: !!user,
     isLoading,
     login,
-    register,
+    signUp,
     logout
   };
 
