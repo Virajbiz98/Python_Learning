@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { toast } from 'sonner';
-import { ArrowLeft, ArrowRight, Check, ChevronLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, ChevronLeft, Download } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { 
@@ -13,6 +13,8 @@ import EducationForm from '../components/cv/EducationForm';
 import ExperienceForm from '../components/cv/ExperienceForm';
 import SkillsForm from '../components/cv/SkillsForm';
 import TemplateSelection from '../components/cv/TemplateSelection';
+import { useSearchParams } from 'react-router-dom';
+import jsPDF from 'jspdf';
 
 type FormStep = 'template' | 'personal' | 'education' | 'experience' | 'skills' | 'review';
 
@@ -20,12 +22,17 @@ function CVForm() {
   const { id } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const isEditing = Boolean(id);
+  const isDownload = searchParams.get('download') === 'true';
 
-  const [loading, setLoading] = useState(isEditing);
+  const [loading, setLoading] = useState(isEditing || isDownload);
   const [saving, setSaving] = useState(false);
-  const [currentStep, setCurrentStep] = useState<FormStep>('template');
-  
+  const [currentStep, setCurrentStep] = useState<FormStep>(isDownload ? 'review' : 'template');
+
+  // Validation state
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   // CV Data
   const [title, setTitle] = useState('My Professional CV');
   const [template, setTemplate] = useState('modern');
@@ -41,9 +48,9 @@ function CVForm() {
   const [experience, setExperience] = useState<Experience[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
 
-  // Load CV data if editing
+  // Load CV data if editing or downloading
   useEffect(() => {
-    if (isEditing && user) {
+    if ((isEditing || isDownload) && user) {
       const fetchCV = async () => {
         try {
           const { data, error } = await supabase
@@ -67,6 +74,12 @@ function CVForm() {
           setEducation(data.education as Education[]);
           setExperience(data.experience as Experience[]);
           setSkills(data.skills as Skill[]);
+
+          if (isDownload) {
+            // Trigger download immediately after loading data
+            await handleDownload();
+            navigate('/dashboard'); // Redirect after download
+          }
         } catch (error) {
           console.error('Error fetching CV:', error);
           toast.error('Failed to load CV data');
@@ -80,7 +93,7 @@ function CVForm() {
     } else {
       setLoading(false);
     }
-  }, [id, user, isEditing, navigate]);
+  }, [id, user, isEditing, navigate, isDownload]);
 
   const steps: { name: FormStep; label: string }[] = [
     { name: 'template', label: 'Template' },
@@ -93,11 +106,60 @@ function CVForm() {
 
   const currentStepIndex = steps.findIndex(step => step.name === currentStep);
 
+  // Validation functions for each step
+  const validateStep = useCallback(() => {
+    const newErrors: Record<string, string> = {};
+    if (currentStep === 'personal') {
+      if (!personalInfo.fullName.trim()) newErrors.fullName = 'Full Name is required';
+      if (!personalInfo.title.trim()) newErrors.title = 'Professional Title is required';
+      if (!personalInfo.email.trim()) newErrors.email = 'Email is invalid';
+      else if (!/\S+@\S+\.\S+/.test(personalInfo.email)) newErrors.email = 'Email is invalid';
+      if (!personalInfo.phone.trim()) newErrors.phone = 'Phone is required';
+      if (!personalInfo.location.trim()) newErrors.location = 'Location is required';
+      if (!personalInfo.summary.trim()) newErrors.summary = 'Summary is required';
+    } else if (currentStep === 'education') {
+      if (education.length === 0) newErrors.education = 'At least one education entry is required';
+      else {
+        education.forEach((edu, idx) => {
+          if (!edu.institution.trim()) newErrors[`education_institution_${idx}`] = 'Institution is required';
+          if (!edu.degree.trim()) newErrors[`education_degree_${idx}`] = 'Degree is required';
+          if (!edu.field.trim()) newErrors[`education_field_${idx}`] = 'Field of study is required';
+          if (!edu.startDate.trim()) newErrors[`education_startDate_${idx}`] = 'Start date is required';
+          if (!edu.endDate.trim()) newErrors[`education_endDate_${idx}`] = 'End date is required';
+        });
+      }
+    } else if (currentStep === 'experience') {
+      if (experience.length === 0) newErrors.experience = 'At least one experience entry is required';
+      else {
+        experience.forEach((exp: Experience, idx: number) => {
+          if (!exp.company.trim()) newErrors[`experience_company_${idx}`] = 'Company is required';
+          if (!exp.position.trim()) newErrors[`experience_position_${idx}`] = 'Position is required';
+          if (!exp.startDate.trim()) newErrors[`experience_startDate_${idx}`] = 'Start date is required';
+          if (!exp.endDate.trim() && !exp.current) newErrors[`experience_endDate_${idx}`] = 'End date is required unless current';
+        });
+      }
+    } else if (currentStep === 'skills') {
+      if (skills.length === 0) newErrors.skills = 'At least one skill is required';
+      else {
+        skills.forEach((skill, idx) => {
+          if (!skill.name.trim()) newErrors[`skill_name_${idx}`] = 'Skill name is required';
+          if (skill.level < 1 || skill.level > 5) newErrors[`skill_level_${idx}`] = 'Skill level must be between 1 and 5';
+        });
+      }
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }, [currentStep, personalInfo, education, experience, skills]);
+
   const goToNextStep = () => {
-    const nextIndex = currentStepIndex + 1;
-    if (nextIndex < steps.length) {
-      setCurrentStep(steps[nextIndex].name);
-      window.scrollTo(0, 0);
+    if (validateStep()) {
+      const nextIndex = currentStepIndex + 1;
+      if (nextIndex < steps.length) {
+        setCurrentStep(steps[nextIndex].name);
+        window.scrollTo(0, 0);
+      }
+    } else {
+      toast.error('Please fix errors before proceeding');
     }
   };
 
@@ -111,6 +173,11 @@ function CVForm() {
 
   const handleSave = async () => {
     if (!user) return;
+
+    if (!validateStep()) {
+      toast.error('Please fix errors before saving');
+      return;
+    }
 
     setSaving(true);
     try {
@@ -145,6 +212,85 @@ function CVForm() {
     } catch (error) {
       console.error('Error saving CV:', error);
       toast.error(`Failed to ${isEditing ? 'update' : 'create'} CV`);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // New function to generate and download PDF
+  const handleDownload = async () => {
+    setSaving(true);
+    try {
+      console.log('handleDownload triggered');
+      const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
+      console.log('jsPDF instance created');
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const pageWidth = doc.internal.pageSize.getWidth();
+      let y = 10;
+      const leftMargin = 15;
+
+      const addText = (text: string | string[], x: number, yPos: number, fontSize: number, lineHeight = 7) => {
+        doc.setFontSize(fontSize);
+        if (Array.isArray(text)) {
+          text.forEach(line => {
+            if (yPos > pageHeight - 20) {
+              doc.addPage();
+              yPos = 10;
+            }
+            doc.text(line, x, yPos);
+            yPos += lineHeight;
+          });
+        } else {
+          if (yPos > pageHeight - 20) {
+            doc.addPage();
+            yPos = 10;
+          }
+          doc.text(text, x, yPos);
+          yPos += lineHeight;
+        }
+        return yPos;
+      };
+
+      y = addText(title, leftMargin, y, 18, 10);
+
+      y = addText('Personal Information', leftMargin, y, 14, 8);
+
+      y = addText(`Name: ${personalInfo.fullName}`, leftMargin, y, 12);
+      y = addText(`Title: ${personalInfo.title}`, leftMargin, y, 12);
+      y = addText(`Email: ${personalInfo.email}`, leftMargin, y, 12);
+      y = addText(`Phone: ${personalInfo.phone}`, leftMargin, y, 12);
+      y = addText(`Location: ${personalInfo.location}`, leftMargin, y, 12);
+      y = addText('Summary:', leftMargin, y, 12);
+      y = addText(doc.splitTextToSize(personalInfo.summary, pageWidth - 2 * leftMargin), leftMargin, y, 12, 7);
+
+      if (education.length > 0) {
+        y = addText('Education', leftMargin, y, 14, 8);
+        education.forEach((edu) => {
+          y = addText(`${edu.degree} in ${edu.field}`, leftMargin, y, 12);
+          y = addText(`${edu.institution} (${edu.startDate} - ${edu.endDate})`, leftMargin, y, 12, 10);
+        });
+      }
+
+      if (experience.length > 0) {
+        y = addText('Experience', leftMargin, y, 14, 8);
+        experience.forEach((exp: Experience, idx: number) => {
+          y = addText(`${exp.position} at ${exp.company}`, leftMargin, y, 12);
+          y = addText(`${exp.startDate} - ${exp.current ? 'Present' : exp.endDate}`, leftMargin, y, 12, 10);
+        });
+      }
+
+      if (skills.length > 0) {
+        y = addText('Skills', leftMargin, y, 14, 8);
+        const skillsText = skills.map(skill => `${skill.name} (${skill.level}/5)`).join(', ');
+        y = addText(skillsText, leftMargin, y, 12, 10);
+      }
+
+      console.log('Saving PDF with title:', `${title}.pdf`);
+      doc.save(`${title}.pdf`);
+      console.log('PDF saved successfully');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      toast.error(`Failed to generate PDF: ${error}`);
     } finally {
       setSaving(false);
     }
@@ -222,9 +368,9 @@ function CVForm() {
         )}
 
         {currentStep === 'personal' && (
-          <PersonalInfoForm 
-            personalInfo={personalInfo} 
-            setPersonalInfo={setPersonalInfo} 
+          <PersonalInfoForm
+            personalInfo={personalInfo}
+            setPersonalInfo={setPersonalInfo}
           />
         )}
 
@@ -250,101 +396,26 @@ function CVForm() {
         )}
 
         {currentStep === 'review' && (
-          <div>
-            <h2 className="text-2xl font-bold text-white mb-4">Review Your CV</h2>
-            <p className="text-gray-400 mb-6">
-              Review your information before saving your CV.
-            </p>
-            
-            <div className="space-y-8">
-              {/* Template & Title */}
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-2">CV Details</h3>
-                <div className="bg-dark-800 p-4 rounded-md">
-                  <p><span className="text-gray-400">Title:</span> {title}</p>
-                  <p><span className="text-gray-400">Template:</span> {template}</p>
-                </div>
-              </div>
-              
-              {/* Personal Info */}
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-2">Personal Information</h3>
-                <div className="bg-dark-800 p-4 rounded-md">
-                  <p><span className="text-gray-400">Name:</span> {personalInfo.fullName}</p>
-                  <p><span className="text-gray-400">Title:</span> {personalInfo.title}</p>
-                  <p><span className="text-gray-400">Email:</span> {personalInfo.email}</p>
-                  <p><span className="text-gray-400">Phone:</span> {personalInfo.phone}</p>
-                  <p><span className="text-gray-400">Location:</span> {personalInfo.location}</p>
-                  <p className="mt-2"><span className="text-gray-400">Summary:</span></p>
-                  <p className="text-sm">{personalInfo.summary}</p>
-                </div>
-              </div>
-              
-              {/* Education */}
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-2">Education</h3>
-                {education.length > 0 ? (
-                  <div className="space-y-4">
-                    {education.map((edu, index) => (
-                      <div key={edu.id} className="bg-dark-800 p-4 rounded-md">
-                        <p className="font-medium text-white">{edu.institution}</p>
-                        <p>{edu.degree} in {edu.field}</p>
-                        <p className="text-sm text-gray-400">
-                          {edu.startDate} - {edu.endDate}
-                        </p>
-                        <p className="text-sm mt-2">{edu.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-400 italic">No education entries added</p>
-                )}
-              </div>
-              
-              {/* Experience */}
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-2">Experience</h3>
-                {experience.length > 0 ? (
-                  <div className="space-y-4">
-                    {experience.map((exp, index) => (
-                      <div key={exp.id} className="bg-dark-800 p-4 rounded-md">
-                        <p className="font-medium text-white">{exp.company}</p>
-                        <p>{exp.position}</p>
-                        <p className="text-sm text-gray-400">
-                          {exp.startDate} - {exp.current ? 'Present' : exp.endDate}
-                        </p>
-                        <p className="text-sm text-gray-400">{exp.location}</p>
-                        <p className="text-sm mt-2">{exp.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-400 italic">No experience entries added</p>
-                )}
-              </div>
-              
-              {/* Skills */}
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-2">Skills</h3>
-                {skills.length > 0 ? (
-                  <div className="bg-dark-800 p-4 rounded-md">
-                    <div className="flex flex-wrap gap-2">
-                      {skills.map(skill => (
-                        <div key={skill.id} className="bg-dark-700 px-3 py-1 rounded-full text-sm">
-                          {skill.name} 
-                          <span className="ml-1 text-gray-400">
-                            ({skill.level}/5)
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <p className="text-gray-400 italic">No skills added</p>
-                )}
-              </div>
+          
+            <div className="flex gap-4">
+              <button
+                onClick={handleDownload}
+                className="btn btn-primary flex items-center gap-2"
+                disabled={saving}
+              >
+                {saving ? <LoadingSpinner size="sm" /> : <Download size={18} />}
+                <span>{saving ? 'Generating...' : 'Download'}</span>
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="btn btn-secondary flex items-center gap-2"
+              >
+                {saving ? <LoadingSpinner size="sm" /> : <Check size={18} />}
+                <span>{saving ? 'Saving...' : 'Save'}</span>
+              </button>
             </div>
-          </div>
+          
         )}
 
         {/* Navigation buttons */}
@@ -358,22 +429,7 @@ function CVForm() {
             <span>Previous</span>
           </button>
           
-          {currentStep === 'review' ? (
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              className="btn btn-primary flex items-center gap-2"
-            >
-              {saving ? (
-                <LoadingSpinner size="sm" />
-              ) : (
-                <>
-                  <Check size={18} />
-                  <span>{isEditing ? 'Update CV' : 'Save CV'}</span>
-                </>
-              )}
-            </button>
-          ) : (
+          {currentStep !== 'review' ? (
             <button
               onClick={goToNextStep}
               className="btn btn-primary flex items-center gap-2"
@@ -381,7 +437,7 @@ function CVForm() {
               <span>Next</span>
               <ArrowRight size={18} />
             </button>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

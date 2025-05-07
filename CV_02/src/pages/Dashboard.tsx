@@ -111,7 +111,7 @@ function Dashboard() {
                   <button
                     className="p-2 bg-dark-700 rounded-md hover:bg-dark-600 transition-colors"
                     title="Download PDF"
-                    onClick={() => toast.info('Export functionality coming soon')}
+                    onClick={() => window.open(`/edit-cv/${cv.id}?download=true`, '_blank')}
                   >
                     <Download size={18} />
                   </button>
