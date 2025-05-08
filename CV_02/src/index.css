@@ -9,7 +9,7 @@
   
   body {
     @apply font-sans text-gray-200 min-h-screen;
-    background: linear-gradient(to bottom, rgba(0, 16, 0, 0.005), rgba(0, 32, 0, 0.005), rgba(0, 48, 0, 0.005));
+    background: linear-gradient(to bottom, rgba(0, 16, 0, 0.1), rgba(0, 32, 0, 0.1), rgba(0, 48, 0, 0.1));
   }
 
   h1, h2, h3, h4, h5, h6 {

@@ -108,7 +108,7 @@ function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 sm:py-32" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.6), rgba(0, 32, 0, 0.6), rgba(0, 48, 0, 0.6))' }}>
+      <section className="relative overflow-hidden py-20 sm:py-32" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -146,7 +146,7 @@ function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20" id="features" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.6), rgba(0, 32, 0, 0.6), rgba(0, 48, 0, 0.6))' }}>
+      <section className="py-20" id="features" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -163,7 +163,7 @@ function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.6), rgba(0, 32, 0, 0.6), rgba(0, 48, 0, 0.6))' }}>
+      <section className="py-16" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
         <div className="container">
           <div className="glass-panel p-8 md:p-12 text-center">
             <h2 className="text-3xl font-bold mb-4">
