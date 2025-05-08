@@ -4,8 +4,8 @@ import { toast } from 'sonner';
 import { ArrowLeft, ArrowRight, Check, ChevronLeft, Download } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
-import { 
-  PersonalInfo, Education, Experience, Skill, CV 
+import {
+  PersonalInfo, Education, Experience, Skill, CV
 } from '../types/database.types';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import PersonalInfoForm from '../components/cv/PersonalInfoForm';
@@ -14,7 +14,7 @@ import ExperienceForm from '../components/cv/ExperienceForm';
 import SkillsForm from '../components/cv/SkillsForm';
 import TemplateSelection from '../components/cv/TemplateSelection';
 import { useSearchParams } from 'react-router-dom';
-import jsPDF from 'jspdf';
+import { generatePdf } from '../lib/pdfGenerator';
 
 type FormStep = 'template' | 'personal' | 'education' | 'experience' | 'skills' | 'review';
 
@@ -24,11 +24,10 @@ function CVForm() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isEditing = Boolean(id);
-  const isDownload = searchParams.get('download') === 'true';
 
-  const [loading, setLoading] = useState(isEditing || isDownload);
+  const [loading, setLoading] = useState(isEditing);
   const [saving, setSaving] = useState(false);
-  const [currentStep, setCurrentStep] = useState<FormStep>(isDownload ? 'review' : 'template');
+  const [currentStep, setCurrentStep] = useState<FormStep>('template');
 
   // Validation state
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -48,9 +47,9 @@ function CVForm() {
   const [experience, setExperience] = useState<Experience[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
 
-  // Load CV data if editing or downloading
+  // Load CV data if editing
   useEffect(() => {
-    if ((isEditing || isDownload) && user) {
+    if (isEditing && user) {
       const fetchCV = async () => {
         try {
           const { data, error } = await supabase
@@ -74,12 +73,6 @@ function CVForm() {
           setEducation(data.education as Education[]);
           setExperience(data.experience as Experience[]);
           setSkills(data.skills as Skill[]);
-
-          if (isDownload) {
-            // Trigger download immediately after loading data
-            await handleDownload();
-            navigate('/dashboard'); // Redirect after download
-          }
         } catch (error) {
           console.error('Error fetching CV:', error);
           toast.error('Failed to load CV data');
@@ -93,7 +86,7 @@ function CVForm() {
     } else {
       setLoading(false);
     }
-  }, [id, user, isEditing, navigate, isDownload]);
+  }, [id, user, isEditing, navigate]);
 
   const steps: { name: FormStep; label: string }[] = [
     { name: 'template', label: 'Template' },
@@ -171,7 +164,7 @@ function CVForm() {
     }
   };
 
-  const handleSave = async () => {
+  const handleSaveAndDownload = async () => {
     if (!user) return;
 
     if (!validateStep()) {
@@ -180,8 +173,9 @@ function CVForm() {
     }
 
     setSaving(true);
+    let cvData: CV;
     try {
-      const cvData = {
+      const cvDataPayload = {
         title,
         template,
         personal_info: personalInfo,
@@ -191,103 +185,42 @@ function CVForm() {
         user_id: user.id,
       };
 
-      if (isEditing) {
-        const { error } = await supabase
+      if (isEditing && id) {
+        const { data, error } = await supabase
           .from('cvs')
-          .update(cvData)
+          .update(cvDataPayload)
           .eq('id', id);
 
         if (error) throw error;
         toast.success('CV updated successfully');
-      } else {
-        const { error } = await supabase
+
+        const { data: fetchedCvData, error: fetchError } = await supabase
           .from('cvs')
-          .insert([cvData]);
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        if (fetchError) throw fetchError;
+        if (!fetchedCvData) {
+          toast.error('CV not found');
+          navigate('/dashboard');
+          return;
+        }
+        cvData = fetchedCvData as CV;
+      } else {
+        const { data: insertedCvData, error } = await supabase
+          .from('cvs')
+          .insert([cvDataPayload])
+          .select('*')
+          .single();
 
         if (error) throw error;
+        cvData = insertedCvData as CV;
         toast.success('CV created successfully');
       }
 
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Error saving CV:', error);
-      toast.error(`Failed to ${isEditing ? 'update' : 'create'} CV`);
-    } finally {
-      setSaving(false);
-    }
-  };
+      await generatePdf(cvData, personalInfo, education, experience, skills);
 
-  // New function to generate and download PDF
-  const handleDownload = async () => {
-    setSaving(true);
-    try {
-      console.log('handleDownload triggered');
-      const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
-      console.log('jsPDF instance created');
-      const pageHeight = doc.internal.pageSize.getHeight();
-      const pageWidth = doc.internal.pageSize.getWidth();
-      let y = 10;
-      const leftMargin = 15;
-
-      const addText = (text: string | string[], x: number, yPos: number, fontSize: number, lineHeight = 7) => {
-        doc.setFontSize(fontSize);
-        if (Array.isArray(text)) {
-          text.forEach(line => {
-            if (yPos > pageHeight - 20) {
-              doc.addPage();
-              yPos = 10;
-            }
-            doc.text(line, x, yPos);
-            yPos += lineHeight;
-          });
-        } else {
-          if (yPos > pageHeight - 20) {
-            doc.addPage();
-            yPos = 10;
-          }
-          doc.text(text, x, yPos);
-          yPos += lineHeight;
-        }
-        return yPos;
-      };
-
-      y = addText(title, leftMargin, y, 18, 10);
-
-      y = addText('Personal Information', leftMargin, y, 14, 8);
-
-      y = addText(`Name: ${personalInfo.fullName}`, leftMargin, y, 12);
-      y = addText(`Title: ${personalInfo.title}`, leftMargin, y, 12);
-      y = addText(`Email: ${personalInfo.email}`, leftMargin, y, 12);
-      y = addText(`Phone: ${personalInfo.phone}`, leftMargin, y, 12);
-      y = addText(`Location: ${personalInfo.location}`, leftMargin, y, 12);
-      y = addText('Summary:', leftMargin, y, 12);
-      y = addText(doc.splitTextToSize(personalInfo.summary, pageWidth - 2 * leftMargin), leftMargin, y, 12, 7);
-
-      if (education.length > 0) {
-        y = addText('Education', leftMargin, y, 14, 8);
-        education.forEach((edu) => {
-          y = addText(`${edu.degree} in ${edu.field}`, leftMargin, y, 12);
-          y = addText(`${edu.institution} (${edu.startDate} - ${edu.endDate})`, leftMargin, y, 12, 10);
-        });
-      }
-
-      if (experience.length > 0) {
-        y = addText('Experience', leftMargin, y, 14, 8);
-        experience.forEach((exp: Experience, idx: number) => {
-          y = addText(`${exp.position} at ${exp.company}`, leftMargin, y, 12);
-          y = addText(`${exp.startDate} - ${exp.current ? 'Present' : exp.endDate}`, leftMargin, y, 12, 10);
-        });
-      }
-
-      if (skills.length > 0) {
-        y = addText('Skills', leftMargin, y, 14, 8);
-        const skillsText = skills.map(skill => `${skill.name} (${skill.level}/5)`).join(', ');
-        y = addText(skillsText, leftMargin, y, 12, 10);
-      }
-
-      console.log('Saving PDF with title:', `${title}.pdf`);
-      doc.save(`${title}.pdf`);
-      console.log('PDF saved successfully');
     } catch (error) {
       console.error('Error generating PDF:', error);
       toast.error(`Failed to generate PDF: ${error}`);
@@ -396,26 +329,16 @@ function CVForm() {
         )}
 
         {currentStep === 'review' && (
-          
             <div className="flex gap-4">
               <button
-                onClick={handleDownload}
+                onClick={handleSaveAndDownload}
                 className="btn btn-primary flex items-center gap-2"
                 disabled={saving}
               >
-                {saving ? <LoadingSpinner size="sm" /> : <Download size={18} />}
-                <span>{saving ? 'Generating...' : 'Download'}</span>
-              </button>
-              <button
-                onClick={handleSave}
-                disabled={saving}
-                className="btn btn-secondary flex items-center gap-2"
-              >
-                {saving ? <LoadingSpinner size="sm" /> : <Check size={18} />}
-                <span>{saving ? 'Saving...' : 'Save'}</span>
-              </button>
-            </div>
-          
+                  {saving ? <LoadingSpinner size="sm" /> : <Download size={18} />}
+                  <span>{saving ? 'Saving...' : 'Save & Download'}</span>
+                </button>
+              </div>
         )}
 
         {/* Navigation buttons */}

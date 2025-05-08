@@ -6,6 +6,8 @@ import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import { CV } from '../types/database.types';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { generatePdf } from '../lib/pdfGenerator';
+import { PersonalInfo, Education, Experience, Skill } from '../types/database.types';
 
 function Dashboard() {
   const { user } = useAuth();
@@ -16,6 +18,7 @@ function Dashboard() {
     if (!user) return;
 
     async function fetchCVs() {
+      if (!user?.id) return;
       try {
         const { data, error } = await supabase
           .from('cvs')
@@ -51,6 +54,57 @@ function Dashboard() {
     } catch (error) {
       console.error('Error deleting CV:', error);
       toast.error('Failed to delete CV');
+    }
+  };
+
+  const handleDownload = async (cv: CV) => {
+    try {
+      const { data: personalInfoData, error: personalInfoError } = await supabase
+        .from('cvs')
+        .select('personal_info')
+        .eq('id', cv.id)
+        .single();
+
+      if (personalInfoError) throw personalInfoError;
+      const personalInfo = personalInfoData?.personal_info as PersonalInfo;
+
+      const { data: educationData, error: educationError } = await supabase
+        .from('cvs')
+        .select('education')
+        .eq('id', cv.id)
+        .single();
+
+      if (educationError) throw educationError;
+      const education = educationData?.education as Education[];
+
+      const { data: experienceData, error: experienceError } = await supabase
+        .from('cvs')
+        .select('experience')
+        .eq('id', cv.id)
+        .single();
+
+      if (experienceError) throw experienceError;
+      const experience = experienceData?.experience as Experience[];
+
+      const { data: skillsData, error: skillsError } = await supabase
+        .from('cvs')
+        .select('skills')
+        .eq('id', cv.id)
+        .single();
+
+      if (skillsError) throw skillsError;
+      const skills = skillsData?.skills as Skill[];
+
+      if (!personalInfo || !education || !experience || !skills) {
+        toast.error('Failed to load CV details');
+        return;
+      }
+
+      await generatePdf(cv, personalInfo, education, experience, skills);
+      toast.success('CV downloaded successfully');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      toast.error(`Failed to generate PDF: ${error}`);
     }
   };
 
@@ -111,7 +165,7 @@ function Dashboard() {
                   <button
                     className="p-2 bg-dark-700 rounded-md hover:bg-dark-600 transition-colors"
                     title="Download PDF"
-                    onClick={() => window.open(`/edit-cv/${cv.id}?download=true`, '_blank')}
+                    onClick={() => handleDownload(cv)}
                   >
                     <Download size={18} />
                   </button>
