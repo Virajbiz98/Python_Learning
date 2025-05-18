@@ -4,7 +4,8 @@ import {
 import { Link } from 'react-router-dom';
 import HeroSphere from '../components/home/HeroSphere';
 import { useAuth } from '../context/AuthContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 interface FeatureCardProps {
   title: string;
@@ -17,7 +18,7 @@ function FeatureCard({
   title,
   description,
   icon: Icon,
-  color = '#1E3A8A',
+  color = '#008000',
 }: FeatureCardProps) {
   return (
     <div className="card p-6 transition-all duration-300 hover:border-primary-500/50 hover:blue-glow group relative overflow-hidden hover:translate-y-[-4px] hover:border-blue-500 hover:shadow-blue-500 cursor-pointer hover-3d floating" style={{ perspective: '1000px' }}>
@@ -48,48 +49,69 @@ const featuresData: Feature[] = [
     title: "Professional Templates",
     description: "Choose from a variety of professionally designed templates to showcase your skills and experience.",
     icon: FileText,
-    color: "#1E3A8A",
+    color: "#008000",
   },
   {
     title: "Easy Editing",
     description: "Intuitive interface makes it simple to add, edit, and organize your resume content.",
     icon: Pencil,
-    color: "#1E40AF",
+    color: "#008000",
   },
   {
     title: "PDF Export",
     description: "Download your resume as a professional PDF file ready to share with potential employers.",
     icon: Download,
-    color: "#2563EB",
+    color: "#008000",
   },
   {
     title: "Customizable Sections",
     description: "Add or remove sections to tailor your CV to specific job applications.",
     icon: LayoutGrid,
-    color: "#3B82F6",
+    color: "#008000",
   },
   {
     title: "Multi-language Support",
     description: "Create CVs in multiple languages to apply for international positions.",
     icon: Globe,
-    color: "#60A5FA",
+    color: "#008000",
   },
   {
     title: "Privacy First",
     description: "Your data is secure and never shared with third parties without your consent.",
     icon: ShieldCheck,
-    color: "#93C5FD",
+    color: "#008000",
   },
 ];
 
 function FeatureGrid() {
   const [features, setFeatures] = useState(featuresData);
+  const featureGridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          } else {
+            entry.target.classList.remove('in-view');
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+      }
+    );
+
+    if (featureGridRef.current) {
+      observer.observe(featureGridRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div ref={featureGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {features.map((feature) => (
         <FeatureCard
           key={feature.title}
@@ -105,10 +127,33 @@ function FeatureGrid() {
 
 function Home() {
   const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { ref: heroRef, inView: heroInView } = useInView({
+    triggerOnce: true,
+    rootMargin: '-50px 0px',
+  });
+
+  const { ref: featuresRef, inView: featuresInView } = useInView({
+    triggerOnce: true,
+    rootMargin: '-50px 0px',
+  });
+
+  const { ref: ctaRef, inView: ctaInView } = useInView({
+    triggerOnce: true,
+    rootMargin: '-50px 0px',
+  });
+
+  useEffect(() => {
+    // Simulate content load delay
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-20 sm:py-32" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
+      <section ref={heroRef} className={`relative overflow-hidden py-20 sm:py-32 ${isLoading ? 'loading-animation' : ''} ${heroInView ? 'scroll-fade-in' : 'scroll-fade-out'}`} style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -146,7 +191,7 @@ function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20" id="features" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
+      <section ref={featuresRef} className={`py-20 ${isLoading ? 'loading-animation' : ''} ${featuresInView ? 'scroll-fade-in' : 'scroll-fade-out'}`} id="features" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
         <div className="container">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -163,7 +208,7 @@ function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16" style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
+      <section ref={ctaRef} className={`py-16 ${isLoading ? 'loading-animation' : ''} ${ctaInView ? 'scroll-fade-in' : 'scroll-fade-out'}`} style={{ background: 'linear-gradient(to bottom, rgba(0, 16, 0, 0.3), rgba(0, 32, 0, 0.3), rgba(0, 48, 0, 0.3))' }}>
         <div className="container">
           <div className="glass-panel p-8 md:p-12 text-center">
             <h2 className="text-3xl font-bold mb-4">

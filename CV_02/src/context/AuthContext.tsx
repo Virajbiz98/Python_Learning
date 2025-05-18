@@ -6,6 +6,8 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  authLoading: boolean;
+  setAuthLoading: React.Dispatch<React.SetStateAction<boolean>>;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: Error | null; rateLimitSeconds?: number }>;
   signOut: () => Promise<void>;
@@ -17,6 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(false);
 
   useEffect(() => {
     // Get initial session
@@ -35,22 +38,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoading(false);
     });
 
+    // Set a timeout to ensure loading is set to false even if auth state change doesn't fire
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+
     return () => subscription.unsubscribe();
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    setAuthLoading(true);
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+      setAuthLoading(false);
       return { error };
     } catch (error) {
+      setAuthLoading(false);
       return { error: error as Error };
     }
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
+    setAuthLoading(true);
     try {
       const { error: signUpError } = await supabase.auth.signUp({
         email,
@@ -87,9 +99,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return { error: new Error('Failed to create profile: ' + profileError.message) };
         }
       }
-
+      setAuthLoading(false);
       return { error: null };
     } catch (error) {
+      setAuthLoading(false);
       return { error: error as Error };
     }
   };
@@ -104,6 +117,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         session,
         loading,
+        authLoading,
+        setAuthLoading,
         signIn,
         signUp,
         signOut,

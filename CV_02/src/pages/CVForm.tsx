@@ -13,6 +13,7 @@ import EducationForm from '../components/cv/EducationForm';
 import ExperienceForm from '../components/cv/ExperienceForm';
 import SkillsForm from '../components/cv/SkillsForm';
 import TemplateSelection from '../components/cv/TemplateSelection';
+import CVPreview from '../components/cv/CVPreview';
 import { useSearchParams } from 'react-router-dom';
 import { generatePdf } from '../lib/pdfGenerator';
 
@@ -329,12 +330,18 @@ function CVForm() {
         )}
 
         {currentStep === 'review' && (
-            <div className="flex gap-4">
-              <button
-                onClick={handleSaveAndDownload}
-                className="btn btn-primary flex items-center gap-2"
-                disabled={saving}
-              >
+          <div className="flex flex-col gap-4">
+            {/* <CVPreview
+              personalInfo={personalInfo}
+              education={education}
+              experience={experience}
+              skills={skills}
+            /> */}
+            <button
+              onClick={handleSaveAndDownload}
+              className="btn btn-primary flex items-center gap-2"
+              disabled={saving}
+            >
                   {saving ? <LoadingSpinner size="sm" /> : <Download size={18} />}
                   <span>{saving ? 'Saving...' : 'Save & Download'}</span>
                 </button>
