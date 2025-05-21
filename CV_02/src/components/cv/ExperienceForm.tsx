@@ -1,8 +1,12 @@
 import { 
-  PlusCircle, Trash, Building, Calendar, CalendarRange, MapPin, Briefcase 
+  PlusCircle, Trash, Building, CalendarRange, MapPin, Briefcase 
 } from 'lucide-react';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { experienceSchema } from '../../lib/validationSchemas';
+import type { z } from 'zod';
 import { Experience } from '../../types/database.types';
+import { toast } from 'sonner';
 
 interface ExperienceFormProps {
   experience: Experience[];
@@ -10,47 +14,47 @@ interface ExperienceFormProps {
 }
 
 function ExperienceForm({ experience, setExperience }: ExperienceFormProps) {
-  const [newExperience, setNewExperience] = useState<Omit<Experience, 'id'>>({
-    company: '',
-    position: '',
-    location: '',
-    startDate: '',
-    endDate: '',
-    current: false,
-    description: '',
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value, type } = e.target;
-    if (type === 'checkbox') {
-      const checked = (e.target as HTMLInputElement).checked;
-      setNewExperience({ ...newExperience, [name]: checked });
-    } else {
-      setNewExperience({ ...newExperience, [name]: value });
-    }
-  };
-
-  const addExperience = () => {
-    const item: Experience = {
-      ...newExperience,
-      id: crypto.randomUUID(),
-    };
-    setExperience([...experience, item]);
-    setNewExperience({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    watch,
+    setValue,
+  } = useForm<z.infer<typeof experienceSchema>>({
+    resolver: zodResolver(experienceSchema),
+    defaultValues: {
       company: '',
       position: '',
       location: '',
       startDate: '',
-      endDate: '',
+      endDate: undefined,
       current: false,
       description: '',
-    });
+    }
+  });
+
+  const current = watch('current');
+
+  const onSubmit = (formData: z.infer<typeof experienceSchema>) => {
+    try {
+      const item: Experience = {
+        ...formData,
+        id: crypto.randomUUID(),
+        endDate: formData.endDate || 'Present',
+        description: [formData.description]
+      };
+      setExperience([...experience, item]);
+      reset();
+      toast.success('Experience entry added successfully');
+    } catch (error) {
+      toast.error('Failed to add experience entry');
+    }
   };
 
   const removeExperience = (id: string) => {
     setExperience(experience.filter(item => item.id !== id));
+    toast.success('Experience entry removed');
   };
 
   return (
@@ -88,11 +92,11 @@ function ExperienceForm({ experience, setExperience }: ExperienceFormProps) {
       )}
 
       {/* Form to add new experience */}
-      <div className="glass-panel p-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="glass-panel p-6">
         <h3 className="text-lg font-semibold text-white mb-4">Add Experience</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-2">
+          <div className="space-y-2">
+            <label htmlFor="company" className="block text-sm font-medium text-gray-300">
               Company *
             </label>
             <div className="relative">
@@ -100,20 +104,20 @@ function ExperienceForm({ experience, setExperience }: ExperienceFormProps) {
                 <Building className="h-5 w-5 text-gray-500" />
               </div>
               <input
+                {...register('company')}
                 type="text"
                 id="company"
-                name="company"
-                value={newExperience.company}
-                onChange={handleChange}
-                className="input pl-10"
+                className={`input pl-10 ${errors.company ? 'border-red-500' : ''}`}
                 placeholder="Company name"
-                required
               />
             </div>
+            {errors.company && (
+              <p className="text-sm text-red-500">{errors.company.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor="position" className="block text-sm font-medium text-gray-300 mb-2">
+          <div className="space-y-2">
+            <label htmlFor="position" className="block text-sm font-medium text-gray-300">
               Position *
             </label>
             <div className="relative">
@@ -121,20 +125,20 @@ function ExperienceForm({ experience, setExperience }: ExperienceFormProps) {
                 <Briefcase className="h-5 w-5 text-gray-500" />
               </div>
               <input
+                {...register('position')}
                 type="text"
                 id="position"
-                name="position"
-                value={newExperience.position}
-                onChange={handleChange}
-                className="input pl-10"
+                className={`input pl-10 ${errors.position ? 'border-red-500' : ''}`}
                 placeholder="Job title"
-                required
               />
             </div>
+            {errors.position && (
+              <p className="text-sm text-red-500">{errors.position.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor="location" className="block text-sm font-medium text-gray-300 mb-2">
+          <div className="space-y-2">
+            <label htmlFor="location" className="block text-sm font-medium text-gray-300">
               Location *
             </label>
             <div className="relative">
@@ -142,113 +146,114 @@ function ExperienceForm({ experience, setExperience }: ExperienceFormProps) {
                 <MapPin className="h-5 w-5 text-gray-500" />
               </div>
               <input
+                {...register('location')}
                 type="text"
                 id="location"
-                name="location"
-                value={newExperience.location}
-                onChange={handleChange}
-                className="input pl-10"
+                className={`input pl-10 ${errors.location ? 'border-red-500' : ''}`}
                 placeholder="City, Country"
-                required
               />
             </div>
+            {errors.location && (
+              <p className="text-sm text-red-500">{errors.location.message}</p>
+            )}
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="startDate" className="block text-sm font-medium text-gray-300 mb-2">
-                Start Date *
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Calendar className="h-5 w-5 text-gray-500" />
-                </div>
-                <input
-                  type="text"
-                  id="startDate"
-                  name="startDate"
-                  value={newExperience.startDate}
-                  onChange={handleChange}
-                  className="input pl-10"
-                  placeholder="MM/YYYY"
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="endDate" className="block text-sm font-medium text-gray-300 mb-2">
-                End Date *
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <CalendarRange className="h-5 w-5 text-gray-500" />
-                </div>
-                <input
-                  type="text"
-                  id="endDate"
-                  name="endDate"
-                  value={newExperience.endDate}
-                  onChange={handleChange}
-                  className="input pl-10"
-                  placeholder="MM/YYYY"
-                  disabled={newExperience.current}
-                  required={!newExperience.current}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="current"
-              name="current"
-              checked={newExperience.current}
-              onChange={handleChange}
-              className="h-4 w-4 bg-dark-800 border-dark-600 rounded focus:ring-primary-500 focus:border-primary-500 text-primary-600"
-            />
-            <label htmlFor="current" className="ml-2 block text-sm text-gray-300">
-              I currently work here
+          <div className="space-y-2">
+            <label htmlFor="startDate" className="block text-sm font-medium text-gray-300">
+              Start Date *
             </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <CalendarRange className="h-5 w-5 text-gray-500" />
+              </div>
+              <input
+                {...register('startDate')}
+                type="text"
+                id="startDate"
+                className={`input pl-10 ${errors.startDate ? 'border-red-500' : ''}`}
+                placeholder="MM/YYYY"
+              />
+            </div>
+            {errors.startDate && (
+              <p className="text-sm text-red-500">{errors.startDate.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="endDate" className="block text-sm font-medium text-gray-300">
+              End Date *
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <CalendarRange className="h-5 w-5 text-gray-500" />
+              </div>
+              <input
+                {...register('endDate')}
+                type="text"
+                id="endDate"
+                className={`input pl-10 ${errors.endDate ? 'border-red-500' : ''}`}
+                placeholder="MM/YYYY"
+                disabled={current}
+                value={current ? 'Present' : undefined}
+              />
+            </div>
+            {errors.endDate && (
+              <p className="text-sm text-red-500">{errors.endDate.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center">
+              <input
+                {...register('current')}
+                type="checkbox"
+                id="current"
+                className="mr-2"
+                onChange={(e) => {
+                  setValue('current', e.target.checked);
+                  if (e.target.checked) {
+                    setValue('endDate', 'Present');
+                  } else {
+                    setValue('endDate', '');
+                  }
+                }}
+              />
+              <label htmlFor="current" className="text-sm font-medium text-gray-300">
+                I currently work here
+              </label>
+            </div>
+            {errors.current && (
+              <p className="text-sm text-red-500">{errors.current.message}</p>
+            )}
+          </div>
+
+          <div className="md:col-span-2 space-y-2">
+            <label htmlFor="description" className="block text-sm font-medium text-gray-300">
+              Description
+            </label>
+            <textarea
+              {...register('description')}
+              id="description"
+              rows={4}
+              className={`input ${errors.description ? 'border-red-500' : ''}`}
+              placeholder="Describe your responsibilities and achievements..."
+            ></textarea>
+            {errors.description && (
+              <p className="text-sm text-red-500">{errors.description.message}</p>
+            )}
+          </div>
+
+          <div className="md:col-span-2">
+            <button
+              type="submit"
+              className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark"
+            >
+              <PlusCircle size={18} className="mr-2" />
+              Add Experience
+            </button>
           </div>
         </div>
-
-        <div className="mt-6">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">
-            Description *
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={newExperience.description}
-            onChange={handleChange}
-            rows={4}
-            className="input"
-            placeholder="Describe your responsibilities, achievements, and skills used..."
-            required
-          />
-        </div>
-
-        <button
-          type="button"
-          onClick={addExperience}
-          disabled={
-            !newExperience.company ||
-            !newExperience.position ||
-            !newExperience.location ||
-            !newExperience.startDate ||
-            (!newExperience.endDate && !newExperience.current) ||
-            !newExperience.description
-          }
-          className="mt-6 btn btn-primary flex items-center gap-2"
-        >
-          <PlusCircle size={18} />
-          <span>Add Experience</span>
-        </button>
-      </div>
+      </form>
     </div>
   );
 }

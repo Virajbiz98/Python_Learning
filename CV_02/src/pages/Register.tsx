@@ -38,8 +38,8 @@ function Register() {
         return;
       }
       
-      toast.success('Registration successful! You are now logged in.');
-      navigate('/dashboard');
+      toast.success('Registration successful! Please complete your profile.');
+      navigate('/setup-profile', { state: { isNewUser: true } });
     } catch (error) {
       toast.error('An unexpected error occurred');
       console.error(error);

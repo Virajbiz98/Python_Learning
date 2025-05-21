@@ -16,8 +16,9 @@ import TemplateSelection from '../components/cv/TemplateSelection';
 import CVPreview from '../components/cv/CVPreview';
 import { useSearchParams } from 'react-router-dom';
 import { generatePdf } from '../lib/pdfGenerator';
+import { JobAnalyzer } from '../components/cv/JobAnalyzer';
 
-type FormStep = 'template' | 'personal' | 'education' | 'experience' | 'skills' | 'review';
+type FormStep = 'template' | 'personal' | 'education' | 'experience' | 'skills' | 'analyze' | 'review';
 
 function CVForm() {
   const { id } = useParams();
@@ -95,6 +96,7 @@ function CVForm() {
     { name: 'education', label: 'Education' },
     { name: 'experience', label: 'Experience' },
     { name: 'skills', label: 'Skills' },
+    { name: 'analyze', label: 'Analyze Job' },
     { name: 'review', label: 'Review' },
   ];
 
@@ -144,26 +146,6 @@ function CVForm() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   }, [currentStep, personalInfo, education, experience, skills]);
-
-  const goToNextStep = () => {
-    if (validateStep()) {
-      const nextIndex = currentStepIndex + 1;
-      if (nextIndex < steps.length) {
-        setCurrentStep(steps[nextIndex].name);
-        window.scrollTo(0, 0);
-      }
-    } else {
-      toast.error('Please fix errors before proceeding');
-    }
-  };
-
-  const goToPreviousStep = () => {
-    const prevIndex = currentStepIndex - 1;
-    if (prevIndex >= 0) {
-      setCurrentStep(steps[prevIndex].name);
-      window.scrollTo(0, 0);
-    }
-  };
 
   const handleSaveAndDownload = async () => {
     if (!user) return;
@@ -230,6 +212,210 @@ function CVForm() {
     }
   };
 
+  const handleSuggestionsGenerated = useCallback((suggestions: any) => {
+    // Update skills
+    const newSkills = [
+      ...skills,
+      ...suggestions.skills.map((skill: string) => ({
+        id: crypto.randomUUID(),
+        name: skill,
+        level: 3
+      }))
+    ];
+    // Remove duplicates based on skill name
+    setSkills(Array.from(new Map(newSkills.map(s => [s.name, s])).values()));
+
+    // Update experience suggestions
+    if (suggestions.experience && suggestions.experience.length > 0) {
+      const newExperience = suggestions.experience.map((exp: any) => ({
+        title: exp.title,
+        company: exp.company,
+        startDate: '',
+        endDate: '',
+        current: false,
+        description: exp.description,
+        location: ''
+      }));
+      setExperience(prev => [...prev, ...newExperience]);
+    }
+
+    // Update education suggestions
+    if (suggestions.education) {
+      toast.success('AI suggestions applied successfully!');
+    }
+  }, [skills]);
+
+  const handleAutoCreate = useCallback(async (suggestions: any) => {
+    try {
+      // Get user profile data
+      const { data: userProfile } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', user!.id)
+        .single();
+
+      if (!userProfile) {
+        toast.error('Please complete your profile first');
+        return;
+      }
+
+      // Update CV data with user profile and AI suggestions
+      setPersonalInfo({
+        fullName: userProfile.full_name,
+        email: userProfile.email || '',
+        phone: userProfile.phone || '',
+        location: userProfile.location || '',
+        title: userProfile.professional_title || '',
+        summary: userProfile.professional_summary || '',
+        website: userProfile.website || '',
+      });
+
+      // Update education if it exists in profile
+      if (userProfile.education) {
+        setEducation(userProfile.education);
+      }
+
+      // Update experience with AI suggestions
+      const enhancedExperience = userProfile.experience?.map((exp: any) => {
+        const matchingSuggestion = suggestions.experience?.find(
+          (s: any) => s.title.toLowerCase().includes(exp.title.toLowerCase())
+        );
+        return {
+          ...exp,
+          description: matchingSuggestion ? 
+            [...exp.description, ...matchingSuggestion.relevantPoints] : 
+            exp.description
+        };
+      }) || [];
+      setExperience(enhancedExperience);
+
+      // Merge existing skills with AI-suggested skills
+      const existingSkills = userProfile.skills || [];
+      const suggestedSkills = suggestions.keySkills?.map((skill: string) => ({
+        id: crypto.randomUUID(),
+        name: skill,
+        level: 3
+      })) || [];
+      
+      const allSkills = [...existingSkills, ...suggestedSkills];
+      // Remove duplicates based on skill name
+      setSkills(Array.from(new Map(allSkills.map(s => [s.name, s])).values()));
+
+      setCurrentStep('review');
+      toast.success('CV created with your profile data and AI suggestions!');
+    } catch (error) {
+      console.error('Error auto-creating CV:', error);
+      toast.error('Failed to auto-create CV');
+    }
+  }, [user, setCurrentStep]);
+
+  const renderStep = () => {
+    switch (currentStep) {
+      case 'template':
+        return (
+          <TemplateSelection
+            title={title}
+            setTitle={setTitle}
+            template={template}
+            setTemplate={setTemplate}
+            onAutoCreate={handleAutoCreate}
+          />
+        );
+      case 'personal':
+        return (
+          <PersonalInfoForm
+            personalInfo={personalInfo}
+            setPersonalInfo={setPersonalInfo}
+          />
+        );
+      case 'education':
+        return (
+          <EducationForm 
+            education={education} 
+            setEducation={setEducation} 
+          />
+        );
+      case 'experience':
+        return (
+          <ExperienceForm 
+            experience={experience} 
+            setExperience={setExperience} 
+          />
+        );
+      case 'skills':
+        return (
+          <SkillsForm 
+            skills={skills} 
+            setSkills={setSkills} 
+          />
+        );
+      case 'analyze':
+        return (
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl font-semibold text-gray-200 mb-6">
+              Analyze Job Description
+            </h2>
+            <JobAnalyzer onSuggestionsGenerated={handleSuggestionsGenerated} />
+          </div>
+        );
+      case 'review':
+        return (
+          <div className="flex flex-col gap-4">
+            <button
+              onClick={handleSaveAndDownload}
+              className="btn btn-primary flex items-center gap-2"
+              disabled={saving}
+            >
+              {saving ? <LoadingSpinner size="sm" /> : <Download size={18} />}
+              <span>{saving ? 'Saving...' : 'Save & Download'}</span>
+            </button>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const renderNavigation = () => {
+    return (
+      <div className="flex justify-between mt-8">
+        <button
+          onClick={() => {
+            const prevIndex = currentStepIndex - 1;
+            if (prevIndex >= 0) {
+              setCurrentStep(steps[prevIndex].name);
+              window.scrollTo(0, 0);
+            }
+          }}
+          className="btn btn-secondary"
+          disabled={currentStepIndex === 0}
+        >
+          <ArrowLeft size={16} className="mr-2" />
+          Back
+        </button>
+        {currentStep !== 'review' && (
+          <button
+            onClick={() => {
+              if (currentStep === 'analyze' || validateStep()) {
+                const nextIndex = currentStepIndex + 1;
+                if (nextIndex < steps.length) {
+                  setCurrentStep(steps[nextIndex].name);
+                  window.scrollTo(0, 0);
+                }
+              } else {
+                toast.error('Please fix errors before proceeding');
+              }
+            }}
+            className="btn btn-primary"
+          >
+            Next
+            <ArrowRight size={16} className="ml-2" />
+          </button>
+        )}
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <div className="container py-12 flex justify-center">
@@ -271,18 +457,28 @@ function CVForm() {
             style={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
           />
         </div>
-        <div className="mt-4 grid grid-cols-6 gap-2">
+
+        {/* Step navigation */}
+        <div className="mt-4 grid grid-cols-7 gap-2">
           {steps.map((step, index) => (
             <button
               key={step.name}
-              onClick={() => setCurrentStep(step.name)}
+              onClick={() => {
+                if (currentStep === 'analyze' || validateStep()) {
+                  setCurrentStep(step.name);
+                  window.scrollTo(0, 0);
+                } else {
+                  toast.error('Please fix errors before proceeding');
+                }
+              }}
+              disabled={index > currentStepIndex + 1}
               className={`text-xs px-1 py-2 rounded-md transition-colors ${
                 index === currentStepIndex
                   ? 'bg-primary-600 text-white'
                   : index < currentStepIndex
                   ? 'bg-dark-700 text-white'
                   : 'bg-dark-800 text-gray-400'
-              }`}
+              } ${index > currentStepIndex + 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               {step.label}
             </button>
@@ -290,86 +486,11 @@ function CVForm() {
         </div>
       </div>
 
-      {/* Form steps */}
-      <div className="glass-panel p-6 md:p-8">
-        {currentStep === 'template' && (
-          <TemplateSelection
-            title={title}
-            setTitle={setTitle}
-            template={template}
-            setTemplate={setTemplate}
-          />
-        )}
+      {/* Current step content */}
+      {renderStep()}
 
-        {currentStep === 'personal' && (
-          <PersonalInfoForm
-            personalInfo={personalInfo}
-            setPersonalInfo={setPersonalInfo}
-          />
-        )}
-
-        {currentStep === 'education' && (
-          <EducationForm 
-            education={education} 
-            setEducation={setEducation} 
-          />
-        )}
-
-        {currentStep === 'experience' && (
-          <ExperienceForm 
-            experience={experience} 
-            setExperience={setExperience} 
-          />
-        )}
-
-        {currentStep === 'skills' && (
-          <SkillsForm 
-            skills={skills} 
-            setSkills={setSkills} 
-          />
-        )}
-
-        {currentStep === 'review' && (
-          <div className="flex flex-col gap-4">
-            {/* <CVPreview
-              personalInfo={personalInfo}
-              education={education}
-              experience={experience}
-              skills={skills}
-            /> */}
-            <button
-              onClick={handleSaveAndDownload}
-              className="btn btn-primary flex items-center gap-2"
-              disabled={saving}
-            >
-                  {saving ? <LoadingSpinner size="sm" /> : <Download size={18} />}
-                  <span>{saving ? 'Saving...' : 'Save & Download'}</span>
-                </button>
-              </div>
-        )}
-
-        {/* Navigation buttons */}
-        <div className="flex justify-between mt-8 pt-4 border-t border-dark-700">
-          <button
-            onClick={goToPreviousStep}
-            disabled={currentStepIndex === 0}
-            className="btn btn-secondary flex items-center gap-2"
-          >
-            <ArrowLeft size={18} />
-            <span>Previous</span>
-          </button>
-          
-          {currentStep !== 'review' ? (
-            <button
-              onClick={goToNextStep}
-              className="btn btn-primary flex items-center gap-2"
-            >
-              <span>Next</span>
-              <ArrowRight size={18} />
-            </button>
-          ) : null}
-        </div>
-      </div>
+      {/* Navigation buttons */}
+      {renderNavigation()}
     </div>
   );
 }

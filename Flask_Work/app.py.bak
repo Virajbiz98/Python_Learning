@@ -1,0 +1,211 @@
+from flask import Flask, render_template, request, jsonify
+import os
+import google.generativeai as genai
+import pandas as pd
+import PyPDF2
+from dotenv import load_dotenv
+import json
+
+# Load environment variables
+load_dotenv()
+
+# Configure Gemini API and logging
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY')
+logger.debug(f"API Key present: {bool(GOOGLE_API_KEY)}")
+
+if not GOOGLE_API_KEY:
+    raise ValueError("GOOGLE_API_KEY environment variable is not set")
+
+try:
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model = genai.GenerativeModel('gemini-pro')
+    logger.info("Gemini API configured successfully")
+except Exception as e:
+    logger.error(f"Error configuring Gemini API: {str(e)}")
+    raise
+
+# Hotel data dictionary
+hotel_data = {
+    'name': 'K D M Grand Royal Hotel',
+    'location': 'New York, USA',
+    'rooms': [
+        {
+            'name': 'Luxury Suite',
+            'price': 499,
+            'size': '75 m²',
+            'features': ['King-size bed', 'Ocean view', 'Private balcony', 'Luxury bathroom', 'Mini bar']
+        },
+        {
+            'name': 'Presidential Suite',
+            'price': 899,
+            'size': '120 m²',
+            'features': ['Master bedroom', 'Living room', 'Executive lounge access', 'Butler service', 'Private dining']
+        },
+        {
+            'name': 'Standard Room',
+            'price': 299,
+            'size': '45 m²',
+            'features': ['Queen-size bed', 'City view', 'Work desk', 'Rain shower', 'Coffee maker']
+        },
+        {
+            'name': 'Single Room',
+            'price': 199,
+            'size': '30 m²',
+            'features': ['Single bed', 'Garden view', 'Work corner', 'En-suite bathroom', 'Smart TV']
+        }
+    ],
+    'amenities': [
+        {'name': 'Infinity Pool', 'icon': 'swimming-pool', 'description': 'Stunning rooftop pool with city views'},
+        {'name': 'Luxury Spa', 'icon': 'spa', 'description': 'World-class treatments and facilities'},
+        {'name': 'Fitness Center', 'icon': 'dumbbell', 'description': '24/7 state-of-the-art equipment'},
+        {'name': 'Fine Dining', 'icon': 'utensils', 'description': 'Award-winning restaurants'},
+        {'name': 'Business Center', 'icon': 'business-time', 'description': 'Full-service business facilities'}
+    ],
+    'images': ['hotel1.jpg', 'hotel2.jpg']
+}
+
+def load_knowledge_base():
+    knowledge = ""
+    
+    # Try to load PDF if exists
+    if os.path.exists('hotel_data.pdf'):
+        with open('hotel_data.pdf', 'rb') as file:
+            pdf_reader = PyPDF2.PdfReader(file)
+            for page in pdf_reader.pages:
+                knowledge += page.extract_text()
+    
+    # Try to load CSV if exists
+    elif os.path.exists('hotel_data.csv'):
+        df = pd.read_csv('hotel_data.csv')
+        knowledge = df.to_string()
+    else:
+        # Use the existing hotel_data dictionary as fallback
+        knowledge = str(hotel_data)
+    
+    return knowledge
+
+# Initialize Flask app with correct template and static folders
+app = Flask(__name__,
+            template_folder=os.path.join('hotel_website', 'templates'),
+            static_folder=os.path.join('hotel_website', 'static'))
+
+hotel_data = {
+    'name': 'K D M Grand Royal Hotel',
+    'location': 'New York, USA',
+    'rooms': [
+        {
+            'name': 'Luxury Suite',
+            'price': 499,
+            'size': '75 m²',
+            'features': ['King-size bed', 'Ocean view', 'Private balcony', 'Luxury bathroom', 'Mini bar']
+        },
+        {
+            'name': 'Presidential Suite',
+            'price': 899,
+            'size': '120 m²',
+            'features': ['Master bedroom', 'Living room', 'Executive lounge access', 'Butler service', 'Private dining']
+        },
+        {
+            'name': 'Standard Room',
+            'price': 299,
+            'size': '45 m²',
+            'features': ['Queen-size bed', 'City view', 'Work desk', 'Rain shower', 'Coffee maker']
+        },
+        {
+            'name': 'Single Room',
+            'price': 199,
+            'size': '30 m²',
+            'features': ['Single bed', 'Garden view', 'Work corner', 'En-suite bathroom', 'Smart TV']
+        }
+    ],
+    'amenities': [
+        {'name': 'Infinity Pool', 'icon': 'swimming-pool', 'description': 'Stunning rooftop pool with city views'},
+        {'name': 'Luxury Spa', 'icon': 'spa', 'description': 'World-class treatments and facilities'},
+        {'name': 'Fitness Center', 'icon': 'dumbbell', 'description': '24/7 state-of-the-art equipment'},
+        {'name': 'Fine Dining', 'icon': 'utensils', 'description': 'Award-winning restaurants'},
+        {'name': 'Business Center', 'icon': 'business-time', 'description': 'Full-service business facilities'}
+    ],
+    'images': ['hotel1.jpg', 'hotel2.jpg']
+}
+
+@app.route('/', methods=['GET'])
+def home():
+    # Check if the request wants JSON
+    if request.headers.get('Accept') == 'application/json':
+        return jsonify(hotel_data)
+    # Otherwise render the HTML template
+    return render_template('index.html', hotel=hotel_data, bot_response=None)
+
+@app.route('/ask_bot', methods=['POST'])
+def ask_bot():
+    try:
+        logger.debug("Received ask_bot request")
+        logger.debug(f"Form data: {request.form}")
+        
+        # Get user input from form data
+        user_input = request.form.get('user_input', '')
+        logger.debug(f"User input: {user_input}")
+        
+        if not user_input:
+            logger.warning("No user input provided")
+            return jsonify({'status': 'error', 'response': 'No question provided'})
+
+        # Create a simple context string
+        context = f"""
+Hotel Information:
+- Name: {hotel_data['name']}
+- Location: {hotel_data['location']}
+
+Available Rooms:
+{chr(10).join(f'- {room["name"]}: ${room["price"]} per night' for room in hotel_data['rooms'])}
+
+Hotel Amenities:
+{chr(10).join(f'- {amenity["name"]}' for amenity in hotel_data['amenities'])}
+        """
+        
+        logger.debug(f"Created context: {context}")
+        
+        try:
+            # Create the prompt
+            prompt = f"Answer this question about our hotel: {user_input}\n\nHere is the hotel information:\n{context}"
+            logger.debug(f"Generated prompt: {prompt}")
+            
+            # Generate response using Gemini
+            logger.debug("Calling Gemini API...")
+            response = model.generate_content(prompt)
+            logger.debug(f"Received response: {response}")
+            
+            if response and hasattr(response, 'text'):
+                logger.info("Successfully generated response")
+                return jsonify({
+                    'status': 'success',
+                    'response': response.text
+                })
+            else:
+                logger.error("Response object invalid")
+                return jsonify({
+                    'status': 'error',
+                    'response': 'Failed to generate response'
+                })
+                
+        except Exception as e:
+            logger.error(f"Error generating response: {str(e)}", exc_info=True)
+            return jsonify({
+                'status': 'error',
+                'response': f'An error occurred: {str(e)}'
+            })
+            
+    except Exception as e:
+        logger.error(f"Error in ask_bot route: {str(e)}", exc_info=True)
+        return jsonify({
+            'status': 'error',
+            'response': f'An error occurred: {str(e)}'
+        })
+
+if __name__ == '__main__':
+    app.run(debug=True, port=5002)

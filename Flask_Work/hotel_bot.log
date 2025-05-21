@@ -1,0 +1,1795 @@
+2025-05-11 01:26:59,429 - __main__ - DEBUG - API Key present: True
+2025-05-11 01:27:00,244 - __main__ - ERROR - Error configuring Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 38, in <module>
+    test_response = model.generate_content("Test connection")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:29:33,699 - __main__ - INFO - Available models:
+2025-05-11 01:29:35,683 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:29:35,683 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:29:35,684 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:29:35,685 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:29:35,686 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:29:35,687 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:29:35,687 - __main__ - INFO - - models/aqa
+2025-05-11 01:29:36,030 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:29:36,030 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:29:36,613 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:29:36,647 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:29:36,654 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:31:00,256 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/list_models.py', reloading
+2025-05-11 01:31:02,593 - __main__ - INFO - Available models:
+2025-05-11 01:31:03,791 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:31:03,791 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:31:03,791 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:31:03,791 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:31:03,791 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:31:03,792 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:31:03,793 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:31:03,794 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:31:03,795 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:31:03,795 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:31:03,795 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:31:03,795 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:31:03,795 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:31:03,795 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:31:03,795 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:31:03,795 - __main__ - INFO - - models/aqa
+2025-05-11 01:31:04,431 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:31:04,431 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:31:06,475 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:31:06,512 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:31:06,518 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:32:12,971 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/quick_test.py', reloading
+2025-05-11 01:32:15,318 - __main__ - INFO - Available models:
+2025-05-11 01:32:17,341 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:32:17,341 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:32:17,341 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:32:17,342 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:32:17,343 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:32:17,343 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:32:17,343 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:32:17,343 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:32:17,343 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:32:17,343 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:32:17,343 - __main__ - INFO - - models/aqa
+2025-05-11 01:32:17,675 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:32:17,675 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:32:19,591 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:32:20,330 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:32:20,341 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:32:23,372 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py', reloading
+2025-05-11 01:32:25,725 - __main__ - INFO - Available models:
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:32:27,649 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:32:27,650 - __main__ - INFO - - models/aqa
+2025-05-11 01:32:27,984 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:32:27,984 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:32:28,576 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:32:28,596 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:32:28,601 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:32:48,749 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/quick_test.py', reloading
+2025-05-11 01:32:51,092 - __main__ - INFO - Available models:
+2025-05-11 01:32:51,967 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:32:51,968 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:32:51,968 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:32:51,968 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:32:51,968 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:32:51,968 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:32:51,968 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:32:51,969 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:32:51,970 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:32:51,971 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:32:51,972 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:32:51,972 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:32:51,972 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:32:51,972 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:32:51,972 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:32:51,972 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:32:51,972 - __main__ - INFO - - models/aqa
+2025-05-11 01:32:53,176 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:32:53,176 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:32:55,225 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:32:55,264 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:32:55,272 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:33:31,539 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/quick_test.py', reloading
+2025-05-11 01:33:33,861 - __main__ - INFO - Available models:
+2025-05-11 01:33:35,988 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:33:35,988 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:33:35,988 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:33:35,988 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:33:35,988 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:33:35,989 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:33:35,990 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:33:35,990 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:33:35,990 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:33:35,990 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:33:35,990 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:33:35,990 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:33:35,990 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:33:35,991 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:33:35,992 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:33:35,992 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:33:35,992 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:33:35,992 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:33:35,992 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:33:35,992 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:33:35,992 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:33:35,992 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:33:35,993 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:33:35,993 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:33:35,993 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:33:35,993 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:33:35,993 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:33:35,993 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:33:35,993 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:33:35,993 - __main__ - INFO - - models/aqa
+2025-05-11 01:33:36,351 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:33:36,352 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:33:37,003 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:33:37,038 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:33:37,044 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:34:51,557 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/test_api_versions.py', reloading
+2025-05-11 01:34:53,871 - __main__ - INFO - Available models:
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:34:54,566 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:34:54,567 - __main__ - INFO - - models/aqa
+2025-05-11 01:34:55,790 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:34:55,790 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:34:56,877 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:34:56,918 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:34:56,948 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:37:01,749 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/quick_test.py', reloading
+2025-05-11 01:37:04,154 - __main__ - INFO - Available models:
+2025-05-11 01:37:04,857 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:37:04,857 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:37:04,857 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:37:04,857 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:37:04,857 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:37:04,857 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:37:04,857 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:37:04,857 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:37:04,858 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:37:04,859 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:37:04,860 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:37:04,861 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:37:04,861 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:37:04,861 - __main__ - INFO - - models/aqa
+2025-05-11 01:37:06,104 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:37:06,104 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:37:07,963 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:37:07,990 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:37:07,996 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:37:37,197 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/simple_test.py', reloading
+2025-05-11 01:37:39,527 - __main__ - INFO - Available models:
+2025-05-11 01:37:41,551 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:37:41,552 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:37:41,552 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:37:41,552 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:37:41,552 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:37:41,552 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:37:41,552 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:37:41,552 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:37:41,553 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:37:41,553 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:37:41,553 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:37:41,553 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:37:41,553 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:37:41,553 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:37:41,553 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:37:41,553 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:37:41,554 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:37:41,555 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:37:41,556 - __main__ - INFO - - models/aqa
+2025-05-11 01:37:41,943 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:37:41,944 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:37:42,763 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:37:42,802 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:37:42,809 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-11 01:38:16,029 - werkzeug - INFO -  * Detected change in '/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/test_gemini_simple.py', reloading
+2025-05-11 01:38:18,363 - __main__ - INFO - Available models:
+2025-05-11 01:38:20,455 - __main__ - INFO - - models/chat-bison-001
+2025-05-11 01:38:20,456 - __main__ - INFO - - models/text-bison-001
+2025-05-11 01:38:20,456 - __main__ - INFO - - models/embedding-gecko-001
+2025-05-11 01:38:20,456 - __main__ - INFO - - models/gemini-1.0-pro-vision-latest
+2025-05-11 01:38:20,456 - __main__ - INFO - - models/gemini-pro-vision
+2025-05-11 01:38:20,456 - __main__ - INFO - - models/gemini-1.5-pro-latest
+2025-05-11 01:38:20,456 - __main__ - INFO - - models/gemini-1.5-pro-001
+2025-05-11 01:38:20,456 - __main__ - INFO - - models/gemini-1.5-pro-002
+2025-05-11 01:38:20,456 - __main__ - INFO - - models/gemini-1.5-pro
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-latest
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-001
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-001-tuning
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-002
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-8b
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-8b-001
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-8b-latest
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0827
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-1.5-flash-8b-exp-0924
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-2.5-pro-exp-03-25
+2025-05-11 01:38:20,457 - __main__ - INFO - - models/gemini-2.5-pro-preview-03-25
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.5-flash-preview-04-17-thinking
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.5-pro-preview-05-06
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash-exp
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash-001
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash-exp-image-generation
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash-lite-001
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash-lite
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash-preview-image-generation
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview-02-05
+2025-05-11 01:38:20,458 - __main__ - INFO - - models/gemini-2.0-flash-lite-preview
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/gemini-2.0-pro-exp
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/gemini-2.0-pro-exp-02-05
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/gemini-exp-1206
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-01-21
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/gemini-2.0-flash-thinking-exp-1219
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/learnlm-1.5-pro-experimental
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/learnlm-2.0-flash-experimental
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/gemma-3-1b-it
+2025-05-11 01:38:20,459 - __main__ - INFO - - models/gemma-3-4b-it
+2025-05-11 01:38:20,460 - __main__ - INFO - - models/gemma-3-12b-it
+2025-05-11 01:38:20,460 - __main__ - INFO - - models/gemma-3-27b-it
+2025-05-11 01:38:20,460 - __main__ - INFO - - models/embedding-001
+2025-05-11 01:38:20,460 - __main__ - INFO - - models/text-embedding-004
+2025-05-11 01:38:20,460 - __main__ - INFO - - models/gemini-embedding-exp-03-07
+2025-05-11 01:38:20,460 - __main__ - INFO - - models/gemini-embedding-exp
+2025-05-11 01:38:20,460 - __main__ - INFO - - models/aqa
+2025-05-11 01:38:22,087 - __main__ - INFO - - models/imagen-3.0-generate-002
+2025-05-11 01:38:22,088 - __main__ - INFO - - models/gemini-2.0-flash-live-001
+2025-05-11 01:38:22,699 - __main__ - ERROR - Error initializing Gemini API: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app_new.py", line 47, in init_genai
+    response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-11 01:38:22,719 - werkzeug - WARNING -  * Debugger is active!
+2025-05-11 01:38:22,724 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-15 15:45:01,391 - __main__ - DEBUG - API Key present: True
+2025-05-15 15:45:03,506 - __main__ - ERROR - Error configuring Gemini API: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 38, in <module>
+    test_response = model.generate_content("Test connection")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2025-05-15 16:00:22,957 - __main__ - DEBUG - API Key present: True
+2025-05-15 16:00:23,741 - __main__ - ERROR - Error configuring Gemini API: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 38, in <module>
+    test_response = model.generate_content("Test connection")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2025-05-15 16:04:54,291 - __main__ - DEBUG - API Key present: True
+2025-05-15 16:04:56,169 - __main__ - ERROR - Error configuring Gemini API: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 38, in <module>
+    test_response = model.generate_content("Test connection")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2025-05-15 16:09:23,339 - __main__ - DEBUG - API Key present: True
+2025-05-15 16:09:24,045 - __main__ - WARNING - Rate limit hit, waiting 1 seconds before retry
+2025-05-15 16:09:25,686 - __main__ - WARNING - Rate limit hit, waiting 2 seconds before retry
+2025-05-15 16:09:28,284 - __main__ - WARNING - Rate limit hit, waiting 4 seconds before retry
+2025-05-15 16:09:32,290 - __main__ - ERROR - Failed to initialize Gemini API after retries: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 27
+}
+]
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 66, in <module>
+    model = initialize_model_with_retry()
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 63, in initialize_model_with_retry
+    raise last_error
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 46, in initialize_model_with_retry
+    test_response = model.generate_content("Test")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 27
+}
+]
+2025-05-15 16:13:11,442 - __main__ - DEBUG - API Key present: True
+2025-05-15 16:13:11,442 - __main__ - INFO - Attempting to initialize model: models/gemini-1.5-pro-latest
+2025-05-15 16:13:12,193 - __main__ - WARNING - Failed to initialize models/gemini-1.5-pro-latest: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 44
+}
+]
+2025-05-15 16:13:14,197 - __main__ - INFO - Attempting to initialize model: models/gemini-1.5-pro
+2025-05-15 16:13:14,646 - __main__ - WARNING - Failed to initialize models/gemini-1.5-pro: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 41
+}
+]
+2025-05-15 16:13:16,652 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro-latest
+2025-05-15 16:13:17,000 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro-latest: 404 models/gemini-1.0-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:13:17,000 - __main__ - INFO - Attempting to initialize model: models/chat-bison-001
+2025-05-15 16:13:17,512 - __main__ - WARNING - Failed to initialize models/chat-bison-001: 404 models/chat-bison-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:13:17,512 - __main__ - ERROR - Failed to initialize any model
+2025-05-15 16:13:17,513 - __main__ - ERROR - Failed to initialize Gemini API: 404 models/chat-bison-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 73, in <module>
+    model = find_available_model(MODEL_PRIORITIES)
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 68, in find_available_model
+    raise last_error
+  File "/Users/vjb/Desktop/git_hub/Python_Learning/Flask_Work/app.py", line 54, in find_available_model
+    test_response = model.generate_content("OK")
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/generativeai/generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/ai/generativelanguage_v1beta/services/generative_service/client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/gapic_v1/method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+    ~~~~~~~~~~~~~~~~~~~^
+        exc,
+        ^^^^
+    ...<6 lines>...
+        timeout,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "/Users/vjb/.pyenv/versions/3.13.2/lib/python3.13/site-packages/google/api_core/grpc_helpers.py", line 78, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/chat-bison-001 is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:22:12,420 - __main__ - DEBUG - API Key present: True
+2025-05-15 16:22:14,502 - __main__ - INFO - Available models: ['models/gemini-1.0-pro-vision-latest', 'models/gemini-pro-vision', 'models/gemini-1.5-pro-latest', 'models/gemini-1.5-pro-001', 'models/gemini-1.5-pro-002', 'models/gemini-1.5-pro', 'models/gemini-1.5-flash-latest', 'models/gemini-1.5-flash-001', 'models/gemini-1.5-flash-001-tuning', 'models/gemini-1.5-flash', 'models/gemini-1.5-flash-002', 'models/gemini-1.5-flash-8b', 'models/gemini-1.5-flash-8b-001', 'models/gemini-1.5-flash-8b-latest', 'models/gemini-1.5-flash-8b-exp-0827', 'models/gemini-1.5-flash-8b-exp-0924', 'models/gemini-2.5-pro-exp-03-25', 'models/gemini-2.5-pro-preview-03-25', 'models/gemini-2.5-flash-preview-04-17', 'models/gemini-2.5-flash-preview-04-17-thinking', 'models/gemini-2.5-pro-preview-05-06', 'models/gemini-2.0-flash-exp', 'models/gemini-2.0-flash', 'models/gemini-2.0-flash-001', 'models/gemini-2.0-flash-exp-image-generation', 'models/gemini-2.0-flash-lite-001', 'models/gemini-2.0-flash-lite', 'models/gemini-2.0-flash-preview-image-generation', 'models/gemini-2.0-flash-lite-preview-02-05', 'models/gemini-2.0-flash-lite-preview', 'models/gemini-2.0-pro-exp', 'models/gemini-2.0-pro-exp-02-05', 'models/gemini-exp-1206', 'models/gemini-2.0-flash-thinking-exp-01-21', 'models/gemini-2.0-flash-thinking-exp', 'models/gemini-2.0-flash-thinking-exp-1219', 'models/gemini-embedding-exp-03-07', 'models/gemini-embedding-exp', 'models/gemini-2.0-flash-live-001']
+2025-05-15 16:22:14,503 - __main__ - INFO - Attempting to initialize model: gemini-pro
+2025-05-15 16:22:15,114 - __main__ - WARNING - Failed to initialize gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:22:15,114 - __main__ - INFO - Attempting to initialize model: models/gemini-pro
+2025-05-15 16:22:16,357 - __main__ - WARNING - Failed to initialize models/gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:22:16,357 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro
+2025-05-15 16:22:16,734 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro: 404 models/gemini-1.0-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:22:16,735 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro-latest
+2025-05-15 16:22:17,977 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro-latest: 404 models/gemini-1.0-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:22:17,977 - __main__ - INFO - Attempting to initialize model: models/gemini-1.5-pro-latest
+2025-05-15 16:22:18,396 - __main__ - WARNING - Failed to initialize models/gemini-1.5-pro-latest: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 37
+}
+]
+2025-05-15 16:22:20,402 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.0-pro-vision-latest
+2025-05-15 16:22:20,764 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-pro-vision
+2025-05-15 16:22:21,262 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-001
+2025-05-15 16:22:23,709 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-002
+2025-05-15 16:22:26,085 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro
+2025-05-15 16:22:28,442 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-flash-latest
+2025-05-15 16:22:29,245 - __main__ - INFO - Successfully initialized alternative model: models/gemini-1.5-flash-latest
+2025-05-15 16:23:00,067 - __main__ - DEBUG - API Key present: True
+2025-05-15 16:23:02,011 - __main__ - INFO - Available models: ['models/gemini-1.0-pro-vision-latest', 'models/gemini-pro-vision', 'models/gemini-1.5-pro-latest', 'models/gemini-1.5-pro-001', 'models/gemini-1.5-pro-002', 'models/gemini-1.5-pro', 'models/gemini-1.5-flash-latest', 'models/gemini-1.5-flash-001', 'models/gemini-1.5-flash-001-tuning', 'models/gemini-1.5-flash', 'models/gemini-1.5-flash-002', 'models/gemini-1.5-flash-8b', 'models/gemini-1.5-flash-8b-001', 'models/gemini-1.5-flash-8b-latest', 'models/gemini-1.5-flash-8b-exp-0827', 'models/gemini-1.5-flash-8b-exp-0924', 'models/gemini-2.5-pro-exp-03-25', 'models/gemini-2.5-pro-preview-03-25', 'models/gemini-2.5-flash-preview-04-17', 'models/gemini-2.5-flash-preview-04-17-thinking', 'models/gemini-2.5-pro-preview-05-06', 'models/gemini-2.0-flash-exp', 'models/gemini-2.0-flash', 'models/gemini-2.0-flash-001', 'models/gemini-2.0-flash-exp-image-generation', 'models/gemini-2.0-flash-lite-001', 'models/gemini-2.0-flash-lite', 'models/gemini-2.0-flash-preview-image-generation', 'models/gemini-2.0-flash-lite-preview-02-05', 'models/gemini-2.0-flash-lite-preview', 'models/gemini-2.0-pro-exp', 'models/gemini-2.0-pro-exp-02-05', 'models/gemini-exp-1206', 'models/gemini-2.0-flash-thinking-exp-01-21', 'models/gemini-2.0-flash-thinking-exp', 'models/gemini-2.0-flash-thinking-exp-1219', 'models/gemini-embedding-exp-03-07', 'models/gemini-embedding-exp', 'models/gemini-2.0-flash-live-001']
+2025-05-15 16:23:02,012 - __main__ - INFO - Attempting to initialize model: gemini-pro
+2025-05-15 16:23:02,610 - __main__ - WARNING - Failed to initialize gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:23:02,610 - __main__ - INFO - Attempting to initialize model: models/gemini-pro
+2025-05-15 16:23:03,869 - __main__ - WARNING - Failed to initialize models/gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:23:03,869 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro
+2025-05-15 16:23:04,263 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro: 404 models/gemini-1.0-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:23:04,263 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro-latest
+2025-05-15 16:23:04,675 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro-latest: 404 models/gemini-1.0-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:23:04,675 - __main__ - INFO - Attempting to initialize model: models/gemini-1.5-pro-latest
+2025-05-15 16:23:05,088 - __main__ - WARNING - Failed to initialize models/gemini-1.5-pro-latest: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 51
+}
+]
+2025-05-15 16:23:07,094 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.0-pro-vision-latest
+2025-05-15 16:23:07,539 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-pro-vision
+2025-05-15 16:23:07,949 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-001
+2025-05-15 16:23:10,363 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-002
+2025-05-15 16:23:12,823 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro
+2025-05-15 16:23:15,280 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-flash-latest
+2025-05-15 16:23:25,768 - __main__ - INFO - Successfully initialized alternative model: models/gemini-1.5-flash-latest
+2025-05-15 16:23:25,783 - werkzeug - INFO -  * Running on http://127.0.0.1:5003/ (Press CTRL+C to quit)
+2025-05-15 16:23:25,784 - werkzeug - INFO -  * Restarting with stat
+2025-05-15 16:23:26,237 - __main__ - DEBUG - API Key present: True
+2025-05-15 16:23:28,226 - __main__ - INFO - Available models: ['models/gemini-1.0-pro-vision-latest', 'models/gemini-pro-vision', 'models/gemini-1.5-pro-latest', 'models/gemini-1.5-pro-001', 'models/gemini-1.5-pro-002', 'models/gemini-1.5-pro', 'models/gemini-1.5-flash-latest', 'models/gemini-1.5-flash-001', 'models/gemini-1.5-flash-001-tuning', 'models/gemini-1.5-flash', 'models/gemini-1.5-flash-002', 'models/gemini-1.5-flash-8b', 'models/gemini-1.5-flash-8b-001', 'models/gemini-1.5-flash-8b-latest', 'models/gemini-1.5-flash-8b-exp-0827', 'models/gemini-1.5-flash-8b-exp-0924', 'models/gemini-2.5-pro-exp-03-25', 'models/gemini-2.5-pro-preview-03-25', 'models/gemini-2.5-flash-preview-04-17', 'models/gemini-2.5-flash-preview-04-17-thinking', 'models/gemini-2.5-pro-preview-05-06', 'models/gemini-2.0-flash-exp', 'models/gemini-2.0-flash', 'models/gemini-2.0-flash-001', 'models/gemini-2.0-flash-exp-image-generation', 'models/gemini-2.0-flash-lite-001', 'models/gemini-2.0-flash-lite', 'models/gemini-2.0-flash-preview-image-generation', 'models/gemini-2.0-flash-lite-preview-02-05', 'models/gemini-2.0-flash-lite-preview', 'models/gemini-2.0-pro-exp', 'models/gemini-2.0-pro-exp-02-05', 'models/gemini-exp-1206', 'models/gemini-2.0-flash-thinking-exp-01-21', 'models/gemini-2.0-flash-thinking-exp', 'models/gemini-2.0-flash-thinking-exp-1219', 'models/gemini-embedding-exp-03-07', 'models/gemini-embedding-exp', 'models/gemini-2.0-flash-live-001']
+2025-05-15 16:23:28,226 - __main__ - INFO - Attempting to initialize model: gemini-pro
+2025-05-15 16:23:28,832 - __main__ - WARNING - Failed to initialize gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:23:28,832 - __main__ - INFO - Attempting to initialize model: models/gemini-pro
+2025-05-15 16:23:30,273 - __main__ - WARNING - Failed to initialize models/gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:23:30,273 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro
+2025-05-15 16:23:30,694 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro: 404 models/gemini-1.0-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:23:30,694 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro-latest
+2025-05-15 16:23:31,910 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro-latest: 404 models/gemini-1.0-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 16:23:31,910 - __main__ - INFO - Attempting to initialize model: models/gemini-1.5-pro-latest
+2025-05-15 16:23:32,318 - __main__ - WARNING - Failed to initialize models/gemini-1.5-pro-latest: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 23
+}
+]
+2025-05-15 16:23:34,322 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.0-pro-vision-latest
+2025-05-15 16:23:34,778 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-pro-vision
+2025-05-15 16:23:36,006 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-001
+2025-05-15 16:23:38,423 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-002
+2025-05-15 16:23:41,134 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro
+2025-05-15 16:23:43,500 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-flash-latest
+2025-05-15 16:23:44,199 - __main__ - INFO - Successfully initialized alternative model: models/gemini-1.5-flash-latest
+2025-05-15 16:23:44,215 - werkzeug - WARNING -  * Debugger is active!
+2025-05-15 16:23:44,247 - werkzeug - INFO -  * Debugger PIN: 906-689-284
+2025-05-15 18:41:53,566 - __main__ - DEBUG - API Key present: True
+2025-05-15 18:41:56,636 - __main__ - INFO - Available models: ['models/gemini-1.0-pro-vision-latest', 'models/gemini-pro-vision', 'models/gemini-1.5-pro-latest', 'models/gemini-1.5-pro-001', 'models/gemini-1.5-pro-002', 'models/gemini-1.5-pro', 'models/gemini-1.5-flash-latest', 'models/gemini-1.5-flash-001', 'models/gemini-1.5-flash-001-tuning', 'models/gemini-1.5-flash', 'models/gemini-1.5-flash-002', 'models/gemini-1.5-flash-8b', 'models/gemini-1.5-flash-8b-001', 'models/gemini-1.5-flash-8b-latest', 'models/gemini-1.5-flash-8b-exp-0827', 'models/gemini-1.5-flash-8b-exp-0924', 'models/gemini-2.5-pro-exp-03-25', 'models/gemini-2.5-pro-preview-03-25', 'models/gemini-2.5-flash-preview-04-17', 'models/gemini-2.5-flash-preview-04-17-thinking', 'models/gemini-2.5-pro-preview-05-06', 'models/gemini-2.0-flash-exp', 'models/gemini-2.0-flash', 'models/gemini-2.0-flash-001', 'models/gemini-2.0-flash-exp-image-generation', 'models/gemini-2.0-flash-lite-001', 'models/gemini-2.0-flash-lite', 'models/gemini-2.0-flash-preview-image-generation', 'models/gemini-2.0-flash-lite-preview-02-05', 'models/gemini-2.0-flash-lite-preview', 'models/gemini-2.0-pro-exp', 'models/gemini-2.0-pro-exp-02-05', 'models/gemini-exp-1206', 'models/gemini-2.0-flash-thinking-exp-01-21', 'models/gemini-2.0-flash-thinking-exp', 'models/gemini-2.0-flash-thinking-exp-1219', 'models/gemini-embedding-exp-03-07', 'models/gemini-embedding-exp', 'models/gemini-2.0-flash-live-001']
+2025-05-15 18:41:56,637 - __main__ - INFO - Attempting to initialize model: gemini-pro
+2025-05-15 18:41:57,795 - __main__ - WARNING - Failed to initialize gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 18:41:57,796 - __main__ - INFO - Attempting to initialize model: models/gemini-pro
+2025-05-15 18:41:59,044 - __main__ - WARNING - Failed to initialize models/gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 18:41:59,044 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro
+2025-05-15 18:41:59,552 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro: 404 models/gemini-1.0-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 18:41:59,552 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro-latest
+2025-05-15 18:42:00,037 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro-latest: 404 models/gemini-1.0-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 18:42:00,037 - __main__ - INFO - Attempting to initialize model: models/gemini-1.5-pro-latest
+2025-05-15 18:42:00,521 - __main__ - WARNING - Failed to initialize models/gemini-1.5-pro-latest: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 55
+}
+]
+2025-05-15 18:42:02,526 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.0-pro-vision-latest
+2025-05-15 18:42:02,894 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-pro-vision
+2025-05-15 18:42:03,299 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-001
+2025-05-15 18:42:05,683 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-002
+2025-05-15 18:42:08,185 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro
+2025-05-15 18:42:10,606 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-flash-latest
+2025-05-15 18:42:11,340 - __main__ - INFO - Successfully initialized alternative model: models/gemini-1.5-flash-latest
+2025-05-15 18:42:11,359 - werkzeug - INFO -  * Running on http://127.0.0.1:5003/ (Press CTRL+C to quit)
+2025-05-15 18:42:11,360 - werkzeug - INFO -  * Restarting with stat
+2025-05-15 18:42:11,747 - __main__ - DEBUG - API Key present: True
+2025-05-15 18:42:13,312 - __main__ - INFO - Available models: ['models/gemini-1.0-pro-vision-latest', 'models/gemini-pro-vision', 'models/gemini-1.5-pro-latest', 'models/gemini-1.5-pro-001', 'models/gemini-1.5-pro-002', 'models/gemini-1.5-pro', 'models/gemini-1.5-flash-latest', 'models/gemini-1.5-flash-001', 'models/gemini-1.5-flash-001-tuning', 'models/gemini-1.5-flash', 'models/gemini-1.5-flash-002', 'models/gemini-1.5-flash-8b', 'models/gemini-1.5-flash-8b-001', 'models/gemini-1.5-flash-8b-latest', 'models/gemini-1.5-flash-8b-exp-0827', 'models/gemini-1.5-flash-8b-exp-0924', 'models/gemini-2.5-pro-exp-03-25', 'models/gemini-2.5-pro-preview-03-25', 'models/gemini-2.5-flash-preview-04-17', 'models/gemini-2.5-flash-preview-04-17-thinking', 'models/gemini-2.5-pro-preview-05-06', 'models/gemini-2.0-flash-exp', 'models/gemini-2.0-flash', 'models/gemini-2.0-flash-001', 'models/gemini-2.0-flash-exp-image-generation', 'models/gemini-2.0-flash-lite-001', 'models/gemini-2.0-flash-lite', 'models/gemini-2.0-flash-preview-image-generation', 'models/gemini-2.0-flash-lite-preview-02-05', 'models/gemini-2.0-flash-lite-preview', 'models/gemini-2.0-pro-exp', 'models/gemini-2.0-pro-exp-02-05', 'models/gemini-exp-1206', 'models/gemini-2.0-flash-thinking-exp-01-21', 'models/gemini-2.0-flash-thinking-exp', 'models/gemini-2.0-flash-thinking-exp-1219', 'models/gemini-embedding-exp-03-07', 'models/gemini-embedding-exp', 'models/gemini-2.0-flash-live-001']
+2025-05-15 18:42:13,313 - __main__ - INFO - Attempting to initialize model: gemini-pro
+2025-05-15 18:42:13,963 - __main__ - WARNING - Failed to initialize gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 18:42:13,963 - __main__ - INFO - Attempting to initialize model: models/gemini-pro
+2025-05-15 18:42:14,396 - __main__ - WARNING - Failed to initialize models/gemini-pro: 404 models/gemini-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 18:42:14,396 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro
+2025-05-15 18:42:14,865 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro: 404 models/gemini-1.0-pro is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 18:42:14,866 - __main__ - INFO - Attempting to initialize model: models/gemini-1.0-pro-latest
+2025-05-15 18:42:15,279 - __main__ - WARNING - Failed to initialize models/gemini-1.0-pro-latest: 404 models/gemini-1.0-pro-latest is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-05-15 18:42:15,279 - __main__ - INFO - Attempting to initialize model: models/gemini-1.5-pro-latest
+2025-05-15 18:42:15,811 - __main__ - WARNING - Failed to initialize models/gemini-1.5-pro-latest: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-1.5-pro"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, retry_delay {
+  seconds: 40
+}
+]
+2025-05-15 18:42:17,813 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.0-pro-vision-latest
+2025-05-15 18:42:18,294 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-pro-vision
+2025-05-15 18:42:18,876 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-001
+2025-05-15 18:42:21,442 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro-002
+2025-05-15 18:42:23,960 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-pro
+2025-05-15 18:42:26,377 - __main__ - INFO - Attempting to initialize alternative model: models/gemini-1.5-flash-latest
+2025-05-15 18:42:27,375 - __main__ - INFO - Successfully initialized alternative model: models/gemini-1.5-flash-latest
+2025-05-15 18:42:27,394 - werkzeug - WARNING -  * Debugger is active!
+2025-05-15 18:42:27,407 - werkzeug - INFO -  * Debugger PIN: 906-689-284

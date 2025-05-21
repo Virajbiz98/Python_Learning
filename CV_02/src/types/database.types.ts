@@ -6,6 +6,48 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
+export interface UserProfile {
+  id: string;
+  user_id: string;
+  full_name: string;
+  professional_title?: string;
+  professional_summary?: string;
+  email: string;
+  phone?: string;
+  location?: string;
+  website?: string;
+  photo_url?: string;
+  created_at: string;
+  updated_at: string;
+  education?: Education[];
+  experience?: Experience[];
+  skills?: Skill[];
+}
+
+export interface PersonalInfo {
+  fullName: string;
+  email: string;
+  phone: string;
+  location: string;
+  title: string;
+  summary: string;
+  website?: string;
+  photoUrl?: string;
+}
+
+export interface CV {
+  id: string;
+  user_id: string;
+  title: string;
+  template: string;
+  personal_info: PersonalInfo;
+  education: Education[];
+  experience: Experience[];
+  skills: Skill[];
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -98,34 +140,44 @@ export type PersonalInfo = {
   summary: string;
   linkedIn?: string;
   website?: string;
+  photoUrl?: string;
 };
 
-export type Education = {
-  id: string;
+export interface BaseEducation {
   institution: string;
   degree: string;
   field: string;
   startDate: string;
   endDate: string;
-  description: string;
-};
+  description?: string;
+}
 
-export type Experience = {
+export interface Education extends BaseEducation {
   id: string;
+}
+
+export interface BaseExperience {
   company: string;
   position: string;
   location: string;
   startDate: string;
   endDate: string;
   current: boolean;
-  description: string;
-};
+  description: string[];
+}
 
-export type Skill = {
+export interface Experience extends BaseExperience {
   id: string;
+}
+
+export interface BaseSkill {
   name: string;
   level: number;
-};
+}
+
+export interface Skill extends BaseSkill {
+  id: string;
+}
 
 export type AdditionalInfo = {
   languages: { language: string; proficiency: string }[];

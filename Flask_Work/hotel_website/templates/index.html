@@ -19,6 +19,7 @@
             height: 100vh;
             background: url("{{ url_for('static', filename='images/hotel1.jpg') }}") no-repeat center center;
             background-size: cover;
+            background-color: #1a1a1a; /* Fallback color */
             overflow: hidden;
         }
         .hero::before {
@@ -93,6 +94,7 @@
                 <li><a href="#amenities" data-aos="fade-down" data-aos-delay="200">Amenities</a></li>
                 <li><a href="#gallery" data-aos="fade-down" data-aos-delay="300">Gallery</a></li>
                 <li><a href="#contact" data-aos="fade-down" data-aos-delay="400">Contact</a></li>
+                <li><a href="#ai-assistant" data-aos="fade-down" data-aos-delay="500">Ask Me Anything</a></li>
             </ul>
         </nav>
     </header>
@@ -187,6 +189,29 @@
         </div>
     </section>
 
+    <!-- AI Assistant Section -->
+    <section id="ai-assistant" class="ai-assistant">
+        <h2 data-aos="fade-up">Ask Me Anything</h2>
+        <p class="section-description" data-aos="fade-up">Have questions about our hotel? Our AI assistant is here to help!</p>
+        <div class="chat-container" data-aos="fade-up">
+            <div id="chat-messages">
+                {% if bot_response %}
+                    <div class="message bot-message">
+                        {{ bot_response }}
+                    </div>
+                {% endif %}
+            </div>
+            <form id="chat-form">
+                <div class="input-group">
+                    <input type="text" name="user_input" id="user-input" placeholder="Ask about our rooms, amenities, or services..." required>
+                    <button type="submit" class="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -216,121 +241,128 @@
         </div>
     </footer>
 
-    <!-- Chatbot Button and Popup -->
-    <div class="chatbot-button">
-        <button onclick="openChatbot()">Ask Me Anything</button>
-    </div>
-
-    <div id="chatbot-popup" class="chatbot-popup">
-        <div class="chatbot-header">
-            <h3>K D M Grand Royal Hotel Bot</h3>
-            <span onclick="closeChatbot()" class="close-button">×</span>
-        </div>
-        <div class="chatbot-body">
-            <div id="chat-messages"></div>
-            <form id="chatbot-form" onsubmit="handleChatSubmit(event)">
-                <input type="text" name="user_input" id="user-input" placeholder="Type your question here..." required>
-                <button type="submit">Ask</button>
-            </form>
-        </div>
-    </div>
-
     <!-- Scroll to Top Button -->
     <button class="scroll-to-top" aria-label="Scroll to top">
         <i class="fas fa-chevron-up"></i>
     </button>
 
-    <!-- AOS Animation Script -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Chat Interface -->
+    <div class="chat-interface" id="chat-interface">
+        <div class="chat-header">
+            <h3>Hotel Assistant</h3>
+            <button class="close-chat" onclick="toggleChat()">×</button>
+        </div>
+        <div id="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Ask about our rooms, amenities, or services..." autocomplete="off">
+            <button class="send-button" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Chat functionality -->
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-
-        // Preloader
-        window.addEventListener('load', function() {
-            document.querySelector('.preloader').style.display = 'none';
-        });
-
-        // Header scroll effect
-        const header = document.querySelector('header');
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Chatbot functions
-        function openChatbot() {
-            document.getElementById('chatbot-popup').style.display = 'flex';
-        }
-
-        function closeChatbot() {
-            document.getElementById('chatbot-popup').style.display = 'none';
-        }
-
-        function handleChatSubmit(event) {
-            event.preventDefault();
+        // Toggle chat interface
+        function toggleChat() {
+            const chatInterface = document.getElementById('chat-interface');
+            const currentDisplay = window.getComputedStyle(chatInterface).display;
+            chatInterface.style.display = currentDisplay === 'none' ? 'flex' : 'none';
             
+            if (currentDisplay === 'none') {
+                document.getElementById('user-input').focus();
+            }
+        }
+
+        // Add click handler to navbar chat button
+        document.querySelector('a[href="#ai-assistant"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleChat();
+        });
+
+        function addMessage(message, isUser, isError = false) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'} ${isError ? 'error-message' : ''}`;
+            
+            if (!isUser && !isError) {
+                messageDiv.innerHTML = `
+                    <div class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                `;
+            } else {
+                messageDiv.textContent = message;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return messageDiv;
+        }
+
+        async function sendMessage() {
             const input = document.getElementById('user-input');
-            const messageDiv = document.getElementById('chat-messages');
-            const userMessage = input.value;
+            const sendButton = document.querySelector('.send-button');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Disable input and button while processing
+            input.disabled = true;
+            sendButton.disabled = true;
 
             // Add user message to chat
-            messageDiv.innerHTML += `<p class="user-message"><strong>You:</strong> ${userMessage}</p>`;
-
-            // Create form data
-            const formData = new FormData();
-            formData.append('user_input', userMessage);
-
-            // Clear input
+            addMessage(message, true);
             input.value = '';
+            
+            // Add temporary bot message with typing indicator
+            const botMessageDiv = addMessage('', false);
 
-            // Send AJAX request
-            fetch('/ask_bot', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    messageDiv.innerHTML += `<p class="bot-message"><strong>Bot:</strong> ${data.response}</p>`;
+            try {
+                const response = await fetch('/ask_bot', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+                
+                // Remove typing indicator
+                botMessageDiv.remove();
+                
+                if (data.error || data.status === 'error') {
+                    addMessage(data.error || data.response, false, true);
                 } else {
-                    messageDiv.innerHTML += `<p class="bot-message error"><strong>Error:</strong> ${data.response}</p>`;
+                    addMessage(data.response || data.text, false);
                 }
-                // Scroll to bottom of messages
-                messageDiv.scrollTop = messageDiv.scrollHeight;
-            })
-            .catch(error => {
-                messageDiv.innerHTML += `<p class="bot-message error"><strong>Error:</strong> Failed to get response</p>`;
-                console.error('Error:', error);
-            });
+            } catch (error) {
+                // Remove typing indicator
+                botMessageDiv.remove();
+                addMessage('Error: Failed to get response', false, true);
+            } finally {
+                // Re-enable input and button
+                input.disabled = false;
+                sendButton.disabled = false;
+                input.focus();
+            }
         }
 
-        // Scroll to Top Button functionality
-        const scrollToTop = document.querySelector('.scroll-to-top');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollToTop.classList.add('visible');
-            } else {
-                scrollToTop.classList.remove('visible');
+        // Send message on Enter key
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
             }
         });
-
-        scrollToTop.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
     </script>
+
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
 </html>

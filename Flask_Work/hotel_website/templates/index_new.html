@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Experience luxury at {{ hotel.name }} in {{ hotel.location }}. Book your perfect stay with our premium amenities and world-class service.">
+    <title>{{ hotel.name }} - Luxury Hotel Experience in {{ hotel.location }}</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- ... Existing header to ai-assistant section ... -->
+
+    <!-- AI Assistant Section -->
+    <section id="ai-assistant" class="ai-assistant">
+        <h2 data-aos="fade-up">Ask Me Anything</h2>
+        <p class="section-description" data-aos="fade-up">Have questions about our hotel? Our AI assistant is here to help!</p>
+        <div class="chat-container" data-aos="fade-up">
+            <div id="chat-messages">
+                {% if bot_response %}
+                    <div class="message bot-message">
+                        {{ bot_response }}
+                    </div>
+                {% endif %}
+            </div>
+            <form id="chat-form">
+                <div class="input-group">
+                    <input type="text" name="user_input" id="user-input" placeholder="Ask about our rooms, amenities, or services..." required>
+                    <button type="submit" class="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ... Existing footer section ... -->
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Preloader
+        window.addEventListener('load', function() {
+            document.querySelector('.preloader').style.display = 'none';
+        });
+
+        // Header scroll effect
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll to Top Button functionality
+        const scrollToTop = document.querySelector('.scroll-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTop.classList.add('visible');
+            } else {
+                scrollToTop.classList.remove('visible');
+            }
+        });
+
+        scrollToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Chat functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatForm = document.getElementById('chat-form');
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+
+            if (chatForm) {
+                chatForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const userMessage = userInput.value.trim();
+                    if (!userMessage) return;
+
+                    try {
+                        // Disable input and button while processing
+                        userInput.disabled = true;
+                        const submitButton = this.querySelector('button[type="submit"]');
+                        submitButton.disabled = true;
+
+                        // Add user message to chat
+                        chatMessages.innerHTML += `
+                            <div class="message user-message">
+                                <strong>You:</strong> ${userMessage}
+                            </div>
+                        `;
+
+                        // Send request to backend
+                        const response = await fetch('/ask_bot', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            },
+                            body: 'user_input=' + encodeURIComponent(userMessage)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+
+                        const data = await response.json();
+                        console.log('Response:', data); // Debug log
+
+                        if (data.status === 'success') {
+                            chatMessages.innerHTML += `
+                                <div class="message bot-message">
+                                    <strong>Hotel Assistant:</strong> ${data.response}
+                                </div>
+                            `;
+                        } else {
+                            throw new Error(data.response || 'Failed to get response');
+                        }
+
+                    } catch (error) {
+                        console.error('Error:', error);
+                        chatMessages.innerHTML += `
+                            <div class="message bot-message error">
+                                <strong>Error:</strong> ${error.message || 'Sorry, there was an error processing your request.'}
+                            </div>
+                        `;
+                    } finally {
+                        // Re-enable input and button
+                        userInput.disabled = false;
+                        submitButton.disabled = false;
+                        
+                        // Clear input and focus it
+                        userInput.value = '';
+                        userInput.focus();
+                        
+                        // Scroll to bottom
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

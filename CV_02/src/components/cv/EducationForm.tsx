@@ -1,6 +1,12 @@
 import { PlusCircle, School, Trash, CalendarRange, GraduationCap } from 'lucide-react';
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { educationSchema } from '../../lib/validationSchemas';
+import type { z } from 'zod';
 import { Education } from '../../types/database.types';
+import { toast } from 'sonner';
+
+type EducationInputs = z.infer<typeof educationSchema>;
 
 interface EducationFormProps {
   education: Education[];
@@ -8,38 +14,40 @@ interface EducationFormProps {
 }
 
 function EducationForm({ education, setEducation }: EducationFormProps) {
-  const [newEducation, setNewEducation] = useState<Omit<Education, 'id'>>({
-    institution: '',
-    degree: '',
-    field: '',
-    startDate: '',
-    endDate: '',
-    description: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setNewEducation({ ...newEducation, [name]: value });
-  };
-
-  const addEducation = () => {
-    const item: Education = {
-      ...newEducation,
-      id: crypto.randomUUID(),
-    };
-    setEducation([...education, item]);
-    setNewEducation({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm<EducationInputs>({
+    resolver: zodResolver(educationSchema),
+    defaultValues: {
       institution: '',
       degree: '',
       field: '',
       startDate: '',
       endDate: '',
       description: '',
-    });
+    }
+  });
+
+  const onSubmit = (data: EducationInputs) => {
+    try {
+      const item: Education = {
+        ...data,
+        id: crypto.randomUUID(),
+      };
+      setEducation([...education, item]);
+      reset();
+      toast.success('Education entry added successfully');
+    } catch (error) {
+      toast.error('Failed to add education entry');
+    }
   };
 
   const removeEducation = (id: string) => {
     setEducation(education.filter(item => item.id !== id));
+    toast.success('Education entry removed');
   };
 
   return (
@@ -76,11 +84,11 @@ function EducationForm({ education, setEducation }: EducationFormProps) {
       )}
 
       {/* Form to add new education */}
-      <div className="glass-panel p-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="glass-panel p-6">
         <h3 className="text-lg font-semibold text-white mb-4">Add Education</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="institution" className="block text-sm font-medium text-gray-300 mb-2">
+          <div className="space-y-2">
+            <label htmlFor="institution" className="block text-sm font-medium text-gray-300">
               Institution *
             </label>
             <div className="relative">
@@ -88,20 +96,20 @@ function EducationForm({ education, setEducation }: EducationFormProps) {
                 <School className="h-5 w-5 text-gray-500" />
               </div>
               <input
+                {...register('institution')}
                 type="text"
                 id="institution"
-                name="institution"
-                value={newEducation.institution}
-                onChange={handleChange}
-                className="input pl-10"
+                className={`input pl-10 ${errors.institution ? 'border-red-500' : ''}`}
                 placeholder="University name"
-                required
               />
             </div>
+            {errors.institution && (
+              <p className="text-sm text-red-500">{errors.institution.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor="degree" className="block text-sm font-medium text-gray-300 mb-2">
+          <div className="space-y-2">
+            <label htmlFor="degree" className="block text-sm font-medium text-gray-300">
               Degree *
             </label>
             <div className="relative">
@@ -109,99 +117,108 @@ function EducationForm({ education, setEducation }: EducationFormProps) {
                 <GraduationCap className="h-5 w-5 text-gray-500" />
               </div>
               <input
+                {...register('degree')}
                 type="text"
                 id="degree"
-                name="degree"
-                value={newEducation.degree}
-                onChange={handleChange}
-                className="input pl-10"
+                className={`input pl-10 ${errors.degree ? 'border-red-500' : ''}`}
                 placeholder="Bachelor's, Master's, etc."
-                required
               />
             </div>
+            {errors.degree && (
+              <p className="text-sm text-red-500">{errors.degree.message}</p>
+            )}
           </div>
 
-          <div>
-            <label htmlFor="field" className="block text-sm font-medium text-gray-300 mb-2">
+          <div className="space-y-2">
+            <label htmlFor="field" className="block text-sm font-medium text-gray-300">
               Field of Study *
             </label>
-            <input
-              type="text"
-              id="field"
-              name="field"
-              value={newEducation.field}
-              onChange={handleChange}
-              className="input"
-              placeholder="Computer Science, Business, etc."
-              required
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="startDate" className="block text-sm font-medium text-gray-300 mb-2">
-                Start Date *
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <CalendarRange className="h-5 w-5 text-gray-500" />
-                </div>
-                <input
-                  type="text"
-                  id="startDate"
-                  name="startDate"
-                  value={newEducation.startDate}
-                  onChange={handleChange}
-                  className="input pl-10"
-                  placeholder="MM/YYYY"
-                  required
-                />
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <GraduationCap className="h-5 w-5 text-gray-500" />
               </div>
-            </div>
-
-            <div>
-              <label htmlFor="endDate" className="block text-sm font-medium text-gray-300 mb-2">
-                End Date *
-              </label>
               <input
+                {...register('field')}
                 type="text"
-                id="endDate"
-                name="endDate"
-                value={newEducation.endDate}
-                onChange={handleChange}
-                className="input"
-                placeholder="MM/YYYY or Present"
-                required
+                id="field"
+                className={`input pl-10 ${errors.field ? 'border-red-500' : ''}`}
+                placeholder="Computer Science, Business, etc."
               />
             </div>
+            {errors.field && (
+              <p className="text-sm text-red-500">{errors.field.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="startDate" className="block text-sm font-medium text-gray-300">
+              Start Date *
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <CalendarRange className="h-5 w-5 text-gray-500" />
+              </div>
+              <input
+                {...register('startDate')}
+                type="text"
+                id="startDate"
+                className={`input pl-10 ${errors.startDate ? 'border-red-500' : ''}`}
+                placeholder="MM/YYYY"
+              />
+            </div>
+            {errors.startDate && (
+              <p className="text-sm text-red-500">{errors.startDate.message}</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="endDate" className="block text-sm font-medium text-gray-300">
+              End Date *
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <CalendarRange className="h-5 w-5 text-gray-500" />
+              </div>
+              <input
+                {...register('endDate')}
+                type="text"
+                id="endDate"
+                className={`input pl-10 ${errors.endDate ? 'border-red-500' : ''}`}
+                placeholder="MM/YYYY or Present"
+              />
+            </div>
+            {errors.endDate && (
+              <p className="text-sm text-red-500">{errors.endDate.message}</p>
+            )}
+          </div>
+
+          <div className="md:col-span-2 space-y-2">
+            <label htmlFor="description" className="block text-sm font-medium text-gray-300">
+              Description
+            </label>
+            <textarea
+              {...register('description')}
+              id="description"
+              rows={4}
+              className={`input ${errors.description ? 'border-red-500' : ''}`}
+              placeholder="Describe your studies, achievements, and relevant coursework..."
+            ></textarea>
+            {errors.description && (
+              <p className="text-sm text-red-500">{errors.description.message}</p>
+            )}
+          </div>
+
+          <div className="md:col-span-2">
+            <button
+              type="submit"
+              className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark"
+            >
+              <PlusCircle size={18} className="mr-2" />
+              Add Education
+            </button>
           </div>
         </div>
-
-        <div className="mt-6">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">
-            Description (Optional)
-          </label>
-          <textarea
-            id="description"
-            name="description"
-            value={newEducation.description}
-            onChange={handleChange}
-            rows={3}
-            className="input"
-            placeholder="Describe your achievements, coursework, or other relevant details..."
-          />
-        </div>
-
-        <button
-          type="button"
-          onClick={addEducation}
-          disabled={!newEducation.institution || !newEducation.degree || !newEducation.field || !newEducation.startDate || !newEducation.endDate}
-          className="mt-6 btn btn-primary flex items-center gap-2"
-        >
-          <PlusCircle size={18} />
-          <span>Add Education</span>
-        </button>
-      </div>
+      </form>
     </div>
   );
 }
