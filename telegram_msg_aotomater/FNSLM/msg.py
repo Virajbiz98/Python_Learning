@@ -5,16 +5,17 @@ from datetime import datetime
 # Your Telegram API credentials
 api_id = 21056222
 api_hash = '84b84425cabf8d1dc46f7dae27c48378'
-phone_number = '+94779281223'
+phone_number = '+94768314890'
 
-# Message to be shared
-message_to_send = """❤️ Your soulmate could be just a click away! Upload your photo and find your love match now!
-👉 https://l8.nu/-1N7!"""
-
-# All target groups
-target_groups = [
-    "testvjb"
-]
+# Group + message mapping
+group_messages = {
+    "eskort_ekb1": """❤️ Ваша родственная душа может быть всего в одном клике от вас! Загрузите свою фотографию и найдите свою вторую половинку прямо сейчас!
+👉 https://lovematcher109.blogspot.com/""", # russian 
+    "Mavrence": """❤️ Jodohmu bisa ditemukan hanya dengan sekali klik! Unggah fotomu dan temukan jodohmu sekarang!
+👉 https://l8.nu/-1N7!""", # indunisia 
+    "YourThirdGroup": """❤️ Your soulmate could be just a click away! Upload your photo and find your love match now!
+👉 https://l8.nu/-1N7"""
+}
 
 # Create the Telegram client
 client = TelegramClient('test_session', api_id, api_hash)
@@ -25,28 +26,27 @@ async def main():
 
     while True:
         try:
-            for group in target_groups:
+            for group, message in group_messages.items():
                 try:
                     print(f"[{datetime.now()}] Sending message to {group}...")
-                    await client.send_message(group, message_to_send)
+                    await client.send_message(group, message)
                 except Exception as e:
                     print(f"❌ Error sending to {group}: {e}")
-            print("✅ All messages sent. Waiting 5 minutes...\n")
-            await asyncio.sleep(300)  # Wait 5 minutes (300 seconds)
+            print("✅ All messages sent. Waiting 10 minutes...\n")
+            await asyncio.sleep(600)  # Wait 10 minutes
         except errors.PersistentTimestampOutdatedError as e:
-            print(f"⚠️ PersistentTimestampOutdatedError: {e}. Attempting to reconnect...")
+            print(f"⚠️ PersistentTimestampOutdatedError: {e}. Reconnecting...")
             try:
                 await client.disconnect()
-                print("Client disconnected.")
-                await asyncio.sleep(5) # Wait a bit before reconnecting
+                await asyncio.sleep(5)
                 await client.start(phone=phone_number)
-                print("Client reconnected successfully.")
+                print("Client reconnected.")
             except Exception as reconnect_e:
-                print(f"❌ Error during reconnection attempt: {reconnect_e}. Waiting 1 minute before next retry...")
-                await asyncio.sleep(60) # Wait longer if reconnection fails
+                print(f"❌ Reconnect error: {reconnect_e}. Waiting 1 minute...")
+                await asyncio.sleep(60)
         except Exception as e:
-            print(f"❌ An unexpected error occurred: {e}. Waiting 1 minute before next retry...")
-            await asyncio.sleep(60) # Wait longer for general errors
+            print(f"❌ Unexpected error: {e}. Waiting 1 minute...")
+            await asyncio.sleep(60)
 
 # Run the script
 with client:
