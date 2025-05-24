@@ -9,6 +9,7 @@ phone_number = '+94768314890'
 
 # Group + message mapping
 group_messages = {
+    # group         message
     "eskort_ekb1": """❤️ Ваша родственная душа может быть всего в одном клике от вас! Загрузите свою фотографию и найдите свою вторую половинку прямо сейчас!
 👉 https://lovematcher109.blogspot.com/""", # russian 
     "Mavrence": """❤️ Jodohmu bisa ditemukan hanya dengan sekali klik! Unggah fotomu dan temukan jodohmu sekarang!
