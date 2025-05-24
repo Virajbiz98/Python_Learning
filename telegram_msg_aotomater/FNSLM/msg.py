@@ -13,9 +13,12 @@ group_messages = {
     "eskort_ekb1": """❤️ Ваша родственная душа может быть всего в одном клике от вас! Загрузите свою фотографию и найдите свою вторую половинку прямо сейчас!
 👉 https://lovematcher109.blogspot.com/""", # russian 
     "Mavrence": """❤️ Jodohmu bisa ditemukan hanya dengan sekali klik! Unggah fotomu dan temukan jodohmu sekarang!
-👉 https://l8.nu/-1N7!""", # indunisia 
-    "YourThirdGroup": """❤️ Your soulmate could be just a click away! Upload your photo and find your love match now!
+👉 https://lovematcher109.blogspot.com""", # indunisia 
+    "intratsitotsiinnoulban": """❤️ Ваша родственная душа может быть всего в одном клике от вас! Загрузите свою фотографию и найдите свою вторую половинку прямо сейчас!
+👉 https://lovematcher109.blogspot.com/""",
+"LinkShare_Earn": """❤️ Your soulmate could be just a click away! Upload your photo and find your love match now!
 👉 https://l8.nu/-1N7"""
+#"group": """message"""
 }
 
 # Create the Telegram client
