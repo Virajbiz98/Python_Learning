@@ -39,7 +39,7 @@ async def main():
                 except Exception as e:
                     print(f"❌ Error sending to {group}: {e}")
             print("✅ All messages sent. Waiting 10 minutes...\n")
-            await asyncio.sleep(600)  # Wait 10 minutes
+            await asyncio.sleep(750)  # Wait 12 minutes
         except errors.PersistentTimestampOutdatedError as e:
             print(f"⚠️ PersistentTimestampOutdatedError: {e}. Reconnecting...")
             try:
