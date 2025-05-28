@@ -1,0 +1,9 @@
+# Configuration for Telegram Bot
+API_ID = 21056222
+API_HASH = '84b84425cabf8d1dc46f7dae27c48378'
+PHONE_NUMBER = '+94768314890'
+
+# Sleep durations in seconds
+MESSAGE_SEND_INTERVAL = 750 
+RECONNECT_WAIT_TIME = 5
+ERROR_WAIT_TIME = 60

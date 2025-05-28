@@ -12,35 +12,35 @@ message_to_send = """🎬 Download 100,000 AI Reels Bundle – Absolutely Free f
 
 We’re excited to share this massive collection of AI-generated reels with you! You can download the bundle using the links below. If one link doesn’t work, feel free to try the others provided.
 
-AI MUSIC Videos - https://l8.nu/ZQz0
+AI MUSIC Videos - https://tinyurl.com/bdrtmn3f
 
-EDUCTION Reels - https://l8.nu/ZQz0
+EDUCTION Reels - https://tinyurl.com/bdrtmn3f
 
-AI HOW TO Reels - https://l8.nu/ZQz0
+AI HOW TO Reels - https://tinyurl.com/bdrtmn3f
 
-AI Tech Reels - https://l8.nu/ZQz0
+AI Tech Reels - https://tinyurl.com/bdrtmn3f
 
-Anime Reels - https://l8.nu/ZQz0
+Anime Reels - https://tinyurl.com/bdrtmn3f
 
-Space Reels - https://l8.nu/ZQz0
+Space Reels - https://tinyurl.com/bdrtmn3f
 
-Gym Content - https://l8.nu/ZQz0
+Gym Content - https://tinyurl.com/bdrtmn3f
 
-Hot Girls - https://l8.nu/ZQz0
+Hot Girls - https://tinyurl.com/bdrtmn3f
 
-Viral Reels - https://l8.nu/ZQz0
+Viral Reels - https://tinyurl.com/bdrtmn3f
 
-Bundle 1 - https://l8.nu/ZQz0
+Bundle 1 - https://tinyurl.com/bdrtmn3f
 
-Bundle 2 - https://l8.nu/ZQz0
+Bundle 2 - https://tinyurl.com/bdrtmn3f
 
-Bundle 3 - https://l8.nu/ZQz0
+Bundle 3 - https://tinyurl.com/bdrtmn3f
 
-Bundle 4 - https://l8.nu/ZQz0
+Bundle 4 - https://tinyurl.com/bdrtmn3f
 
-Bundle 5 - https://l8.nu/ZQz0
+Bundle 5 - https://tinyurl.com/bdrtmn3f
 
-Bundle 6 - https://l8.nu/ZQz0
+Bundle 6 - https://tinyurl.com/bdrtmn3f
 
 ✅ Important: Please make a small edit before using any of the reels. Do not use them as-is.
 
