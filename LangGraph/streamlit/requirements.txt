@@ -4,3 +4,5 @@ streamlit
 langgraph
 google-search-results
 python-dotenv
+langgraph-community
+

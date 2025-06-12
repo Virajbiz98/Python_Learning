@@ -1,5 +1,5 @@
 from langchain import hub
-from langchain.agents import tool, create_json_agent
+from langchain_community.agent_toolkits.json.base import create_json_agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 import os 
 from typing import TypedDict, Annotated, Union
@@ -7,7 +7,7 @@ from langchain_core.agents import AgentAction, AgentFinish
 import operator
 from typing import TypedDict, Annotated
 from langchain_core.agents import AgentFinish
-from langchain.prebuilt import ToolExecutor
+from langchain_community.agent_toolkits.json.base import ToolExecutor
 from langchain_core.agents import AgentActionMessageLog
 from langgraph.graph import END , StateGraph
 
@@ -156,8 +156,11 @@ def main():
             st.write(result)
 
 
+<<<<<<< HEAD
 if __name__ == "__main__":
     main()
 
 
 
+=======
+>>>>>>> 5e6c8c0 (adk new)
